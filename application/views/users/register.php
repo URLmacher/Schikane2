@@ -2,7 +2,7 @@
   <div class="jumbotron">
     <h1 class="display-3"><?=$title ?></h1>
   </div>
-  <?php echo validation_errors(); ?>
+ <?php echo validation_errors('<p class="error">', '</p>'); ?>
   <section class='register'>
     <?php echo form_open_multipart('users/register'); ?>
       <fieldset>
@@ -14,12 +14,12 @@
 
         <div class="form-group">
           <label for="password">Passwort</label>
-          <input id='password' name='password' type="password" class="form-control" >
+          <input id='password' name='password' type="password" class="form-control" autocomplete="new_password">
         </div>
 
         <div class="form-group">
           <label for="password2">Passwort wiederholen</label>
-          <input id='password2' name='password2' type="password" class="form-control" >
+          <input id='password2' name='password2' type="password" class="form-control" autocomplete="new_password">
         </div>
 
         <div class="form-group">

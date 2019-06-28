@@ -113,7 +113,7 @@ function renderCards(card, area) {
         node.dataset.value = card.value;
         node.dataset.id = card.id;
         node.style.backgroundImage =
-            'url(/src/utility/cards/png/1x/' + card.name + '.png)';
+            'url(/assets/utility/cards/png/1x/' + card.name + '.png)';
 
         domTarget.appendChild(node);
     }

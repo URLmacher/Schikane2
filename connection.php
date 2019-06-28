@@ -1,9 +1,9 @@
 <?php
 use Controllers\GameController;
-use Models\Cards;
+use Models\Card_model;
 require_once('vendor/autoload.php');
 
-$obj= new Cards;
+$obj= new Card_model;
 $cards = $obj->getCards();
 $game = new GameController($cards);
 
