@@ -1,0 +1,164 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html{
+    font-size:62.5%;  
+}
+body{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+} 
+
+.wrapper{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background: blueviolet;
+    flex-direction: row;
+}
+.sub-wrapper{
+    width: 40%;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+}
+.ablage-wrapper{
+    background: rgb(196, 159, 103);
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+.p1Ablage{
+    background: blanchedalmond;
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+}
+.p2Ablage{
+    background: blanchedalmond;
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+}
+.p1Joker{
+    background: rgb(214, 145, 42);
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+}
+.p2Joker{
+    background: rgb(214, 145, 42);
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+}
+.ablage{
+    position: relative;
+}
+.utility{
+    width: 100%;
+    height: 100%;
+    background: gainsboro;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr 1fr 15rem;
+    position: relative;
+}
+#message{
+    height: 100%;
+    width: 100%;
+    background: white;
+    position: relative;
+}
+#message p{
+    display: inline-block;
+    line-height: 1.3;
+    margin-left: 1rem;
+    position: absolute;
+}
+.draw-stack{
+    justify-self:center;
+    width: 15rem;
+    height: 100%;
+    background: rgb(196, 139, 139);
+}
+#mainstack{
+    justify-self:center;
+    width: 15rem;
+    height: 100%;
+}
+
+#mainstack-dummy{
+    width: 100%;
+    height: 100%;
+    background-image: url(../utility/cards/png/1x/back-fuchsia.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#play-area{
+    width: 60%;
+    height: 100%;
+    background: rgb(236, 17, 17);
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.play-area__stack{
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+.hand{
+    right:0;
+    bottom: 0;
+    position: absolute;
+    width: 60%;
+    height: 20%;
+    background: tan;
+    display: flex;
+    justify-content:space-around;
+    overflow: hidden;
+}
+.card{
+    width: 15rem;
+    height:250px;
+    position: relative;
+    /* transform: scale(0.8); */
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.play-area__stack .card{
+    position: absolute;
+}
+.draw-stack .card{
+    position: absolute;
+}
+.ablage .card{
+    position: absolute;
+}
+svg, path{
+    background-size: 20px 30px;
+    width: 100%;
+    height:100%; 
+    position: absolute;
+    pointer-events: none;
+    left:0;
+    margin: 0;
+}
+/* #p2-hand{
+    display: flex;
+    position: absolute;
+    width: 60%;
+    height: 20%;
+    right: 0;
+    top: 0;
+    background: tan;
+} */
+.selected{
+    border: 2px solid blueviolet;
+}

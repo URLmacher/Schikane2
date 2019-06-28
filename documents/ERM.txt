@@ -1,0 +1,28 @@
+USER
+user_id /int /auto_inc /pk
+user_name /varchar
+user_age /null
+user_sex /null
+user_city /null
+password /hash
+games_lost /int
+games_won /int
+searching /bool
+online /bool
+
+FRIENDLIST
+friendlist_id /int /auto_inc /pk
+fk_user_a_id /int
+fk_user_b_id /null /int
+
+MESSAGES
+message_id /int /auto_inc /pk
+message_subject /varchar
+message_body /texrt
+fk_recipient_id /int
+fk_sender_id /int
+seen /bool
+created_at /datetime 
+
+mn)Z8xu&NlTY14I5d^
+
