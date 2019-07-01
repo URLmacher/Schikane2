@@ -129,7 +129,7 @@ $game = new GameController($cards);
         $socketUser = [];
         
         if ( !isset( $msg->art  ) ) break; // wenn Browserfenster geschlossen wird
-        $socketUser[$socketID] = $msg->sessId;
+        $socketUser[$socketID] = 'usernamehier';
         // HIER SPIELT´S SICH AB
         $who = 'all';
         $returnMsg = new stdClass();
@@ -180,7 +180,7 @@ $game = new GameController($cards);
       // quit
       $socketData = @socket_read($res, 1024, PHP_NORMAL_READ);
       if ($socketData === false) {
-        $chatHandler->send(  $socketUser[ $socketID ]. ' hat sich ausgeloggt.', 'all')  ;
+        // $chatHandler->send(  $socketUser[ $socketID ]. ' hat sich ausgeloggt.', 'all')  ;
         unset($clientSocketArr[$socketID]);
         unset($socketUser[$socketID]);
       }

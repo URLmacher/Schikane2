@@ -5,7 +5,7 @@
       <div class="p2Ablage ablage" id="p2Ablage|1"></div>
       <div class="p2Ablage ablage" id="p2Ablage|2"></div>
       <div class="p2Ablage ablage" id="p2Ablage|3"></div>
-      <div class="p2-joker joker-ablage" id="p2-jokerablage|0"></div>
+      <div class="p2Joker joker-ablage" id="p2-jokerablage|0"></div>
     </div>
     <div class="utility">
       <div class="draw-stack" id="p1Drawstack|0" data-drawstack="1"></div>
@@ -20,11 +20,7 @@
       <div class="p1Ablage ablage" data-ablageid="1" id="p1Ablage|1"></div>
       <div class="p1Ablage ablage" data-ablageid="2" id="p1Ablage|2"></div>
       <div class="p1Ablage ablage" data-ablageid="3" id="p1Ablage|3"></div>
-      <div
-        class="p1Joker ablage"
-        data-jokerablage="1"
-        id="p1Jokerablage|0"
-      ></div>
+      <div class="p1Joker ablage" data-jokerablage="1"id="p1Jokerablage|0"></div>
     </div>
   </div>
   <div id="play-area">

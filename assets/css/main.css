@@ -13,7 +13,9 @@ html{
     color: blanchedalmond;
 }
 .footer{
-    position: absolute;
+    position: fixed;
+    bottom: 0;
+    height: 10vh;
     margin-top: 10rem;
     margin-bottom: 0;
     text-align: right;
@@ -109,4 +111,20 @@ a.pagination-link{
 }
 .error{
     color: red;
+}
+.user_name{
+    color:goldenrod;
+    margin: 2rem;
+}
+.not-ready{
+    margin-left: 2rem;
+    color: red;
+}
+.ready{
+    color: green;
+     margin-left: 2rem;
+}
+#button-box{
+    margin-top: 3rem;
+    margin-left: 2rem;
 }

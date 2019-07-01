@@ -26,7 +26,6 @@
             $data['title'] = 'Anmelden';
 
             $this->form_validation->set_rules('user_name','Username','required');  
-          
             $this->form_validation->set_rules('password','Password','required');  
        
             if($this->form_validation->run() === FALSE){
@@ -61,12 +60,12 @@
         }
 
         public function logout(){
+            $this->User_model->logout($this->session->user_id);
             $this->session->unset_userdata('logged_in');
             $this->session->unset_userdata('user_id');
             $this->session->unset_userdata('user_name');
 
             $this->session->set_flashdata('user_loggedout', 'Sie sind nun abgemeldet');
-
             redirect('users/login'); 
         }
         
@@ -79,6 +78,5 @@
                 return false;
             }
         }
-
    
     }
