@@ -40,6 +40,13 @@ class User_model extends CI_Model{
         }
     }
 
+    public function get_user_id($username){
+        $query = $this->db->get_where('users', array('user_name' => $username));
+        $row = $query->row_array(0);
+        return $row['user_id'];
+      
+    }
+
     public function logout($user_id){
         $data = array(
             'online' => 0,

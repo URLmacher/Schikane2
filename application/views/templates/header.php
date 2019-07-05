@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Schikane</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url(); ?>assets/images/icons/favicon-32x32.png">
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url(); ?>assets/images/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="<?php echo base_url(); ?>assets/images/icons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/icons/images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/icons/images/favicon-16x16.png"> -->
     <link rel="stylesheet" type="text/css" href='https://bootswatch.com/4/superhero/bootstrap.min.css' >
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/main.css">
@@ -42,7 +42,7 @@
                 <?php endif; ?>
                 <?php if($this->session->userdata('logged_in')) : ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url(); ?>">Dashboard</a>
+                        <a class="nav-link" id="dashboard-btn" href="#">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url(); ?>users/logout">Abmelden</a>
@@ -65,3 +65,7 @@
                 <?php echo "<p class='alert alert-success'>".$this->session->flashdata('user_loggedout')."</p>"; ?>
             <?php endif; ?>
            
+       
+<?php
+$this->load->view('templates/dashboard');
+?>
