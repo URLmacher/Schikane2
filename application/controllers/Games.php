@@ -13,27 +13,25 @@
             { 
                 redirect('login');
             }else{
-                $this->User_model->searching($this->session->userdata('user_id'));
                 $this->load->view('templates/header');
                 $this->load->view('pages/search');
                 $this->load->view('templates/footer');
+                $this->User_model->resetValues($this->session->userdata('user_id'));
             }
         }
-
+        
         public function search() {
+            $this->User_model->searching($this->session->userdata('user_id'));
             $player2 = $this->User_model->search($this->session->userdata('user_id'));
-            $data['player2'] = $player2['user_name'];
-            $data['player2_id'] = $player2['user_id'];
+            $data['player2'] = $player2;
             echo json_encode($data);
         }
 
         public function ready() {
-            $json = json_decode(file_get_contents('php://input'));
+            $json = $this->input->post('player2');
             $this->User_model->setReady($this->session->userdata('user_id'));
-            $playersReady = $this->User_model->getReady($json->player2id);
-            // $data['ready'] = $playersReady;
-            // echo json_encode($data);
-            $data['debug'] = '$playersReady';
+            $playersReady = $this->User_model->getReady($json);
+            $data['ready'] = $playersReady;
             echo json_encode($data);
         }
 

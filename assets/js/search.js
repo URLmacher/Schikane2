@@ -1,10 +1,12 @@
 const searchBtn = document.getElementById('search');
 const player1 = document.getElementById('playerone');
 let player2 = false;
-let player2Id = false;
 let ready = false;
 let interval;
 
+/**
+ * Neuer Eventlistener auf dem Such-Button, nachdem das Document fertig geladen hat
+ */
 document.addEventListener(
 	'DOMContentLoaded',
 	function() {
@@ -12,9 +14,14 @@ document.addEventListener(
 	},
 	false
 );
+
+/**
+ * Der 'Bereit'-Button wird abgehört
+ * Bei Click werden die indikatoren verändert
+ * Funktion checkIfReady wird alle paar Sekunden ausgeführt
+ */
 document.addEventListener('click', function(e) {
 	if (e.target && e.target.id == 'readybtn') {
-		player2Id = document.getElementById('playertwo').dataset.userid;
 		document.getElementById('readybtn').remove();
 		let readyDom = document.getElementById('playeronereadyindicator');
 		readyDom.className = 'ready';
@@ -27,7 +34,15 @@ document.addEventListener('click', function(e) {
 	}
 });
 
+/**
+ * Such-Funktion wird alle paar Sekunden ausgeführt
+ * Button wird entfernt
+ * Lade-Gif wird angezeigt
+ * @param {Event} e 
+ */
 function searchGo(e) {
+	searchBtn.remove();
+	document.getElementById('searching').classList.remove('hide');
 	e.preventDefault();
 	if (!player2) {
 		interval = setInterval(function() {
@@ -36,11 +51,37 @@ function searchGo(e) {
 	}
 }
 
+/**
+ * Countdown wird angezeigt
+ * Indikatoren des zweiten Spielers zeigen Bereitschaft an
+ * Nach Ablauf der Zeit werden die Spieler zum eigentlichen Spiel weitergeleitet
+ */
 function startCountdown() {
-	console.log('geht');
+	const player2Dom = document.getElementById('playertworeadyindicator');
+	player2Dom.className = 'ready';
+	player2Dom.innerHTML = 'Bereit';
+	let timeleft = 5;
+	let downloadTimer = setInterval(function() {
+		document.getElementById('countdown').innerHTML =
+			'Spiel startet in: '+timeleft;
+		timeleft -= 1;
+		if (timeleft <= 0) {
+			clearInterval(downloadTimer);
+			window.location.replace(
+				'http://schikanezwei.loc/start'
+			);
+		}
+	}, 1000);
 }
 
+/**
+ * Nach erfolgreicher Suche werden beide Spieler anezeigt
+ * Bereitsschafts-Indikatoren sind auf 'Nicht Bereit'
+ * Bereitschaftsbutton wird eingeblendet
+ * @param {string} player2 
+ */
 function renderReady(player2) {
+	document.getElementById('searching').remove();
 	const btnBox = document.getElementById('button-box');
 	const player1Dom = document.getElementById('playeroneready');
 	const player2Dom = document.getElementById('playertwoready');
@@ -65,33 +106,52 @@ function renderReady(player2) {
 	btnBox.innerHTML = btn;
 }
 
+/**
+ * AJAX-Request
+ * Liefert Namen des zweiten Spielers
+ * startet Renderung der nächsten Stufe
+ * Beendet die Suche
+ */
 function searchPlayer2() {
-	var xhr = new XMLHttpRequest();
+	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'http://schikanezwei.loc/search');
 	xhr.send();
 	xhr.onload = function() {
+	
 		if (isJson(xhr.response)) {
 			const data = JSON.parse(xhr.response);
-			player2 = data.player2;
-			renderReady(data.player2);
-			clearInterval(interval);
+			if(data.player2){
+				player2 = data.player2;
+				renderReady(data.player2);
+				clearInterval(interval);
+			}
 		}
 	};
 }
 
+/**
+ * AJAX-Request
+ * Sendet Namen des zweiten Spielers
+ * Bringt in Erfahrung, ob der zweite Spieler bereit ist
+ * Beendet die Überprüfung der Bereitschaft
+ * Startet den Countdown zum Spiel
+ */
 function checkIfReady() {
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://schikanezwei.loc/ready');
-	xhr.send(JSON.stringify({"player2id": player2Id }));
+	let data = new FormData();
+	data.append('player2', player2);
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', 'http://schikanezwei.loc/ready');
+	xhr.send(data);
 	xhr.onload = function() {
-		console.log(xhr.reaponse);
+	
 		if (isJson(xhr.response)) {
 			const data = JSON.parse(xhr.response);
 			if (data.ready) {
+			
 				ready = true;
 				clearInterval(interval);
 				startCountdown();
-			}else{
+			} else {
 				console.log('notready');
 			}
 		}

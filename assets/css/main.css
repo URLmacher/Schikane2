@@ -8,10 +8,6 @@ html{
     width:100%;
     height: 100vh;
 }
-.post-date{
-    font-size: .7rem;
-    color: blanchedalmond;
-}
 .footer{
     position: fixed;
     bottom: 0;
@@ -21,16 +17,8 @@ html{
     text-align: right;
     width: 100%;
 }
-.posts{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows:  auto;
-}
 .form-group{
     position: relative;
-}
-.btn{
-    margin-left: 1rem;
 }
 .btn-wrapper{
     display: flex;
@@ -44,40 +32,6 @@ html{
 .form-select{
     margin: 1rem;
 }
-.view-wrapper{
-    display: flex;
-    flex-direction: row;
-}
-.imager{
-    max-width: 100%;
-    margin: 2rem;
-    border: 5px solid rgb(55, 79, 107);
-}
-.left-img{
-    width: 40%;
-    display: inline-block;
-}
-.right-body{
-    display: inline-block;
-    
-    padding:4rem;
-}
-.list-group{
-    list-style: none;
-}
-.list-group-item{
-    margin-bottom: 3px;
-    max-width: 30rem; 
-}
-.view-card{
-    width: 100%;
-}
-.comment{
-    max-width: 30rem;
-}
-.comments{
-    text-align: right;
-}
 h3{
     margin-bottom: 2rem;
 }
@@ -89,25 +43,6 @@ h3{
 
     max-width: 30rem;
     text-align: left;
-}
-.pagination-links{
-    margin:30px;
-}
-a.pagination-link{
-    padding: 8px 13px;
-    margin: 5px;
-    background: #f4f4f4;
-    border: 1px solid #cccccc;
-}
-.pagination-links strong{
-    padding: 8px 13px;
-    margin: 5px;
-    background: #f4f4f4;
-    border: 1px solid #cccccc;
-}
-.cat-delete{
-    display: inline;
-    margin-left: 2rem;
 }
 .error{
     color: red;
@@ -127,4 +62,16 @@ a.pagination-link{
 #button-box{
     margin-top: 3rem;
     margin-left: 2rem;
+}
+#searching{
+    width: 17rem;
+    background-image: url('../images/ajax-loader.gif');
+    background-repeat: no-repeat;
+    margin-left: 2rem;
+}
+#searching h4{
+    padding-top: 1rem;
+}
+.hide{
+    display: none;
 }

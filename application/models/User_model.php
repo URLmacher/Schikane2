@@ -63,7 +63,7 @@ class User_model extends CI_Model{
         $query = $this->db->get_where('users', array('searching' => 1));
         foreach($query->result_array() as $row) {
             if($row['user_id'] != $user_id) {
-                return $row;
+                return $row['user_name'];
             }
         }
         return false;
@@ -71,22 +71,31 @@ class User_model extends CI_Model{
 
     public function setReady($user_id) {
         $data = array(
-            'user_id' => $user_id
+            'ready' => 1
         );
 
         $this->db->where('user_id', $user_id);
         $this->db->update('users', $data);
     }
 
-    public function getReady($user_id) {
+    public function getReady($user_name) {
         $query = $this->db->get_where('users', array('ready' => 1));
         foreach($query->result_array() as $row) {
-            if($row['user_id'] != $user_id) {
-                return true;
+            if($row['user_name'] == $user_name) {
+                return $row['user_name'];
             }
         }
         return false;
     }
 
+    public function resetValues($user_id) {
+          $data = array(
+            'ready' => 0,
+            'searching' => 0
+        );
+
+        $this->db->where('user_id', $user_id);
+        $this->db->update('users', $data);
+    }
  
 }
