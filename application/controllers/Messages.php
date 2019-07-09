@@ -8,6 +8,7 @@
         }
 
         public function view($msg_id) {
+            $msg = $this->Message_model->message_seen($msg_id);
             $msg = $this->Message_model->get_message($msg_id);
             if($msg[0]['recipient_id'] == $this->session->userdata('user_id') ) {
                 $data['msg'] = $msg;
@@ -23,8 +24,8 @@
             $data['errors'] = [];
 
             if(!empty($_POST['recipient'])){
-                if($this->User_model->check_username_exists($recipient)) {
-                    $recipient = $this->User_model->get_user_id($recipient);
+                if(!$this->User_model->check_username_exists($_POST['recipient'])) {
+                    $recipient = $this->User_model->get_user_id($_POST['recipient']);
                 }else{
                     $data['errors']['recipient'] = 'Username existiert nicht';
                 }

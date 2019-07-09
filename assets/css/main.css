@@ -101,6 +101,7 @@ h3 {
 #user-messages {
 	height: 90%;
 	width: 90%;
+	position: relative;
 	background: rgb(119, 180, 204);
 	overflow-y: scroll;
 }
@@ -125,4 +126,32 @@ h3 {
 }
 .error-box{
 	color: red;
+}
+#send-msg-form-wrapper{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: #3c3b3be6;
+	display: flex;
+	justify-content: center;
+	z-index: 900;
+}
+#send-msg-form{
+	margin-top:5rem;
+	width: 40%;
+}
+
+.stand-in-btn:hover{
+	background: red;
+}
+.stand-in-btn{
+	height: 2rem;
+	width: 2rem;
+	position: absolute;
+	top: 2rem;
+	right: 2rem;
+	background: blue;
+	text-align: center;
+	border-radius: 50%;
+	cursor: pointer;
 }
