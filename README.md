@@ -1,6 +1,16 @@
 # MULTIPLAYER Cardgame
 ## Schikane
 
+## Quickstart
+1. Repo klonieren
+2. Datenbank erstellen utf8_mb4_general_ci name schikane
+3. Datenbank migrieren: php index.php migrate latest
+4. websockets am server aktivieren extension=sockets in php.ini
+5. vhost erstellen schikanezwei.loc od. $config['base_url'] in application/config/config.php anpassen
+6. composer install
+7. php connection.php im Hauptverzeichnis ausführen um Websockets zu starten
+8. Website im Browser aufrufen
+
 **Minimum Viable Product:**
 - Kartenspiel für 2 Spieler
 - User Login

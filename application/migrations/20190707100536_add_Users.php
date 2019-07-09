@@ -6,7 +6,7 @@ class Migration_add_Users extends CI_Migration {
         public function up()
         {
                 $this->dbforge->add_field(array(
-                        'user_id int(11) NOT NULL',
+                        'user_id int(11) NOT NULL ',
                         'user_name varchar(255) NOT NULL',
                         'password varchar(255) NOT NULL',
                         'user_age int(11) DEFAULT NULL',
@@ -17,8 +17,11 @@ class Migration_add_Users extends CI_Migration {
                         'searching tinyint(1) NOT NULL',
                         'ready tinyint(1) NOT NULL'
                 ));
-                $this->dbforge->add_key('user_id', TRUE);
                 $this->dbforge->create_table('users');
+                $this->db->query('ALTER TABLE users
+                ADD PRIMARY KEY (user_id);');
+                $this->db->query("ALTER TABLE users
+                MODIFY user_id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6");
         }
 
         public function down()

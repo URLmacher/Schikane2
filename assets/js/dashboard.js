@@ -1,5 +1,7 @@
 const dashboard = document.getElementById('dashboard');
 const dashboardBtn = document.getElementById('dashboard-btn');
+const base_url = window.location.origin;
+
 
 
 document.addEventListener(

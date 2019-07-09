@@ -67,9 +67,7 @@ function startCountdown() {
 		timeleft -= 1;
 		if (timeleft <= 0) {
 			clearInterval(downloadTimer);
-			window.location.replace(
-				'http://schikanezwei.loc/start'
-			);
+			window.location.replace(base_url + '/start');
 		}
 	}, 1000);
 }
@@ -114,7 +112,7 @@ function renderReady(player2) {
  */
 function searchPlayer2() {
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://schikanezwei.loc/search');
+	xhr.open('GET', base_url + '/search');
 	xhr.send();
 	xhr.onload = function() {
 	
@@ -140,7 +138,7 @@ function checkIfReady() {
 	let data = new FormData();
 	data.append('player2', player2);
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', 'http://schikanezwei.loc/ready');
+	xhr.open('POST', base_url + '/ready');
 	xhr.send(data);
 	xhr.onload = function() {
 	

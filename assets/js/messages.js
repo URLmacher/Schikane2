@@ -79,7 +79,7 @@ function renderSingleMessage(msg) {
 
 function getMessages() {
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://schikanezwei.loc/messages');
+	xhr.open('GET', base_url + '/messages');
 	xhr.send();
 	xhr.onload = function() {
 		if (isJson(xhr.response)) {
@@ -95,7 +95,7 @@ function getMessages() {
 
 function getSingleMessage(msg_id) {
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://schikanezwei.loc/messages/' + msg_id);
+	xhr.open('GET', base_url + '/messages/' + msg_id);
 	xhr.send();
 	xhr.onload = function() {
 		if (isJson(xhr.response)) {
@@ -120,7 +120,7 @@ function sendMessage(e) {
 	data.append('title', title);
 	data.append('body', body);
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', 'http://schikanezwei.loc/messages/create');
+	xhr.open('POST', base_url+'/messages/create');
 	xhr.send(data);
 	xhr.onload = function() {
 		if (isJson(xhr.response)) {
