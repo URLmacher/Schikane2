@@ -91,7 +91,9 @@ h3 {
 #user-profile {
 	height: 90%;
 	width: 90%;
+	position: relative;
 	background: rgb(160, 139, 139);
+	overflow-y: scroll;
 }
 #user-friends {
 	height: 90%;

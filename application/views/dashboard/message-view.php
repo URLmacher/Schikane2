@@ -26,9 +26,10 @@
             <h3 id="msg-sender"></h3>
         </div>
         <div class="card-body" id="msg-body">
-        </div>
-        <div class="btn-box flex-justify">
-            <a href="#" class="btn btn-primary antworten">Antworten</a>
+            </div>
+            <div class="btn-box flex-justify">
+                <a href="#" class="btn btn-primary antworten">Antworten</a>
+                <div id="specialpurpose"></div>
             <a href="#" class="btn btn-secondary back-to-table">Zurück</a>
         </div>
     </div>

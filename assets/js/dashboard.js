@@ -14,5 +14,6 @@ document.addEventListener(
 
 function showDashboard(e) {
 	getMessages();
+	getFriends();
 	dashboard.classList.toggle('hide');
 }

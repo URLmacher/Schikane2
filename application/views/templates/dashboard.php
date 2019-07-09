@@ -8,11 +8,9 @@
     </div>
 
     <div id="user-friends">
-        <h3>Freunde</h3>
-        <p>Seppo</p>
-        <p>Hansi</p>
-        <p>Elvira</p>
-        <p>Töfte</p>
+        <?php
+        $this->load->view('dashboard/friends-view');
+        ?>
     </div>
 
     <div id="user-messages">

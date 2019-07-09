@@ -40,31 +40,52 @@ function differentActions(e) {
 		const domMsgForm = document.getElementById('send-msg-form-wrapper');
 
 		domMsgForm.classList.remove('hide');
+	} else if (e.target.classList.contains('msg-to-friend')) {
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
+		const recipientName = e.target.dataset.friendname;
+		domRecipientInput.value = recipientName;
+		domMsgForm.classList.remove('hide');
+	} else if (e.target.classList.contains('delete-friend')) {
+		const friendName = e.target.dataset.friendname;
+		deleteFriend(friendName);
+	} else if (e.target.classList.contains('new-friend-btn')) {
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
+
+		domMsgForm.classList.remove('hide');
+		domTitleInput.value = 'Freundschaftseinladung';
+	} else if (e.target.classList.contains('be-friend')) {
+		clearForm();
+		const friendName = e.target.dataset.username;
+		confirmFriendship(friendName);
 	}
 }
 
 function renderMessages(msgs) {
 	const domTableBody = document.getElementById('msg-table-body');
-	domTableBody.innerHTML = '';
-	msgs.forEach(msg => {
-		let msgTable;
-		let tableRow = document.createElement('TR');
-		tableRow.className = 'msg-tr';
-		tableRow.dataset.msgid = msg.msg_id;
-		let msgBody = shortenString(msg.msg_body);
-		let date = convertDate(msg.created_at);
-		let seen = seenOrNot(msg.msg_seen);
+	if (msgs.length > 0) {
+		domTableBody.innerHTML = '';
+		msgs.forEach(msg => {
+			let msgTable;
+			let tableRow = document.createElement('TR');
+			tableRow.className = 'msg-tr';
+			tableRow.dataset.msgid = msg.msg_id;
+			let msgBody = shortenString(msg.msg_body);
+			let date = convertDate(msg.created_at);
+			let seen = seenOrNot(msg.msg_seen);
 
-		msgTable = `
-            <td>${msg.user_name}</td>
-            <td>${date}</td>
-            <td>${msg.msg_title}</td>
-            <td>${msgBody}</td>
-            <td>${seen}</td>
-        `;
-		tableRow.innerHTML = msgTable;
-		domTableBody.appendChild(tableRow);
-	});
+			msgTable = `
+				<td>${msg.user_name}</td>
+				<td>${date}</td>
+				<td>${msg.msg_title}</td>
+				<td>${msgBody}</td>
+				<td>${seen}</td>
+			`;
+			tableRow.innerHTML = msgTable;
+			domTableBody.appendChild(tableRow);
+		});
+	} else {
+		domTableBody.innerHTML = 'Keine Nachrichten';
+	}
 }
 
 function renderErrors(errors) {
@@ -88,6 +109,12 @@ function renderSingleMessage(msg) {
 	const domMsgSender = document.getElementById('msg-sender');
 	const domMsgBody = document.getElementById('msg-body');
 
+	if (msg.msg_title == 'Freundschaftseinladung') {
+		const buttonArea = document.getElementById('specialpurpose');
+		buttonArea.innerHTML = `<button data-username="${
+			msg.user_name
+		}" class="be-friend btn btn-primary">Anfrage annehmen</button>`;
+	}
 	recipientUserName = msg.user_name;
 	domTableBody.classList.add('hide');
 	domMsgBox.classList.remove('hide');
@@ -120,7 +147,8 @@ function clearForm(errorsonly = false) {
 		});
 	} else {
 		const domMsgForm = document.getElementById('send-msg-form-wrapper');
-
+		const buttonArea = document.getElementById('specialpurpose');
+		buttonArea.innerHTML = '';
 		domMsgForm.classList.add('hide');
 		domRecipientInput.value = '';
 		domTitleInput.value = '';
