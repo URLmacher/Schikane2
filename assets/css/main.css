@@ -98,6 +98,7 @@ h3 {
 #user-friends {
 	height: 90%;
 	width: 90%;
+	position: relative;
 	background: rgb(156, 103, 103);
 }
 #user-messages {
@@ -144,16 +145,42 @@ h3 {
 }
 
 .stand-in-btn:hover{
-	background: red;
+	transform: scale(1.2);
 }
 .stand-in-btn{
 	height: 2rem;
 	width: 2rem;
 	position: absolute;
-	top: 2rem;
-	right: 2rem;
-	background: blue;
+	top: 1rem;
+	right: 1rem;
 	text-align: center;
-	border-radius: 50%;
 	cursor: pointer;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.new-msg-btn{
+	background-image: url('../images/envelop.png');
+}
+.new-friend-btn{
+	background-image: url('../images/user-plus.png');
+}
+.send-msg-close{
+	background-image: url('../images/cross.png');
+}
+.table-btn{
+	height: 2rem;
+	width: 2rem;
+	text-align: center;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.msg-to-friend{
+	background-image: url('../images/envelop.png');
+}
+.delete-friend{
+	background-image: url('../images/cancel-circle.png');
+}
+.table-btn:hover{
+	transform: scale(1.2);
 }

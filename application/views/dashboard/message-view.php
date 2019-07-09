@@ -1,5 +1,5 @@
 <h3>Nachrichten</h3>
-<div class="new-msg-btn stand-in-btn">+</div>
+<div class="new-msg-btn stand-in-btn"></div>
     <table class="table" id="msg-table">
         <thead>
             <tr>

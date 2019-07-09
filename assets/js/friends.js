@@ -11,12 +11,12 @@ function renderFriends(friends) {
 			friendTable = `
                 <td>${friend.user_name}</td>
                 <td>${friend.online}</td>
-                <td><button data-friendname="${
+                <td><div data-friendname="${
 					friend.user_name
-				}" class="msg-to-friend">Schick</button></td>
-                <td><button data-friendname="${
+				}" class="msg-to-friend table-btn"></div></td>
+                <td><div data-friendname="${
 					friend.friendship_id
-				}" class="delete-friend">lösch</button></td>
+				}" class="delete-friend table-btn"></div></td>
             `;
 			tableRow.innerHTML = friendTable;
 			domTableBody.appendChild(tableRow);

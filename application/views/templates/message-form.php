@@ -1,7 +1,7 @@
 
     <div id="send-msg-form-wrapper" class="hide" >
         <form  id="send-msg-form" >
-            <div class="send-msg-close stand-in-btn">X</div>
+            <div class="send-msg-close stand-in-btn"></div>
             <fieldset>
             <legend id="send-msg-legend">Neue Nachricht</legend>
                 <div class="form-group">
