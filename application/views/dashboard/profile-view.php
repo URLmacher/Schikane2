@@ -49,6 +49,11 @@
 
             <div id="profile-delete-confirm" class="hide">
                 <p>Sind Sie sicher?</p>
+                <form class="form-group">
+                    <label for="profil-delete-password">Bitte geben Sie Ihr Passwort ein</label>
+                    <input type="password" class="form-control" id="profil-delete-password" placeholder="Password">
+                    <p class="error-profile" id="profile-delete-error"></p>
+                </form>
                 <button type="button" class="btn btn-danger" id="profile-delete-confirm-btn">Löschen</button>
                 <button type="button" class="btn btn-primary" id="profile-delete-back-btn">Zurück</button>
             </div>

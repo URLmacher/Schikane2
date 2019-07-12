@@ -11,6 +11,7 @@ class Migration_add_Users extends CI_Migration {
                         'password varchar(255) NOT NULL',
                         'user_age int(11) DEFAULT NULL',
                         'user_sex varchar(50) DEFAULT NULL',
+                        'user_city varchar(255) DEFAULT NULL',
                         'games_won int(11) DEFAULT NULL',
                         'games_lost int(11) DEFAULT NULL',
                         'online tinyint(1) NOT NULL',

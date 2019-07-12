@@ -118,19 +118,26 @@ function saveProfile() {
 				ageSpan.innerHTML = ageInput;
 				citySpan.innerHTML = cityInput;
 				clearEditForm();
-				backToProfileView();
+				backToProfileViewFromEdit();
 			} else {
-				renderErrors(data.errors);
+				renderEditErrors(data.errors);
 			}
 		}
 	};
 }
 
 function deleteProfile() {
-    console.log('Profil wird gelöscht...');
+    const password = document.getElementById('profil-delete-password');
+    const passwordError = document.getElementById('profile-delete-error');
+
+    if(password.value == '') {
+        passwordError.innerHTML='Passwort fehlt';
+    }else{
+        console.log('Profil wird gelöscht...');
+    }
 }
 
-function renderErrors(errors) {
+function renderEditErrors(errors) {
 	if (errors.hasOwnProperty('age')) {
 		document.getElementById('profile-age-error').innerHTML = errors.age;
 	}

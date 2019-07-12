@@ -44,8 +44,7 @@ function renderMessages(msgs) {
 	}
 }
 
-function renderErrors(errors) {
-	console.log(errors);
+function renderMsgErrors(errors) {
 	if (errors.hasOwnProperty('recipient')) {
 		document.getElementById('recipient-error').innerHTML = errors.recipient;
 	}
@@ -150,8 +149,7 @@ function sendMessage(e) {
 				feedback.innerHTML = `<p class='alert alert-success'>Nachricht wurde verschickt</p>`;
 				clearForm();
 			} else {
-				console.log(data.errors);
-				renderErrors(data.errors);
+				renderMsgErrors(data.errors);
 			}
 		}
 	};
