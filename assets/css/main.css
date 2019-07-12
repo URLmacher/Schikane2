@@ -127,7 +127,7 @@ h3 {
 	-ms-flex-pack: distribute;
 	    justify-content: space-around;
 }
-.error-box{
+.error-box,.error-profile{
 	color: red;
 }
 #send-msg-form-wrapper{
@@ -183,4 +183,11 @@ h3 {
 }
 .table-btn:hover{
 	transform: scale(1.2);
+}
+.profile-data{
+	font-weight: 600;
+}
+#profile-sex-input-span{
+	display: inline-table;
+	margin-left: 1rem;
 }

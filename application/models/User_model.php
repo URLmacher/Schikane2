@@ -25,7 +25,8 @@ class User_model extends CI_Model{
 
             $this->db->where('user_name', $username);
             $this->db->update('users', $data); 
-            return $result->row(0)->user_id;
+            $result_array = $result->result_array();
+            return $result_array[0];
         }else{
             return false;
         }
@@ -95,12 +96,23 @@ class User_model extends CI_Model{
     }
 
     public function resetValues($user_id) {
-          $data = array(
+        $data = array(
             'ready' => 0,
             'searching' => 0
         );
 
         $this->db->where('user_id', $user_id);
+        $this->db->update('users', $data);
+    }
+
+    public function editProfile($sex,$age,$city) {
+        $data = array(
+            'user_age' => $age,
+            'user_sex' => $sex,
+            'user_city' => $city
+        );
+
+        $this->db->where('user_id',  $this->session->userdata('user_id'));
         $this->db->update('users', $data);
     }
  

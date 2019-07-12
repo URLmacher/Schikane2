@@ -1,10 +1,9 @@
 <div id="dashboard" class="hide">
 
     <div id="user-profile">
-        <h3>Profil</h3>
-        <p>Username: Heini</p>
-        <p>Alter: 32</p>
-        <p>Geschlecht: M</p>
+       <?php
+        $this->load->view('dashboard/profile-view');
+        ?>
     </div>
 
     <div id="user-friends">
@@ -13,12 +12,10 @@
         ?>
     </div>
 
-    <div id="user-messages">
-               
-    <?php
-    $this->load->view('dashboard/message-view');
-    ?>
-
+    <div id="user-messages">   
+        <?php
+        $this->load->view('dashboard/message-view');
+        ?>
     </div>
 
     <div id="user-stats">

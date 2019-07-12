@@ -38,17 +38,20 @@
               
                 $username = $this->input->post('user_name');
                 $password = md5($this->input->post('password'));
-                $user_id = $this->User_model->login($username, $password);
-
-                if($user_id) {
+                $user_data = $this->User_model->login($username, $password);
+                if($user_data) {
                     
-                    $user_data = array(
-                        'user_id' => $user_id,
-                        'user_name' => $username,
+                    $session_data = array(
+                        'user_id' => $user_data['user_id'],
+                        'user_name' => $username, 
+                        'user_age' => $user_data['user_age'],
+                        'user_sex' => $user_data['user_sex'],
+                        'user_city' => $user_data['user_city'],
                         'logged_in' => true
                     );
-
-                    $this->session->set_userdata($user_data);
+                     
+                        
+                    $this->session->set_userdata($session_data);
                     $this->session->set_flashdata('user_loggedin', 'Sie sind nun angemeldet.');
                     redirect('home'); 
                 }else{
@@ -78,5 +81,54 @@
                 return false;
             }
         }
+
+        public function edit() {
+            $age = false;
+            $sex = false;
+            $city = false;
+            $data['success'] = false;
+            $data['errors'] = [];
+
+            if(!empty($_POST['age']) ){
+                if(is_numeric($_POST['age']) && $_POST['age'] > 0  && $_POST['age'] < 120) {
+                    $age = filter_var($_POST['age'], FILTER_SANITIZE_NUMBER_INT);
+                }else{
+                    $data['errors']['age'] = 'Ungültige Eingabe';
+                }
+            }
+                
+            if(!empty($_POST['sex'])){
+                if($_POST['sex'] == 'männlich' || $_POST['sex'] == 'weiblich' || $_POST['sex'] == 'sonstig') {
+                    $sex = filter_var($_POST['sex'], FILTER_SANITIZE_STRING);
+                }else{
+                    $data['errors']['sex'] = 'Ungültige Eingabe';
+                    $data['debug'] = $_POST['sex'];
+                }
+            }
+
+            if(!empty($_POST['city'])){
+                if(is_string($_POST['city']) && strlen($_POST['city']) > 2 && strlen($_POST['city']) < 50 ) {
+                    $city = filter_var($_POST['city'], FILTER_SANITIZE_STRING);
+                }else{
+                    $data['errors']['city'] = 'Ungültige Eingabe';
+                }
+            }
+
+            if($age && $city && $sex){
+                $this->User_model->editProfile($sex,$age,$city);
+                $data['success'] = true;
+                $session_data = array(
+                    'user_age' => $age,
+                    'user_sex' => $sex,
+                    'user_city' => $city
+                );
+                    
+                        
+                $this->session->set_userdata($session_data);
+            }
+            
+            echo json_encode($data);
+        }
+        
    
     }

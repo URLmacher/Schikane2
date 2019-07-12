@@ -14,51 +14,7 @@ domBodyTextarea.addEventListener('focus', function() {
 	clearForm('errorsonly');
 });
 
-function differentActions(e) {
-	if (e.target.parentElement.classList.contains('msg-tr')) {
-		const tableRow = e.target.parentElement;
-		getSingleMessage(tableRow.dataset.msgid);
-	} else if (e.target.classList.contains('back-to-table')) {
-		getMessages();
-		const domTable = document.getElementById('msg-table');
-		const domMsgBox = document.getElementById('single-msg');
-		domTable.classList.remove('hide');
-		domMsgBox.classList.add('hide');
-	} else if (e.target.classList.contains('antworten')) {
-		e.preventDefault();
-		const domTable = document.getElementById('msg-table');
-		const domMsgBox = document.getElementById('single-msg');
-		const domMsgForm = document.getElementById('send-msg-form-wrapper');
 
-		domMsgBox.classList.add('hide');
-		domMsgForm.classList.remove('hide');
-		domTable.classList.remove('hide');
-		domRecipientInput.value = recipientUserName;
-	} else if (e.target.classList.contains('send-msg-close')) {
-		clearForm();
-	} else if (e.target.classList.contains('new-msg-btn')) {
-		const domMsgForm = document.getElementById('send-msg-form-wrapper');
-
-		domMsgForm.classList.remove('hide');
-	} else if (e.target.classList.contains('msg-to-friend')) {
-		const domMsgForm = document.getElementById('send-msg-form-wrapper');
-		const recipientName = e.target.dataset.friendname;
-		domRecipientInput.value = recipientName;
-		domMsgForm.classList.remove('hide');
-	} else if (e.target.classList.contains('delete-friend')) {
-		const friendName = e.target.dataset.friendname;
-		deleteFriend(friendName);
-	} else if (e.target.classList.contains('new-friend-btn')) {
-		const domMsgForm = document.getElementById('send-msg-form-wrapper');
-
-		domMsgForm.classList.remove('hide');
-		domTitleInput.value = 'Freundschaftseinladung';
-	} else if (e.target.classList.contains('be-friend')) {
-		clearForm();
-		const friendName = e.target.dataset.username;
-		confirmFriendship(friendName);
-	}
-}
 
 function renderMessages(msgs) {
 	const domTableBody = document.getElementById('msg-table-body');
