@@ -945,6 +945,13 @@ class GameController {
         $arr = [];
     }
 
+    /**
+     * Wechselt Spieler ab bei Rundenende
+     * Keiner ist dran, wenn das Spiel vorbei ist
+     *
+     * @param boolean $gameover
+     * @return void
+     */
     function changePlayer($gameover = false) {
         if($this->currentPlayer == 1) {
             $this->currentPlayer = 2;

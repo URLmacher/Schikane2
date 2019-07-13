@@ -1,3 +1,7 @@
+/**
+ * Stellt die Freunde eines Users dar
+ * @param {object} friends 
+ */
 function renderFriends(friends) {
 	const domTableBody = document.getElementById('friend-table-body');
 	if (friends.length > 0) {
@@ -26,6 +30,10 @@ function renderFriends(friends) {
 	}
 }
 
+/**
+ * Holt Freunde vom Server
+ * rendert nach Bedarf
+ */
 function getFriends() {
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', base_url + '/friends');
@@ -42,6 +50,11 @@ function getFriends() {
 	};
 }
 
+/**
+ * Löst Freundschaft auf
+ * rendert neu
+ * @param {number} friendship_id 
+ */
 function deleteFriend(friendship_id) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', base_url + '/friends/' + friendship_id);
@@ -59,6 +72,12 @@ function deleteFriend(friendship_id) {
 	};
 }
 
+/**
+ * Speichert Freundschaft nach Bestätigung einer Freundschaftsanfrage
+ * rendert Freundesliste neu
+ * zeigt Erfolgsmeldung
+ *  @param {string} friendName 
+ */
 function confirmFriendship(friendName) {
 
 	let data = new FormData();

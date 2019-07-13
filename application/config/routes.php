@@ -6,6 +6,7 @@ $route['default_controller'] = 'pages/view';
 $route['home'] = 'pages/view';
 $route['login'] = 'users/login';
 $route['profile/edit'] = 'users/edit';
+$route['profile/delete'] = 'users/delete';
 $route['game'] = 'games/render_search';
 $route['messages/create'] = 'messages/create';
 $route['messages'] = 'messages/index';

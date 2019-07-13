@@ -19,9 +19,9 @@
     </div>
 
     <div id="user-stats">
-        <h3>Statistik</h3>
-        <p>Spiele gewonnen: 2</p>
-        <p>Spiele verloren: 5</p>
+        <?php
+        $this->load->view('dashboard/stats-view');
+        ?>
     </div>
 
 </div>

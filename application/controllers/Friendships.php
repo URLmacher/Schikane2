@@ -1,12 +1,23 @@
 <?php
     class Friendships extends CI_Controller{
 
+        /**
+         * Holt alle Freunde ab
+         *
+         * @return JSON
+         */
         public function index() {
             $friends = $this->Friendship_model->get_friends($this->session->userdata('user_id'));
             $data['friends'] = $friends;
             echo json_encode($data);
         }
 
+        /**
+         * Löscht Freundschaften
+         *
+         * @param int $friendship_id
+         * @return JSON
+         */
         public function delete($friendship_id) {
             $data['success'] = false;
             if($this->Friendship_model->delete_friendship($friendship_id)) {
@@ -15,6 +26,12 @@
             echo json_encode($data);
         }
 
+        /**
+         * Fügt Freunde hinzu, wenn vorhanden
+         * Gibt Fehler zurück
+         * 
+         * @return JSON
+         */
         public function add() {
             $friend_id = false;
             $data['success'] = false;

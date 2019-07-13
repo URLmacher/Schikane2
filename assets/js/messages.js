@@ -4,6 +4,7 @@ const domTitleInput = document.getElementById('send-msg-title');
 const domBodyTextarea = document.getElementById('send-msg-body');
 let recipientUserName = false;
 
+// Fehler werden entfernt bei Fokusierung der Input-Felder
 domRecipientInput.addEventListener('focus', function() {
 	clearForm('errorsonly');
 });
@@ -15,7 +16,11 @@ domBodyTextarea.addEventListener('focus', function() {
 });
 
 
-
+/**
+ * Stellt alle Nachrichten dar
+ * passt Formatierung an
+ * @param {object} msgs 
+ */
 function renderMessages(msgs) {
 	const domTableBody = document.getElementById('msg-table-body');
 	if (msgs.length > 0) {
@@ -44,6 +49,10 @@ function renderMessages(msgs) {
 	}
 }
 
+/**
+ * Stellt Fehler dar
+ * @param {object} errors 
+ */
 function renderMsgErrors(errors) {
 	if (errors.hasOwnProperty('recipient')) {
 		document.getElementById('recipient-error').innerHTML = errors.recipient;
@@ -56,6 +65,12 @@ function renderMsgErrors(errors) {
 	}
 }
 
+/**
+ * Rendert Einzelansicht einer Nachricht
+ * Versteckt Ansicht aller Nachrichten
+ * Bei speziellen Nachrichtenarten werden Buttons dargestellt
+ * @param {object} msg 
+ */
 function renderSingleMessage(msg) {
 	msg = msg[0];
 	const domTableBody = document.getElementById('msg-table');
@@ -78,6 +93,10 @@ function renderSingleMessage(msg) {
 	domMsgBody.innerHTML = msg.msg_body;
 }
 
+/**
+ * Bestellt frische Nachrichten vom Server
+ * ruft Renderung auf, wenns welche gibt
+ */
 function getMessages() {
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', base_url + '/messages');
@@ -94,6 +113,12 @@ function getMessages() {
 	};
 }
 
+
+/**
+ * Leert die Input-Felder
+ * Oder entfernt Fehleranzeigen
+ * @param {string} errorsonly 
+ */
 function clearForm(errorsonly = false) {
 	if (errorsonly) {
 		const errors = document.querySelectorAll('.error-box');
@@ -111,6 +136,11 @@ function clearForm(errorsonly = false) {
 	}
 }
 
+/**
+ * Holt einzelne Nachricht vom Server anhand der Nachrichten-ID
+ * Ruft Darstellung der Nachricht auf, wenn vorhanden
+ * @param {number} msg_id 
+ */
 function getSingleMessage(msg_id) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', base_url + '/messages/' + msg_id);
@@ -127,6 +157,14 @@ function getSingleMessage(msg_id) {
 	};
 }
 
+/**
+ * Verschickt Nachricht an Server
+ * Empfänger, Betreff und Nachricht werden übergeben
+ * Erfolg leert und enfernt das Formular
+ * Erfolgsnachricht wird dargestellt
+ * Fehler werden dem Nutzer angezeigt
+ * @param {event} e 
+ */
 function sendMessage(e) {
 	e.preventDefault();
 	const recipient = domRecipientInput.value;
@@ -174,11 +212,19 @@ function isJson(item) {
 	return false;
 }
 
+/**
+ * Wandelt SQL datetime in ordentliches Datum um
+ * @param {string} dateString 
+ */
 function convertDate(dateString) {
 	var date = new Date(dateString);
 	return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
 }
 
+/**
+ * Kürzt Nachrichten in der Mehrfach-Ansicht
+ * @param {string} string 
+ */
 function shortenString(string) {
 	if (string.length > 25) {
 		return string.substring(0, 24) + '...';
@@ -187,6 +233,10 @@ function shortenString(string) {
 	}
 }
 
+/**
+ * Stellt dar, ob Nachrichten gelesen wurden, oder nicht
+ * @param {string} string 
+ */
 function seenOrNot(string) {
 	let eyeCon = `
         <img class="eyeCon"  src="assets/images/eye-blocked.png"/> 

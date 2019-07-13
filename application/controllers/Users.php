@@ -1,5 +1,14 @@
 <?php
     class Users extends CI_Controller{
+
+        /**
+         * Speichert Benutzerdaten
+         * Überprüft Eingaben
+         * Gibt Fehler zurück
+         * Leitet zur Startseite weiter
+         *
+         * @return void
+         */
         public function register(){
             $data['title'] = 'Registrieren';   
 
@@ -22,6 +31,14 @@
             }
         }
 
+        /**
+         * Meldet Benutzer nach Überprüfung der Anmeldedaten an
+         * Gibt Fehler aus
+         * Setzt Session-Daten
+         * Leitet zur Startseite weiter
+         *
+         * @return void
+         */
         public function login(){
             $data['title'] = 'Anmelden';
 
@@ -47,6 +64,8 @@
                         'user_age' => $user_data['user_age'],
                         'user_sex' => $user_data['user_sex'],
                         'user_city' => $user_data['user_city'],
+                        'games_won' => $user_data['games_won'],
+                        'games_lost' => $user_data['games_lost'],
                         'logged_in' => true
                     );
                      
@@ -62,16 +81,27 @@
             }
         }
 
+        /**
+         * Meldet User ab
+         * zerstört Session-daten
+         * Leitet zum Login-Bildschirm weiter
+         *
+         * @return void
+         */
         public function logout(){
             $this->User_model->logout($this->session->user_id);
-            $this->session->unset_userdata('logged_in');
-            $this->session->unset_userdata('user_id');
-            $this->session->unset_userdata('user_name');
-
-            $this->session->set_flashdata('user_loggedout', 'Sie sind nun abgemeldet');
+            $this->session->sess_destroy();
+           
             redirect('users/login'); 
         }
         
+        /**
+         * Überprüft, ob ein Username schon vergeben ist
+         * Gibt Fehler aus
+         *
+         * @param string $username
+         * @return bool
+         */
         public function check_username_exists($username){
             $this->form_validation->set_message('check_username_exists', 'Username bereits belegt');
 
@@ -82,6 +112,12 @@
             }
         }
 
+        /**
+         * Ändert zusätzliche Profildaten
+         * Gibt Fehler zurück
+         *
+         * @return JSON
+         */
         public function edit() {
             $age = false;
             $sex = false;
@@ -130,5 +166,33 @@
             echo json_encode($data);
         }
         
-   
+        /**
+         * Löscht Profil nach Passwort Überprüfung
+         * Gibt Fehler zurück
+         *
+         * @return JSON
+         */
+        public function delete() {
+            $password = false;
+            $data['success'] = false;
+            $data['errors'] = [];
+            if(!empty($_POST['password']) ){
+                $password =  md5($_POST['password']);
+            }else{
+                $data['errors']['password'] = 'Bitte Passwort eingeben';
+            }
+          
+
+            if($password){
+                if($this->User_model->deleteProfile($password,$this->session->userdata('user_name'))) {
+                    $this->session->sess_destroy();
+                    $data['success'] = true;
+                }else{
+                   $data['errors']['password'] = 'Falsches Passwort';
+                }
+            }
+
+            echo json_encode($data);
+        }
+
     }

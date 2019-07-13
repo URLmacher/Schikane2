@@ -1,12 +1,24 @@
 <?php
     class Messages extends CI_Controller{
 
+        /**
+         * Holt alle Nachrichten eines Users
+         *
+         * @return JSON
+         */
         public function index() {
             $msgs = $this->Message_model->get_messages($this->session->userdata('user_id'));
             $data['msgs'] = $msgs;
             echo json_encode($data);
         }
 
+        /**
+         * Holt eine einzelne Nachricht
+         * Markiert Nachricht als gelesen
+         *
+         * @param int $msg_id
+         * @return JSON
+         */
         public function view($msg_id) {
             $msg = $this->Message_model->message_seen($msg_id);
             $msg = $this->Message_model->get_message($msg_id);
@@ -16,6 +28,13 @@
             }
         }
 
+        /**
+         * Verschickt eine Nachricht
+         * Überprüft Werte 
+         * Gibt Fehler zurück
+         *
+         * @return JSON
+         */
         public function create() {
             $recipient = false;
             $title = false;

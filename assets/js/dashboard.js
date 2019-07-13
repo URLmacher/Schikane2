@@ -2,6 +2,9 @@ const dashboard = document.getElementById('dashboard');
 const dashboardBtn = document.getElementById('dashboard-btn');
 const base_url = window.location.origin;
 
+/**
+ * Verschiedene Eventlistener zum Dashboard
+ */
 document.addEventListener(
 	'DOMContentLoaded',
 	function() {
@@ -19,12 +22,22 @@ document.addEventListener(
 	false
 );
 
-function showDashboard(e) {
+/**
+ * Nach Betätigung eines Buttons wird das Dashboard angezeigt
+ * Nachrichten und Freunde werden vom Server geholt
+ * Nach erneuter Betätigung schliesst das Dashboard wieder
+ */
+function showDashboard() {
 	getMessages();
 	getFriends();
 	dashboard.classList.toggle('hide');
 }
 
+/**
+ * Verschieden Aktionen werden durch Interaktion mit
+ * dynamisch generierten Elementen ausgeführt
+ * @param {event} e 
+ */
 function differentActions(e) {
 	if (e.target.parentElement.classList.contains('msg-tr')) {
 		const tableRow = e.target.parentElement;
