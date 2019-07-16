@@ -43,3 +43,6 @@
     <?php
     $this->load->view('templates/message-form');
     ?>
+    <?php
+    $this->load->view('templates/other-profile');
+    ?>

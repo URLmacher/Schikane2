@@ -219,5 +219,30 @@ class User_model extends CI_Model{
         } 
    
     }
+
+    /**
+     * Holt Profildaten eines Users
+     *
+     * @param string $user_name
+     * @return array
+     */
+    public function get_profile($user_name) {
+        $data = new stdClass();
+        
+        $otherUserId = $this->User_model->get_user_id($_POST['username']);
+        $thisUserId = intval($this->session->userdata('user_id'));
+        $friend = $this->Friendship_model->is_friend($otherUserId,$thisUserId);
+        
+        $query = $this->db->get_where('users',array('user_name' => $user_name));
+        $row = $query->row();
+        $data->user_name = $row->user_name;
+        $data->friend = $friend;
+        $data->user_city = $row->user_city;
+        $data->user_sex = $row->user_sex;
+        $data->games_won = $row->games_won;
+        $data->games_lost = $row->games_lost;
+        $data->online = $row->online;
+        return $data;
+    }
  
 }

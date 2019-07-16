@@ -9,9 +9,7 @@
                 <?php echo $this->session->user_name; ?>
             <span></h5> 
             <div class="readystate" id="playeroneready"></div>
-            <h5 id="playertwo" data-userid=" <?php echo (isset($player2_id )? $player2_id : ''); ?>" class="card-title user_name">Player2: <span id="playertwoname">
-                <?php echo (isset($player2 )? $player2 : '-'); ?>
-            </span></h5>
+            <h5 id="playertwo" class="card-title user_name">Player2: <span class="view-profile view-profile-search" id="playertwoname">-</span></h5>
             <div class="readystate" id="playertwoready"></div>
             <div id="button-box">
                 <a class="btn btn-primary " href="#" id="search" role="button">Mitspieler suchen</a>

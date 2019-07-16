@@ -194,5 +194,34 @@
 
             echo json_encode($data);
         }
+        
+        /**
+         *  Zeigt Profil für andere Leute
+         *
+         * @return JSON
+         */
+        public function show() {
+            $profile = false;
+            $data['success'] = false;
+            $data['errors'] = [];
+
+            if(!empty($_POST['username']) ){
+                if(!$this->User_model->check_username_exists($_POST['username'])) {
+                    $profile = $this->User_model->get_profile($_POST['username']);
+                }else{
+                    $data['errors']['username'] = 'Username existiert nicht';
+                }
+            }else{
+                $data['errors']['username'] = 'Kein Username angegeben';
+            }
+          
+
+            if($profile){
+                $data['success'] = true;
+                $data['profile'] = $profile;
+            }
+
+            echo json_encode($data);
+        }
 
     }

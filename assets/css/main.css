@@ -29,11 +29,6 @@ html {
 	    -ms-flex-direction: row;
 	        flex-direction: row;
 }
-/* .btn-primary{
-    left:0;
-    bottom:10px;
-    position: relative;
-} */
 .form-select {
 	margin: 1rem;
 }
@@ -139,11 +134,19 @@ h3 {
 	justify-content: center;
 	z-index: 900;
 }
+#other-profile-wrapper{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: #3c3b3be6;
+	display: flex;
+	justify-content: center;
+	z-index: 900;
+}
 #send-msg-form{
 	margin-top:5rem;
 	width: 40%;
 }
-
 .stand-in-btn:hover{
 	transform: scale(1.2);
 }
@@ -165,6 +168,9 @@ h3 {
 	background-image: url('../images/user-plus.png');
 }
 .send-msg-close{
+	background-image: url('../images/cross.png');
+}
+#other-profile-close{
 	background-image: url('../images/cross.png');
 }
 .table-btn{
@@ -190,4 +196,38 @@ h3 {
 #profile-sex-input-span{
 	display: inline-table;
 	margin-left: 1rem;
+}
+.view-profile{
+	font-weight: bold;
+	color: aqua;
+	cursor: pointer;
+	position: relative;
+}
+.view-profile-search::after{
+	left: 4.5rem;
+	bottom: 0;
+}
+.view-profile:hover{
+	color: #3c3b3be6;
+}
+.view-profile::after{
+	content: 'Profil ansehen';
+	font-size: 12px;
+	font-weight: 300;
+	height: 1.8rem;
+	width: 6rem;
+	padding: 4px;
+	position: absolute;
+	display: none;
+	background: #fafafa;
+	border: 1px solid brown;
+	border-radius: 10px;
+	left:.5rem;
+	bottom: -.5rem;
+}
+.view-profile:hover:after {
+    display: inline-block;
+}
+#other-profile-profile{
+	width:30rem;
 }

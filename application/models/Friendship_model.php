@@ -2,13 +2,6 @@
     class Friendship_model extends CI_Model{
 
         /**
-         * Lädt die Datembank
-         */
-        public function __construct(){
-            $this->load->database();
-        }
-
-        /**
          * Holt Freunde eines Users aus der DB
          * Sortiert nach Alter
          *
@@ -49,6 +42,36 @@
                 'friend_b_id' => $this->session->userdata('user_id')
             );
             $this->db->insert('friendships',$data);
+        }
+
+        /**
+         * Überprüft, ob 2 User Freunde sind
+         *
+         * @param int $user_a_id
+         * @param int $user_b_id
+         * @return boolean
+         */
+        public function is_friend($user_a_id,$user_b_id) {
+            $check = array(
+                'friend_a_id' => $user_a_id,
+                'friend_b_id' => $user_b_id
+            );
+            $query =$this->db->get_where('friendships', $check);
+          
+            if(!$query->result_array()){
+                $check = array(
+                    'friend_a_id' => $user_b_id,
+                    'friend_b_id' => $user_a_id
+                );
+                $query = $this->db->get_where('friendships', $check);
+                if(!$query->result_array()){
+                    return false;
+                }else{
+                    return true;
+                }
+            }else{
+                return true;
+            }
         }
 
     }

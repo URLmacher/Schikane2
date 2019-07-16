@@ -35,11 +35,11 @@ function renderMessages(msgs) {
 			let seen = seenOrNot(msg.msg_seen);
 
 			msgTable = `
-				<td>${msg.user_name}</td>
-				<td>${date}</td>
-				<td>${msg.msg_title}</td>
-				<td>${msgBody}</td>
-				<td>${seen}</td>
+				<td class="view-profile">${msg.user_name}</td> 
+				<td data-msgid="${msg.msg_id}" class="view-msg">${date}</td>
+				<td data-msgid="${msg.msg_id}" class="view-msg">${msg.msg_title}</td>
+				<td data-msgid="${msg.msg_id}" class="view-msg">${msgBody}</td>
+				<td data-msgid="${msg.msg_id}" class="view-msg">${seen}</td>
 			`;
 			tableRow.innerHTML = msgTable;
 			domTableBody.appendChild(tableRow);

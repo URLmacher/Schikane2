@@ -36,12 +36,11 @@ function showDashboard() {
 /**
  * Verschieden Aktionen werden durch Interaktion mit
  * dynamisch generierten Elementen ausgeführt
- * @param {event} e 
+ * @param {event} e
  */
 function differentActions(e) {
-	if (e.target.parentElement.classList.contains('msg-tr')) {
-		const tableRow = e.target.parentElement;
-		getSingleMessage(tableRow.dataset.msgid);
+	if (e.target.classList.contains('view-msg')) {
+		getSingleMessage(e.target.dataset.msgid);
 	} else if (e.target.classList.contains('back-to-table')) {
 		getMessages();
 		const domTable = document.getElementById('msg-table');
@@ -62,7 +61,6 @@ function differentActions(e) {
 		clearForm();
 	} else if (e.target.classList.contains('new-msg-btn')) {
 		const domMsgForm = document.getElementById('send-msg-form-wrapper');
-
 		domMsgForm.classList.remove('hide');
 	} else if (e.target.classList.contains('msg-to-friend')) {
 		const domMsgForm = document.getElementById('send-msg-form-wrapper');
@@ -81,5 +79,21 @@ function differentActions(e) {
 		clearForm();
 		const friendName = e.target.dataset.username;
 		confirmFriendship(friendName);
+	} else if (e.target.classList.contains('view-profile')) {
+		const username = e.target.innerText;
+		getOtherProfile(username);
+	} else if (e.target.classList.contains('other-profile-msg')) {
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
+		const recipientName = e.target.dataset.othername;
+		domRecipientInput.value = recipientName;
+		otherProfileDom.classList.add('hide');
+		domMsgForm.classList.remove('hide');
+	} else if (e.target.classList.contains('other-profile-friend')) {
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
+		const recipientName = e.target.dataset.othername;
+		domRecipientInput.value = recipientName;
+		otherProfileDom.classList.add('hide');
+		domMsgForm.classList.remove('hide');
+		domTitleInput.value = 'Freundschaftseinladung';
 	}
 }

@@ -13,7 +13,7 @@ function renderFriends(friends) {
 			tableRow.dataset.friendid = friend.friend_id;
 
 			friendTable = `
-                <td>${friend.user_name}</td>
+                <td class="view-profile">${friend.user_name}</td>
                 <td>${friend.online}</td>
                 <td><div data-friendname="${
 					friend.user_name
