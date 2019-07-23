@@ -1,8 +1,11 @@
 const searchBtn = document.getElementById('search');
 const player1 = document.getElementById('playerone');
+const inviteBtn = document.getElementById('friend-invite-btn');
+
 let player2 = false;
 let ready = false;
 let interval;
+let interval2;
 
 /**
  * Neuer Eventlistener auf dem Such-Button, nachdem das Document fertig geladen hat
@@ -10,6 +13,8 @@ let interval;
 document.addEventListener(
 	'DOMContentLoaded',
 	function() {
+		getFriendsGameSearch();
+		checkIfJoined();
 		searchBtn.addEventListener('click', searchGo);
 	},
 	false
@@ -31,14 +36,56 @@ document.addEventListener('click', function(e) {
 				checkIfReady();
 			}, 3000);
 		}
+	} else if (e.target.classList.contains('send-invite')) {
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
+		const username = e.target.dataset.username;
+
+		domRecipientInput.value = username;
+		domMsgForm.classList.remove('hide');
+		domTitleInput.value = 'Spieleinladung';
+		if (!player2) {
+			interval2 = setInterval(function() {
+				searchPlayer2(username);
+			}, 3000);
+		}
 	}
 });
+
+function checkIfJoined() {
+	const urlPart = window.location.pathname;
+	if(urlPart.indexOf('join') !== -1){
+		const username = urlPart.replace('/join/', '')
+		interval2 = setInterval(function() {
+			searchPlayer2(username);
+		}, 3000);
+	}
+}
+
+/**
+ * Zeigt Freunde im Dropdown-Menü an
+ * 
+ * @param {object} data 
+ */
+function renderSearchFriends(data) {
+	const friendlist = document.getElementById('search-friendlist');
+	friendlist.innerHTML = '';
+	data.forEach(el => {
+		let anchor = document.createElement('a');
+		let online = el.online == 1 ? 'online':'offline';
+		anchor.classList.add('dropdown-item');
+		anchor.classList.add('flex-justify');
+		anchor.classList.add('send-invite');
+		anchor.dataset.username = el.user_name;
+		anchor.innerHTML = `${el.user_name}<span class="online-indicator">${online}</span>`
+		friendlist.appendChild(anchor);
+	});
+}
 
 /**
  * Such-Funktion wird alle paar Sekunden ausgeführt
  * Button wird entfernt
  * Lade-Gif wird angezeigt
- * @param {Event} e 
+ * @param {Event} e
  */
 function searchGo(e) {
 	searchBtn.remove();
@@ -52,6 +99,27 @@ function searchGo(e) {
 }
 
 /**
+ * Holt Freunde vom Server
+ * wegen Spieleinladungen und so
+ * rendert nach Bedarf
+ */
+function getFriendsGameSearch() {
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', base_url + '/friends');
+	xhr.send();
+	xhr.onload = function() {
+		if (isJson(xhr.response)) {
+			const data = JSON.parse(xhr.response);
+			if (data.friends) {
+				renderSearchFriends(data.friends);
+			} else {
+				console.log('no Friends');
+			}
+		}
+	};
+}
+
+/**
  * Countdown wird angezeigt
  * Indikatoren des zweiten Spielers zeigen Bereitschaft an
  * Nach Ablauf der Zeit werden die Spieler zum eigentlichen Spiel weitergeleitet
@@ -61,12 +129,11 @@ function startCountdown() {
 	player2Dom.className = 'ready';
 	player2Dom.innerHTML = 'Bereit';
 	let timeleft = 5;
-	let downloadTimer = setInterval(function() {
-		document.getElementById('countdown').innerHTML =
-			'Spiel startet in: '+timeleft;
+	let gameStartTimer = setInterval(function() {
+		document.getElementById('countdown').innerHTML = 'Spiel startet in: ' + timeleft;
 		timeleft -= 1;
 		if (timeleft <= 0) {
-			clearInterval(downloadTimer);
+			clearInterval(gameStartTimer);
 			window.location.replace(base_url + '/start');
 		}
 	}, 1000);
@@ -76,10 +143,13 @@ function startCountdown() {
  * Nach erfolgreicher Suche werden beide Spieler anezeigt
  * Bereitsschafts-Indikatoren sind auf 'Nicht Bereit'
  * Bereitschaftsbutton wird eingeblendet
- * @param {string} player2 
+ * @param {string} player2
  */
 function renderReady(player2) {
-	document.getElementById('searching').remove();
+	const searchBar = document.getElementById('searching');
+	if(searchBar) {
+		searchBar.remove();
+	}
 	const btnBox = document.getElementById('button-box');
 	const player1Dom = document.getElementById('playeroneready');
 	const player2Dom = document.getElementById('playertwoready');
@@ -110,21 +180,40 @@ function renderReady(player2) {
  * startet Renderung der nächsten Stufe
  * Beendet die Suche
  */
-function searchPlayer2() {
-	let xhr = new XMLHttpRequest();
-	xhr.open('GET', base_url + '/search');
-	xhr.send();
-	xhr.onload = function() {
-	
-		if (isJson(xhr.response)) {
-			const data = JSON.parse(xhr.response);
-			if(data.player2){
-				player2 = data.player2;
-				renderReady(data.player2);
-				clearInterval(interval);
+function searchPlayer2(username = false) {
+	if(username) {
+		let data = new FormData();
+		data.append('username', username);
+		let xhr = new XMLHttpRequest();
+		xhr.open('POST', base_url + '/invite');
+		xhr.send(data);
+		xhr.onload = function() {
+			if (isJson(xhr.response)) {
+				const data = JSON.parse(xhr.response);
+				if (data.success) {
+					player2 = data.player2;
+					clearInterval(interval2);
+					renderReady(data.player2);
+				}else{
+					console.log(data);
+				}
 			}
-		}
-	};
+		};
+	}else{
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', base_url + '/search');
+		xhr.send();
+		xhr.onload = function() {
+			if (isJson(xhr.response)) {
+				const data = JSON.parse(xhr.response);
+				if (data.player2) {
+					player2 = data.player2;
+					renderReady(data.player2);
+					clearInterval(interval);
+				}
+			}
+		};
+	}
 }
 
 /**
@@ -141,11 +230,9 @@ function checkIfReady() {
 	xhr.open('POST', base_url + '/ready');
 	xhr.send(data);
 	xhr.onload = function() {
-	
 		if (isJson(xhr.response)) {
 			const data = JSON.parse(xhr.response);
 			if (data.ready) {
-			
 				ready = true;
 				clearInterval(interval);
 				startCountdown();

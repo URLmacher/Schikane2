@@ -82,7 +82,7 @@ document.addEventListener(
 	function() {
 		spielerVergabe();
 		setTimeout(function() {
-			austeilen();
+			anmelden();
 		}, 2000);
 
 		document.addEventListener('click', playersChoice);
@@ -166,14 +166,49 @@ function abheben() {
 	websocket.send(JSON.stringify(msg));
 }
 
+function anmelden() {
+	const playerUsername = document.getElementById('playerUsername').value;
+	var msg = {
+		art: 'anmelden',
+		username: playerUsername,
+	};
+	websocket.send(JSON.stringify(msg));
+}
+
 /**
  * Bestellt alle zum Spielstart benötigten Karten vom Server
  */
 function austeilen() {
 	var msg = {
-		art: 'austeilen',
+		art: 'austeilen'
 	};
 	websocket.send(JSON.stringify(msg));
+}
+
+/**
+ * Zeigt den aktuellen Punktestand an
+ *
+ * @param {int} p1Points
+ * @param {int} p2Points
+ */
+function renderPoints(p1Points, p2Points) {
+	const p1PointsDom = document.getElementById('p1Points');
+	const p2PointsDom = document.getElementById('p2Points');
+	p1PointsDom.innerHTML = p1Points;
+	p2PointsDom.innerHTML = p2Points;
+}
+
+/**
+ * Zeigt die Usernamen der Spieler an
+ *
+ * @param {string} p1Name
+ * @param {string} p2Name
+ */
+function renderUsernames(p1Name, p2Name) {
+	const p1NameDom = document.getElementById('p1Name');
+	const p2NameDom = document.getElementById('p2Name');
+	p1NameDom.innerHTML = p1Name;
+	p2NameDom.innerHTML = p2Name;
 }
 
 /**
@@ -218,6 +253,8 @@ function serverCall(data) {
 				msg.hand.forEach(el => {
 					renderCards(el, msg.trgt);
 				});
+				renderUsernames(msg.player1Username, msg.player2Username);
+				renderPoints(msg.player1Points, msg.player2Points);
 				renderCards(msg.p1Drawstack, 'p1Drawstack|0');
 				renderCards(msg.p2Drawstack, 'p2Drawstack|0');
 			} else if (msg.art == 'move') {
@@ -229,6 +266,7 @@ function serverCall(data) {
 				renderCards(msg.card, msg.trgt);
 			} else if (msg.art == 'draw') {
 				removeCards(msg.card);
+				renderPoints(msg.player1Points, msg.player2Points);
 				renderCards(msg.card, msg.trgt);
 				renderCards(msg.newcard, msg.src);
 				console.log(msg);

@@ -15,11 +15,10 @@ domBodyTextarea.addEventListener('focus', function() {
 	clearForm('errorsonly');
 });
 
-
 /**
  * Stellt alle Nachrichten dar
  * passt Formatierung an
- * @param {object} msgs 
+ * @param {object} msgs
  */
 function renderMessages(msgs) {
 	const domTableBody = document.getElementById('msg-table-body');
@@ -51,7 +50,7 @@ function renderMessages(msgs) {
 
 /**
  * Stellt Fehler dar
- * @param {object} errors 
+ * @param {object} errors
  */
 function renderMsgErrors(errors) {
 	if (errors.hasOwnProperty('recipient')) {
@@ -69,7 +68,7 @@ function renderMsgErrors(errors) {
  * Rendert Einzelansicht einer Nachricht
  * Versteckt Ansicht aller Nachrichten
  * Bei speziellen Nachrichtenarten werden Buttons dargestellt
- * @param {object} msg 
+ * @param {object} msg
  */
 function renderSingleMessage(msg) {
 	msg = msg[0];
@@ -84,6 +83,13 @@ function renderSingleMessage(msg) {
 		buttonArea.innerHTML = `<button data-username="${
 			msg.user_name
 		}" class="be-friend btn btn-primary">Anfrage annehmen</button>`;
+	}
+	if (msg.msg_title == 'Spieleinladung') {
+		const buttonArea = document.getElementById('specialpurpose');
+		const url = base_url + '/join';
+		buttonArea.innerHTML = `<a href="${url}/${
+			msg.user_name
+		}" class="join-game btn btn-primary">Spiel beitreten</a>`;
 	}
 	recipientUserName = msg.user_name;
 	domTableBody.classList.add('hide');
@@ -113,11 +119,10 @@ function getMessages() {
 	};
 }
 
-
 /**
  * Leert die Input-Felder
  * Oder entfernt Fehleranzeigen
- * @param {string} errorsonly 
+ * @param {string} errorsonly
  */
 function clearForm(errorsonly = false) {
 	if (errorsonly) {
@@ -139,7 +144,7 @@ function clearForm(errorsonly = false) {
 /**
  * Holt einzelne Nachricht vom Server anhand der Nachrichten-ID
  * Ruft Darstellung der Nachricht auf, wenn vorhanden
- * @param {number} msg_id 
+ * @param {number} msg_id
  */
 function getSingleMessage(msg_id) {
 	let xhr = new XMLHttpRequest();
@@ -163,7 +168,7 @@ function getSingleMessage(msg_id) {
  * Erfolg leert und enfernt das Formular
  * Erfolgsnachricht wird dargestellt
  * Fehler werden dem Nutzer angezeigt
- * @param {event} e 
+ * @param {event} e
  */
 function sendMessage(e) {
 	e.preventDefault();
@@ -214,7 +219,7 @@ function isJson(item) {
 
 /**
  * Wandelt SQL datetime in ordentliches Datum um
- * @param {string} dateString 
+ * @param {string} dateString
  */
 function convertDate(dateString) {
 	var date = new Date(dateString);
@@ -223,7 +228,7 @@ function convertDate(dateString) {
 
 /**
  * Kürzt Nachrichten in der Mehrfach-Ansicht
- * @param {string} string 
+ * @param {string} string
  */
 function shortenString(string) {
 	if (string.length > 25) {
@@ -235,7 +240,7 @@ function shortenString(string) {
 
 /**
  * Stellt dar, ob Nachrichten gelesen wurden, oder nicht
- * @param {string} string 
+ * @param {string} string
  */
 function seenOrNot(string) {
 	let eyeCon = `

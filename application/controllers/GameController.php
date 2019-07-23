@@ -39,6 +39,8 @@ class GameController {
             'p2Ablage|3' => []],
     ];
     private $currentPlayer; //Zum testen
+    private $playerOne = 'DummyName1';
+    private $playerTwo = 'DummyName2';
 
     /**
      * Hier werden die ganzen fürs Spiel benötigten Arrays befüllt
@@ -51,8 +53,7 @@ class GameController {
         $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 14);
         $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 14);
         $this->mainStack = array_splice($cards,0,(count($cards)-1));
-        
-        
+          
     }
 
     /**
@@ -86,22 +87,32 @@ class GameController {
      * @param int $player
      * @return array $msg
      */
-    function austeilen($player) {
-        if($player == 1) {
+    function austeilen($client,$playerName) {
+        if($client == 1) {
             $this->currentPlayer = 1; 
+            $this->playerOne = $playerName;
             $msg = [
                 'art' => 'austeilen',
                 'trgt' => 'p1Hand|0',
                 'hand' => $this->playerHands['p1Hand|0'],
+                'player1Username' => $this->playerOne,
+                'player2Username' => $this->playerTwo,
+                'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                 'p1Drawstack' => end($this->drawStacks['p1Drawstack|0']),
                 'p2Drawstack' => end($this->drawStacks['p2Drawstack|0'])
             ];
             return $msg;
         }else{
+            $this->playerTwo = $playerName;
             $msg = [
                 'art' => 'austeilen',
                 'trgt' => 'p2Hand|0',
                 'hand' => $this->playerHands['p2Hand|0'],
+                'player1Username' => $this->playerOne,
+                'player2Username' => $this->playerTwo,
+                'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                 'p1Drawstack' => end($this->drawStacks['p1Drawstack|0']),
                 'p2Drawstack' => end($this->drawStacks['p2Drawstack|0'])
             ];
@@ -507,7 +518,7 @@ class GameController {
             }
         }
 
-        // Spieler Zwie Ablage - Karte - Playarea - wenn Karte um 1 höher
+        // Spieler Zwei Ablage - Karte - Playarea - wenn Karte um 1 höher
         else if( array_key_exists($out, $this->trayStacks['p2Ablage'])
             && array_key_exists($in, $this->playArea)
             && count($trgtArr) != 0
@@ -622,6 +633,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false,
@@ -637,6 +650,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'newcard' => end($this->drawStacks[$out]),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
@@ -670,6 +685,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false,
@@ -687,6 +704,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'newcard' => end($this->drawStacks[$out]),
@@ -703,6 +722,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'newcard' => end($this->drawStacks[$out]),
@@ -738,6 +759,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false,
@@ -755,6 +778,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false,
@@ -769,6 +794,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),                    
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'newcard' => end($this->drawStacks[$out]),
@@ -801,6 +828,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false,
@@ -815,6 +844,8 @@ class GameController {
                     'src' => $out,
                     'trgt' => $in,
                     'card' => $card,
+                    'player1Points' => count($this->drawStacks['p1Drawstack|0']),
+                    'player2Points' => count($this->drawStacks['p2Drawstack|0']),                    
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'newcard' => end($this->drawStacks[$out]),
@@ -858,6 +889,8 @@ class GameController {
         // 'newcard': zum rendern der Karte im Spiel-Stack, nach dem eine abgehoben wurde 
         // 'p1Drawstack'. beim austeilen
         // 'p2Drawstack'. beim austeilen
+        // 'player1Username': Name Spieler/Client 1
+        // 'player2Username': Name Spieler/Client 2
     }
 
     /**

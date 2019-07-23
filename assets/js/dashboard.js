@@ -95,5 +95,5 @@ function differentActions(e) {
 		otherProfileDom.classList.add('hide');
 		domMsgForm.classList.remove('hide');
 		domTitleInput.value = 'Freundschaftseinladung';
-	}
+	} 
 }

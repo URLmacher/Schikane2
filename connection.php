@@ -127,6 +127,8 @@ $game = new GameController($cards);
         echo "Client #".$socketID." Nachricht: ".$message."\n";
         $msg = json_decode( $message );
         $socketUser = [];
+        $userOne = false;
+        $userTwo = false;
         
         if ( !isset( $msg->art  ) ) break; // wenn Browserfenster geschlossen wird
         $socketUser[$socketID] = 'usernamehier';
@@ -145,11 +147,12 @@ $game = new GameController($cards);
           foreach($socketUser as $client => $value) {
           
             if($client % 2 == 0){
-              $returnMsg = createMessage($game->austeilen(2));
+              $returnMsg = createMessage($game->austeilen(2,$msg->username));
+              $socketUser[$socketID] = $msg->username;
               $who = $socketID;
   
             }else{
-              $returnMsg = createMessage($game->austeilen(1));
+              $returnMsg = createMessage($game->austeilen(1,$msg->username));
               $who = $socketID;
             }
           }

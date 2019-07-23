@@ -12,6 +12,7 @@ class Pages extends CI_Controller{
         if(!file_exists(APPPATH.'views/pages/'.$page.'.php')) {
             show_404();
         }
+        $this->User_model->resetValues($this->session->userdata('user_id'));
         $data['title'] = ucfirst($page);
         $this->load->view('templates/header');
         $this->load->view('pages/'.$page,$data);

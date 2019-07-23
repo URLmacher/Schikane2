@@ -125,6 +125,29 @@ class User_model extends CI_Model{
     }
 
     /**
+     * Findet heraus, ob bestimmter Spieler schon sucht
+     * bzw die Spieleinladung angenommen hat
+     *
+     * @param string $user_name
+     * @return array
+     * @return bool
+     */
+    public function search_specific($user_name) {
+        $this->searching( $this->session->userdata('user_id'));
+        $query = $this->db->get_where('users', array('searching' => 1, 'user_name' => $user_name));
+        if(empty($query->row_array())) {
+            return false;
+        }else{
+            $row = $query->row_array(0);
+            if($row['user_name'] == $user_name) {
+                return $row['user_name'];
+            }else{
+                return false;
+            }
+        }
+    }
+
+    /**
      * Markiert einen User als 'bereit'
      *
      * @param [type] $user_id
@@ -228,7 +251,7 @@ class User_model extends CI_Model{
      */
     public function get_profile($user_name) {
         $data = new stdClass();
-        
+
         $otherUserId = $this->User_model->get_user_id($_POST['username']);
         $thisUserId = intval($this->session->userdata('user_id'));
         $friend = $this->Friendship_model->is_friend($otherUserId,$thisUserId);

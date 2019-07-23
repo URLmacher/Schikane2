@@ -231,3 +231,9 @@ h3 {
 #other-profile-profile{
 	width:30rem;
 }
+.send-invite{
+	cursor: pointer;
+}
+.online-indicator{
+	font-weight: 600;
+}

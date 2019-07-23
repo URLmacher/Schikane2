@@ -58,4 +58,46 @@
             echo json_encode($data);
         }
 
+         
+        /**
+         * Überprüft, ob eingeladener Spieler beitritt
+         *
+         * @return JSON
+         */
+        public function invite() {
+            $user_name = false;
+            $data['success'] = false;
+            $data['errors'] = [];
+
+            if(!empty($_POST['username'])){
+                if(!$this->User_model->check_username_exists($_POST['username'])) {
+                    $user_name = $this->User_model->search_specific($_POST['username']);
+                }else{
+                    $data['errors']['username'] = 'Username existiert nicht';
+                }
+            }
+
+            if($user_name) {
+                $data['success'] = true;
+                $data['player2'] = $user_name;
+            }
+            
+            echo json_encode($data);
+        }
+
+        /**
+         * Ein eingeladener User wird zur Suchseite weitergeleitet
+         * sein Username wird als Parameter mitgeschickt
+         *
+         * @param [string] $user_name
+         * @return void
+         */
+        public function join($user_name) {
+            $data['username'] = $user_name;
+
+            $this->load->view('templates/header');
+            $this->load->view('pages/search',$data);
+            $this->load->view('templates/footer');
+        }
+
     }
