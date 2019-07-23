@@ -112,39 +112,28 @@ class GameController {
             return $msg;
         }
     }
-    
+
     /**
      * Gibt die Render-Anweisung der auszuteilenden Karten aus
      *
      * @param int $player
      * @return array $msg
      */
-    function austeilen($client,$playerName) {
+    function austeilen($client) {
         if($client == 1) {
-            $this->currentPlayer = 1; 
-            $this->playerOne = $playerName;
             $msg = [
                 'art' => 'austeilen',
                 'trgt' => 'p1Hand|0',
                 'hand' => $this->playerHands['p1Hand|0'],
-                'player1Username' => $this->playerOne,
-                'player2Username' => $this->playerTwo,
-                'player1Points' => count($this->drawStacks['p1Drawstack|0']),
-                'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                 'p1Drawstack' => end($this->drawStacks['p1Drawstack|0']),
                 'p2Drawstack' => end($this->drawStacks['p2Drawstack|0'])
             ];
             return $msg;
         }else{
-            $this->playerTwo = $playerName;
             $msg = [
                 'art' => 'austeilen',
                 'trgt' => 'p2Hand|0',
                 'hand' => $this->playerHands['p2Hand|0'],
-                'player1Username' => $this->playerOne,
-                'player2Username' => $this->playerTwo,
-                'player1Points' => count($this->drawStacks['p1Drawstack|0']),
-                'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                 'p1Drawstack' => end($this->drawStacks['p1Drawstack|0']),
                 'p2Drawstack' => end($this->drawStacks['p2Drawstack|0'])
             ];

@@ -10,7 +10,7 @@
       </div>
       <div class="p2Ablage ablage" id="p2Ablage|2"></div>
       <div class="p2Ablage ablage" id="p2Ablage|3"></div>
-      <div class="p2Joker joker-ablage" id="p2-jokerablage|0"></div>
+      <div class="p2Joker joker-ablage" id="p2Jokerablage|0"></div>
     </div>
 
     <div class="utility">
@@ -18,15 +18,15 @@
       <div class="utility__center--wrapper">
         
         <div id="p2Display"  class="display">
-          <h3 id="p2Points" class="display__points">10</h3>
-          <h3 id="p2Name" class="display__name">Hugo</h3>
+          <div id="p2Points" class="display__points">10</div>
+          <div id="p2Name" class="display__name">Hugo</div>
         </div>
         <div id="mainstack" data-mainstack="0">
           <div id="mainstack-dummy"></div>
         </div>
         <div id="p1Display" class="display">
-          <h3 id="p1Points" class="display__points">12</h3>
-          <h3 id="p1Name" class="display__name">Rudolfo</h3>
+          <div id="p1Points" class="display__points">12</div>
+          <div id="p1Name" class="display__name">Rudolfo</div>
         </div>
         
       </div>

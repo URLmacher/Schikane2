@@ -1,5 +1,6 @@
-var chosenCard; // Die Karte, die verschoben werden soll
-var chosenSrc; // Wo die Karte herkommt
+let chosenCard; // Die Karte, die verschoben werden soll
+let chosenSrc; // Wo die Karte herkommt
+let ausgeteilt = false; // Flag, damit nicht zu oft ausgeteilt wird
 
 /**
  * Speichert
@@ -179,8 +180,11 @@ function anmelden() {
  * Bestellt alle zum Spielstart benötigten Karten vom Server
  */
 function austeilen() {
+	ausgeteilt = true;
+	const playerUsername = document.getElementById('playerUsername').value;
 	var msg = {
-		art: 'austeilen'
+		art: 'austeilen',
+		username: playerUsername,
 	};
 	websocket.send(JSON.stringify(msg));
 }
@@ -240,13 +244,19 @@ function serverCall(data) {
 		console.log('Verbindungsfehler.');
 	};
 	websocket.onmessage = function(e) {
+		
 		if (isJson(e.data)) {
 			let msg = JSON.parse(e.data);
 
 			if (msg.art == 'spielervergabe') {
-				console.log('Spieler werden vergeben');
-
+				console.log('Die IDs der DOM-Elemente werden vertauscht');
 				changeId();
+			} else if (msg.art == 'anmelden') {
+				renderUsernames(msg.player1Username, msg.player2Username);
+				renderPoints(msg.player1Points, msg.player2Points);
+				if(!ausgeteilt) {
+					austeilen();
+				}
 			} else if (msg.art == 'austeilen') {
 				console.log('Austeilen:');
 				console.log(msg);
