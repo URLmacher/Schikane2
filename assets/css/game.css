@@ -105,7 +105,7 @@ div {
 	margin-left: 0.5rem;
 	position: relative;
 }
-/* .p1Joker::after {
+.p1Joker::after {
 	content: 'J';
 	height: 100%;
 	width: 100%;
@@ -119,7 +119,7 @@ div {
 	vertical-align: middle;
 	line-height: var(--card-height);
 	pointer-events: none;
-} */
+}
 .p2Joker {
 	background: var(--joker-background);
 	height: var(--card-height);
@@ -128,7 +128,7 @@ div {
 	border-radius: var(--card-border-radius);
 	position: relative;
 }
-/* .p2Joker::before {
+.p2Joker::before {
 	content: 'J';
 	height: 100%;
 	width: 100%;
@@ -144,7 +144,7 @@ div {
 	-webkit-transform: rotate(-180deg);
 	transform: rotate(-180deg);
 	pointer-events: none;
-} */
+}
 .ablage {
 	position: relative;
 }
@@ -237,17 +237,23 @@ div {
 	border: var(--card-border);
 	border-radius: var(--card-border-radius);
 }
-#message {
-	height: 100%;
-	width: 100%;
-	background: transparent;
-	position: relative;
+.message {
+	height: 15rem;
+	width: 15rem;
+	right: 0;
+	top: 0;
+	background: white;
+	position: absolute;
+}
+#p2Message{
+	right: 15rem;
+	background: greenyellow;
 }
 #message p {
 	display: inline-block;
 	line-height: 1.3;
 	margin-left: 1rem;
-	position: absolute;
+	position: relative;
 }
 .draw-stack {
 	justify-self: center;

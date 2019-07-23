@@ -1,13 +1,11 @@
+<div id="messages" class="message"></div>
 <input id="playerUsername" type="hidden" value="<?= $this->session->userdata('user_name') ?>">
 <div class="wrapper">
   <div class="sub-wrapper">
 
     <div class="ablage-wrapper" id="p2Ablage">
       <div class="p2Ablage ablage" id="p2Ablage|0"></div>
-      <div class="p2Ablage ablage" id="p2Ablage|1">
-        <div class="card" data-value="11" data-id="37" style="background-image: url(&quot;/assets/utility/cards/png/1x/diamond_jack.png&quot;);"></div>
-        <div class="card" data-value="11" data-id="37" style="bottom: 20px;background-image: url(&quot;/assets/utility/cards/png/1x/diamond_queen.png&quot;);"></div>
-      </div>
+      <div class="p2Ablage ablage" id="p2Ablage|1"></div>
       <div class="p2Ablage ablage" id="p2Ablage|2"></div>
       <div class="p2Ablage ablage" id="p2Ablage|3"></div>
       <div class="p2Joker joker-ablage" id="p2Jokerablage|0"></div>
@@ -31,17 +29,12 @@
         
       </div>
       <div class="draw-stack draw-stack-p1" id="p1Drawstack|0" data-drawstack="1"></div>
-      <!-- <div id="message"></div> -->
     </div>
 
     <div class="ablage-wrapper" id="p1Ablage" data-ablage="1">
       <div class="p1Ablage ablage" data-ablageid="0" id="p1Ablage|0"></div>
       <div class="p1Ablage ablage" data-ablageid="1" id="p1Ablage|1"></div>
-      <div class="p1Ablage ablage" data-ablageid="2" id="p1Ablage|2">
-        <div class="card" data-value="4" data-id="4" style="background-image: url(&quot;/assets/utility/cards/png/1x/spade_4.png&quot;);"></div>
-        <div class="card" data-value="4" data-id="4" style="top: 20px;background-image: url(&quot;/assets/utility/cards/png/1x/spade_2.png&quot;);"></div>
-        <div class="card" data-value="4" data-id="4" style="top: 40px;background-image: url(&quot;/assets/utility/cards/png/1x/spade_3.png&quot;);"></div>
-      </div>
+      <div class="p1Ablage ablage" data-ablageid="2" id="p1Ablage|2"></div>
       <div class="p1Ablage ablage" data-ablageid="3" id="p1Ablage|3"></div>
       <div class="p1Joker ablage" data-jokerablage="1"id="p1Jokerablage|0"></div>
     </div>

@@ -12,13 +12,13 @@ let ausgeteilt = false; // Flag, damit nicht zu oft ausgeteilt wird
  */
 function playersChoice(e) {
 	if (!chosenCard) {
-		var domSrc = e.target.parentElement;
+		const domSrc = e.target.parentElement;
 		e.target.classList.add('selected');
 
 		if (domSrc.hasAttribute('data-hand')) {
 			chosenCard = e.target.dataset.id;
 			chosenSrc = domSrc.id;
-		} else if (domSrc.hasAttribute('data-ablageid')) {
+		} else if (domSrc.hasAttribute('data-ablageid') && e.target == domSrc.lastChild) {
 			var abId = domSrc.dataset.ablageid;
 			chosenCard = e.target.dataset.id;
 			chosenSrc = domSrc.id;
@@ -94,22 +94,39 @@ document.addEventListener(
 /**
  * Schreibt eine Nachricht in die Nachrichtenbox
  * @param {string} msg
+ * @param {int} player
  */
-function writeMessage(msg) {
-	var msgBox = document.getElementById('message');
-	var tempString = `<p>${msg}</p>`;
-	msgBox.innerHTML = tempString;
+function writeMessage(msgP1, msgP2, player1, player2) {
+	const playerUsername = document.getElementById('playerUsername').value;
+	const msgBox = document.getElementById('messages');
+	if (player1 == playerUsername) {
+		const tempString = `<p>${msgP1}</p>`;
+		msgBox.innerHTML = tempString;
+	} else if (player2 == playerUsername) {
+		const tempString = `<p>${msgP2}</p>`;
+		msgBox.innerHTML = tempString;
+	}
 }
 
 function renderCards(card, area) {
 	if (document.getElementById(area)) {
-		var domTarget = document.getElementById(area);
-
-		var node = document.createElement('div');
+		const domTarget = document.getElementById(area);
+		let node = document.createElement('div');
 		node.classList.add('card');
 		node.dataset.value = card.value;
 		node.dataset.id = card.id;
 		node.style.backgroundImage = 'url(/assets/utility/cards/png/1x/' + card.name + '.png)';
+
+		if (domTarget.classList.contains('p2Ablage')) {
+			const childCount = domTarget.childElementCount;
+			const offsetPixel = childCount * 30;
+			node.style.bottom = offsetPixel + 'px';
+		}
+		if (domTarget.classList.contains('p1Ablage')) {
+			const childCount = domTarget.childElementCount;
+			const offsetPixel = childCount * 30;
+			node.style.top = offsetPixel + 'px';
+		}
 
 		domTarget.appendChild(node);
 	}
@@ -244,7 +261,6 @@ function serverCall(data) {
 		console.log('Verbindungsfehler.');
 	};
 	websocket.onmessage = function(e) {
-		
 		if (isJson(e.data)) {
 			let msg = JSON.parse(e.data);
 
@@ -254,7 +270,7 @@ function serverCall(data) {
 			} else if (msg.art == 'anmelden') {
 				renderUsernames(msg.player1Username, msg.player2Username);
 				renderPoints(msg.player1Points, msg.player2Points);
-				if(!ausgeteilt) {
+				if (!ausgeteilt) {
 					austeilen();
 				}
 			} else if (msg.art == 'austeilen') {
@@ -267,10 +283,14 @@ function serverCall(data) {
 				renderPoints(msg.player1Points, msg.player2Points);
 				renderCards(msg.p1Drawstack, 'p1Drawstack|0');
 				renderCards(msg.p2Drawstack, 'p2Drawstack|0');
+				writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
 			} else if (msg.art == 'move') {
 				console.log(msg);
 				removeCards(msg.card);
 				renderCards(msg.card, msg.trgt);
+				if (msg.msgP1) {
+					writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
+				}
 			} else if (msg.art == 'abheben') {
 				console.log(msg);
 				renderCards(msg.card, msg.trgt);
@@ -283,11 +303,12 @@ function serverCall(data) {
 			} else if (msg.art == 'gameover') {
 				console.log(msg);
 				removeCards(msg.card);
-				writeMessage(msg.art);
+				writeMessage(msg.art, 1);
+				writeMessage(msg.art, 2);
 			} else if (msg.art == 'stackfull') {
 				console.log(msg);
-				writeMessage(msg.art);
-				removeCards(msg.card);
+				writeMessage(msg.art, 1);
+				writeMessage(msg.art, 2);
 				if (msg.src == 'p1Drawstack|0' || msg.src == 'p2Drawstack|0') {
 					renderCards(msg.newcard, msg.src);
 				}
@@ -328,19 +349,19 @@ function isJson(item) {
  * @param {Nodelist} els
  */
 function removeClasses(els) {
-	for (var i = 0; i < els.length; i++) {
+	for (let i = 0; i < els.length; i++) {
 		els[i].classList.remove('selected');
 	}
 }
 
 /**
- * Ändert die Ids von Elementen, die die Spielerzahl tragen um
+ * Ändert die Ids von Elementen, die die Spielerzahl tragen um die Anzeige umzukehren
+ * Hint: der Aufrufer der Funktion ist immer Spieler 2
  */
 function changeId() {
-	var elements = document.getElementsByTagName('DIV');
-
-	for (var i = 0; i < elements.length; i++) {
-		var string = elements[i].id;
+	let elements = document.getElementsByTagName('DIV');
+	for (let i = 0; i < elements.length; i++) {
+		let string = elements[i].id;
 		if (string.match('p1')) {
 			newstring = string.replace('p1', 'p2');
 			elements[i].id = newstring;

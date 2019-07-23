@@ -112,7 +112,7 @@ class GameController {
             return $msg;
         }
     }
-    
+
     /**
      * Gibt die Render-Anweisung der auszuteilenden Karten aus
      *
@@ -129,6 +129,8 @@ class GameController {
                 'hand' => $this->playerHands['p1Hand|0'],
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
+                'msgP1' => 'Du bist dran!',
+                'msgP2' => 'Du bist nicht dran!',
                 'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                 'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                 'p1Drawstack' => end($this->drawStacks['p1Drawstack|0']),
@@ -143,6 +145,8 @@ class GameController {
                 'hand' => $this->playerHands['p2Hand|0'],
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
+                'msgP1' => 'Du bist dran!',
+                'msgP2' => 'Du bist nicht dran!',
                 'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                 'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                 'p1Drawstack' => end($this->drawStacks['p1Drawstack|0']),
@@ -228,7 +232,10 @@ class GameController {
                 'debug' => 'Hand - Ass - Playarea - wenn leer',
                 'src' => $out,
                 'trgt' => $in,
-                'dran' => 'Du bist nicht dran!',
+                'player1Username' => $this->playerOne,
+                'player2Username' => $this->playerTwo,
+                'msgP1' => 'Du bist nicht dran!',
+                'msgP2' => 'Du bist nicht dran!',
                 'trgtArr' => $trgtArr,
                 'srcArr' => $srcArr,
                 'card' => $card
@@ -251,7 +258,6 @@ class GameController {
                 'debug' => 'Hand - Ass - Playarea - wenn leer',
                 'src' => $out,
                 'trgt' => $in,
-                'dran' => true,
                 'trgtArr' => $trgtArr,
                 'srcArr' => $srcArr,
                 'card' => $card
@@ -287,8 +293,7 @@ class GameController {
                     'card' => $card,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => true
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -301,8 +306,7 @@ class GameController {
                     'trgt' => $in,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'card' => $card,
-                    'dran' => true
+                    'card' => $card
                 ];
                 
                 return $msg;
@@ -338,8 +342,7 @@ class GameController {
                     'card' => $card,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => true
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -352,8 +355,7 @@ class GameController {
                     'trgt' => $in,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'card' => $card,
-                    'dran' => true
+                    'card' => $card
                 ];
                 
                 return $msg;
@@ -383,11 +385,10 @@ class GameController {
                 'trgt' => $in,
                 'card' => $card,
                 'abheben' => true,
-                'dran' => false,
-                'karteGefunden' => array_search($card,$srcArr),
-                'wasIstDas' => gettype($card),
-                'karti'=>$srcArr,
-                'karti2'=>$this->playerHands['p1Hand|0']
+                'player1Username' => $this->playerOne,
+                'player2Username' => $this->playerTwo,
+                'msgP1' => 'Du bist nicht dran!',
+                'msgP2' => 'Du bist dran!',
             ];
             
             return $msg;
@@ -411,11 +412,10 @@ class GameController {
                 'trgt' => $in,
                 'card' => $card,
                 'abheben' => true,
-                'dran' => false,
-                'karteGefunden' => array_search($card,$srcArr),
-                'wasIstDas' => gettype($card),
-                'karti'=>$srcArr,
-                'karti2'=>$this->playerHands['p1Hand|0']
+                'player1Username' => $this->playerOne,
+                'player2Username' => $this->playerTwo,
+                'msgP1' => 'Du bist dran!',
+                'msgP2' => 'Du bist nicht dran!',
             ];
             
             return $msg;
@@ -468,7 +468,6 @@ class GameController {
                 'debug' => 'Ablage - Ass - Playarea - wenn leer',
                 'src' => $out,
                 'trgt' => $in,
-                'dran' => true,
                 'trgtArr' => $trgtArr,
                 'srcArr' => $srcArr,
                 'card' => $card,
@@ -526,8 +525,7 @@ class GameController {
                     'card' => $card,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => true
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -541,8 +539,7 @@ class GameController {
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false,
-                    'trgtfull' => false,
-                    'dran' => true
+                    'trgtfull' => false
                 ];
                 
                 return $msg;
@@ -572,8 +569,7 @@ class GameController {
                     'card' => $card,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => true,
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -587,8 +583,7 @@ class GameController {
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false,
-                    'trgtfull' => false,
-                    'dran' => true
+                    'trgtfull' => false
                 ];
                 
                 return $msg;
@@ -621,8 +616,7 @@ class GameController {
                     'card' => $card,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => true
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -636,8 +630,7 @@ class GameController {
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false,
-                    'trgtfull' => false,
-                    'dran' => true
+                    'trgtfull' => false
                 ];
                 
                 return $msg;
@@ -669,8 +662,7 @@ class GameController {
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => false
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -687,8 +679,7 @@ class GameController {
                     'newcard' => end($this->drawStacks[$out]),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => true
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -721,8 +712,7 @@ class GameController {
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => false
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -741,8 +731,7 @@ class GameController {
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'newcard' => end($this->drawStacks[$out]),
-                    'abheben' => false,
-                    'dran' => true
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -759,8 +748,7 @@ class GameController {
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'newcard' => end($this->drawStacks[$out]),
-                    'abheben' => false,
-                    'dran' => true
+                    'abheben' => false
                 ];
                 
                 return $msg;
@@ -795,8 +783,7 @@ class GameController {
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => true
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -814,8 +801,7 @@ class GameController {
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => true
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -832,8 +818,7 @@ class GameController {
                     'srcArr' => $srcArr,
                     'newcard' => end($this->drawStacks[$out]),
                     'abheben' => false,
-                    'trgtfull' => false,
-                    'dran' => true
+                    'trgtfull' => false
                 ];
                 
                 return $msg;
@@ -864,8 +849,7 @@ class GameController {
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
-                    'abheben' => false,
-                    'dran' => false
+                    'abheben' => false
                 ];
             
                 return $msg;
@@ -882,8 +866,7 @@ class GameController {
                     'srcArr' => $srcArr,
                     'newcard' => end($this->drawStacks[$out]),
                     'abheben' => false,
-                    'trgtfull' => false,
-                    'dran' => true
+                    'trgtfull' => false
                  ];
             
                 return $msg;
@@ -917,12 +900,13 @@ class GameController {
         // 'src': zum entfernen der Karte im DOM
         // 'trgt': zum rendern der Karte im DOM
         // 'card': zum rendern der Karte im DOM (nur ID wird benötigt)
-        // 'dran': schaltet den EventListener ab, je nach dem wer dran is_string
         // 'newcard': zum rendern der Karte im Spiel-Stack, nach dem eine abgehoben wurde 
         // 'p1Drawstack'. beim austeilen
         // 'p2Drawstack'. beim austeilen
         // 'player1Username': Name Spieler/Client 1
         // 'player2Username': Name Spieler/Client 2
+        //'msgP1': 'Du bist dran!',
+        //'msgP2': 'Du bist nicht dran!',
     }
 
     /**
