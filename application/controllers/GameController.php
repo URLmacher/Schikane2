@@ -39,14 +39,14 @@ class GameController {
             'p2Ablage|3' => []],
     ];
     private $currentPlayer; //Zum testen
-    private $playerOne = 'DummyName1';
-    private $playerTwo = 'DummyName2';
+    private $playerOne = false;
+    private $playerTwo = false;
 
     /**
      * Hier werden die ganzen fürs Spiel benötigten Arrays befüllt
      * @param array $cards
      */
-    function __construct($cards) {
+    public function __construct($cards) {
     
         $this->playerHands['p1Hand|0'] = array_splice($cards, 0, 6);
         $this->playerHands['p2Hand|0'] = array_splice($cards, 0, 6);
@@ -60,7 +60,7 @@ class GameController {
      * Nur zum testen
      * @return array $playerHands
      */
-    function getHands() {
+    public function getHands() {
         return $this->playerHands;
     }
 
@@ -68,7 +68,7 @@ class GameController {
      * Nur zum testen
      * @return array $mainStack
      */
-    function getMainStack() {
+    public function getMainStack() {
         return $this->mainStack;
     }
 
@@ -76,7 +76,7 @@ class GameController {
      * Nur zum testen
      * @return int $currentPlayer
      */
-    function getCurrentPlayer() {
+    public function getCurrentPlayer() {
         return $this->currentPlayer;
     }
 
@@ -88,7 +88,7 @@ class GameController {
      * @param int $client
      * @return void
      */
-    function registerPlayers($playerName,$client){
+    public function registerPlayers($playerName,$client){
          if($client == 1) {
             $this->currentPlayer = 1; 
             $this->playerOne = $playerName;
@@ -119,7 +119,7 @@ class GameController {
      * @param int $player
      * @return array $msg
      */
-    function austeilen($client,$playerName) {
+    public function austeilen($client,$playerName) {
         if($client == 1) {
             $this->currentPlayer = 1; 
             $this->playerOne = $playerName;
@@ -129,8 +129,8 @@ class GameController {
                 'hand' => $this->playerHands['p1Hand|0'],
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
-                'msgP1' => 'Du bist dran!',
-                'msgP2' => 'Du bist nicht dran!',
+                'msgP1' => 'dran',
+                'msgP2' => 'nicht dran',
                 'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                 'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                 'p1Drawstack' => end($this->drawStacks['p1Drawstack|0']),
@@ -145,8 +145,8 @@ class GameController {
                 'hand' => $this->playerHands['p2Hand|0'],
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
-                'msgP1' => 'Du bist dran!',
-                'msgP2' => 'Du bist nicht dran!',
+                'msgP1' => 'dran',
+                'msgP2' => 'nicht dran',
                 'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                 'player2Points' => count($this->drawStacks['p2Drawstack|0']),
                 'p1Drawstack' => end($this->drawStacks['p1Drawstack|0']),
@@ -162,7 +162,7 @@ class GameController {
      * @param int $player
      * @return array $msg
      */
-    function abheben($in,$player) {
+    public function abheben($in,$player) {
         // Nur abheben, wenn Karten im Haupstapel sind und in der Hand weniger als 6 Karten sind
         if($player == 1) {
             if(count($this->mainStack) > 0 && count($this->playerHands['p1Hand|0']) < 6) {
@@ -219,7 +219,7 @@ class GameController {
      * @param int $id
      * @return array $msg
      */
-    function moveCards($out,$in,$id,$player) {
+    public function moveCards($out,$in,$id,$player) {
         $srcArr  = $this->preSelect($out);
         $trgtArr = $this->preSelect($in);;
         $card = $this->findCard($srcArr,$id);
@@ -234,8 +234,8 @@ class GameController {
                 'trgt' => $in,
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
-                'msgP1' => 'Du bist nicht dran!',
-                'msgP2' => 'Du bist nicht dran!',
+                'msgP1' => 'nicht dran',
+                'msgP2' => 'nicht dran',
                 'trgtArr' => $trgtArr,
                 'srcArr' => $srcArr,
                 'card' => $card
@@ -387,8 +387,8 @@ class GameController {
                 'abheben' => true,
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
-                'msgP1' => 'Du bist nicht dran!',
-                'msgP2' => 'Du bist dran!',
+                'msgP1' => 'nicht dran',
+                'msgP2' => 'dran',
             ];
             
             return $msg;
@@ -414,8 +414,8 @@ class GameController {
                 'abheben' => true,
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
-                'msgP1' => 'Du bist dran!',
-                'msgP2' => 'Du bist nicht dran!',
+                'msgP1' => 'dran',
+                'msgP2' => 'nicht dran',
             ];
             
             return $msg;
@@ -650,8 +650,7 @@ class GameController {
         
             if(count($this->drawStacks[$out]) == 0) {
                 #gameover  
-                $this->changePlayer('gameover');
-
+                
                 $msg = [
                     'art' => 'gameover',
                     'debug' => 'Draw-Stack - Ass - Playarea - wenn leer',
@@ -660,11 +659,15 @@ class GameController {
                     'card' => $card,
                     'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
+                    'msgP1' => $this->currentPlayer+' hat gewonnen!',
+                    'msgP2' => $this->currentPlayer+' hat gewonnen!',
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false
                 ];
-            
+                
+                $this->changePlayer('gameover');
+
                 return $msg;
             }else{
  
@@ -700,8 +703,7 @@ class GameController {
             
             if(count($this->drawStacks[$out]) == 0) {
                 #gameover  
-                $this->changePlayer('gameover');
-
+                
                 $msg = [
                     'art' => 'gameover',
                     'debug' => 'Draw-Stack - Karte - Playarea - wenn um 1 höher',
@@ -710,11 +712,15 @@ class GameController {
                     'card' => $card,
                     'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
+                    'msgP1' => $this->currentPlayer+' hat gewonnen!',
+                    'msgP2' => $this->currentPlayer+' hat gewonnen!',
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false
                 ];
-            
+                
+                $this->changePlayer('gameover');
+
                 return $msg;
             }else if (count($trgtArr) == 12) {
                 #trgtstackvoll
@@ -771,8 +777,7 @@ class GameController {
          
             if(count($this->drawStacks[$out]) == 0) {
                 #gameover  
-                $this->changePlayer('gameover');
-
+                
                 $msg = [
                     'art' => 'gameover',
                     'debug' => 'Draw-Stack - Joker - Playarea - wenn nicht leer',
@@ -781,11 +786,15 @@ class GameController {
                     'card' => $card,
                     'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
+                    'msgP1' => $this->currentPlayer+' hat gewonnen!',
+                    'msgP2' => $this->currentPlayer+' hat gewonnen!',
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false
                 ];
-            
+                
+                $this->changePlayer('gameover');
+
                 return $msg;
             }else if (count($trgtArr) == 12) {
                 #trgtstackvoll
@@ -837,8 +846,7 @@ class GameController {
             
             if(count($this->drawStacks[$out]) == 0) {
                 #gameover  
-                $this->changePlayer('gameover');
-
+                
                 $msg = [
                     'art' => 'gameover',
                     'debug' => 'Draw-Stack - Joker - JokerAblage- wenn Joker',
@@ -847,11 +855,15 @@ class GameController {
                     'card' => $card,
                     'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
+                    'msgP1' => $this->currentPlayer+' hat gewonnen!',
+                    'msgP2' => $this->currentPlayer+' hat gewonnen!',
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false
                 ];
-            
+
+                $this->changePlayer('gameover');
+                
                 return $msg;
             }else{
                 $msg = [
@@ -905,8 +917,8 @@ class GameController {
         // 'p2Drawstack'. beim austeilen
         // 'player1Username': Name Spieler/Client 1
         // 'player2Username': Name Spieler/Client 2
-        //'msgP1': 'Du bist dran!',
-        //'msgP2': 'Du bist nicht dran!',
+        //'msgP1': 'dran',
+        //'msgP2': 'nicht dran',
     }
 
     /**
@@ -917,7 +929,7 @@ class GameController {
      * @param string $stringNum
      * @return array
      */
-    function preSelect($stringNum) {
+    public function preSelect($stringNum) {
         $arr = explode('|', $stringNum);
         $string = $arr[0];
         $num = (int)$arr[1];
@@ -963,7 +975,7 @@ class GameController {
      * @param int $id
      * @return stdObj $el
      */
-    function findCard($arr, $id) {
+    public function findCard($arr, $id) {
         foreach($arr as $el => $val) {
             if($val->id == $id) {    
                 return $val;
@@ -980,7 +992,7 @@ class GameController {
      * @param array $arr
      * @return void
      */
-    function backToMainStack(&$arr)
+    private function backToMainStack(&$arr)
     {
         foreach($arr as $card) {
             if($card->joker == true) {
@@ -1001,7 +1013,7 @@ class GameController {
      * @param boolean $gameover
      * @return void
      */
-    function changePlayer($gameover = false) {
+    private function changePlayer($gameover = false) {
         if($this->currentPlayer == 1) {
             $this->currentPlayer = 2;
         }else if($gameover) {

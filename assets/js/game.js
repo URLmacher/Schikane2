@@ -3,37 +3,35 @@ let chosenSrc; // Wo die Karte herkommt
 let ausgeteilt = false; // Flag, damit nicht zu oft ausgeteilt wird
 
 /**
- * Speichert
- * erste
- * Auswahl
- *
- * Mit zweiter Auswahl wird
- * Spiel aufgerufen
+ * Speichert erste Auswahl
+ * Mit zweiter Auswahl wird Spiel aufgerufen
+ * Karten werden als ausgewählt markiert
  */
 function playersChoice(e) {
 	if (!chosenCard) {
 		const domSrc = e.target.parentElement;
-		e.target.classList.add('selected');
-
+		removeSelectedClass();
 		if (domSrc.hasAttribute('data-hand')) {
 			chosenCard = e.target.dataset.id;
 			chosenSrc = domSrc.id;
+			e.target.classList.add('selected');
 		} else if (domSrc.hasAttribute('data-ablageid') && e.target == domSrc.lastChild) {
-			var abId = domSrc.dataset.ablageid;
 			chosenCard = e.target.dataset.id;
 			chosenSrc = domSrc.id;
+			e.target.classList.add('selected');
 		} else if (domSrc.hasAttribute('data-jokerablage')) {
 			chosenCard = e.target.dataset.id;
 			chosenSrc = domSrc.id;
+			e.target.classList.add('selected');
 		} else if (domSrc.hasAttribute('data-drawstack')) {
 			chosenCard = e.target.dataset.id;
 			chosenSrc = domSrc.id;
+			e.target.classList.add('selected');
 		} else if (domSrc.hasAttribute('data-mainstack')) {
 			abheben();
 		}
 	} else {
-		var domTarget;
-		var selected = document.querySelectorAll('.selected');
+		let domTarget;
 		e.target.classList.add('selected');
 
 		if (e.target.classList.contains('card')) {
@@ -43,34 +41,33 @@ function playersChoice(e) {
 		}
 
 		if (domTarget.hasAttribute('data-ablageid')) {
-			var trgt = domTarget.id;
+			const trgt = domTarget.id;
 
 			ablegen(chosenSrc, trgt, chosenCard);
 
 			chosenSrc = false;
 			chosenCard = false;
-			removeClasses(selected);
+			removeSelectedClass();
 		} else if (domTarget.hasAttribute('data-jokerablage')) {
-			var trgt = domTarget.id;
+			const trgt = domTarget.id;
 
 			ablegen(chosenSrc, trgt, chosenCard);
 
 			chosenSrc = false;
 			chosenCard = false;
-			removeClasses(selected);
+			removeSelectedClass();
 		} else if (domTarget.hasAttribute('data-playareaid')) {
-			var abId = domTarget.dataset.playareaid;
-			var trgt = domTarget.id;
+			const trgt = domTarget.id;
 
 			ablegen(chosenSrc, trgt, chosenCard);
 
 			chosenSrc = false;
 			chosenCard = false;
-			removeClasses(selected);
+			removeSelectedClass();
 		} else {
 			chosenSrc = false;
 			chosenCard = false;
-			removeClasses(selected);
+			removeSelectedClass();
 		}
 	}
 }
@@ -93,21 +90,69 @@ document.addEventListener(
 
 /**
  * Schreibt eine Nachricht in die Nachrichtenbox
- * @param {string} msg
- * @param {int} player
+ * sorgt dafür, dass die richtigen Spieler die richtige Nachricht erhalten
+ * @param {string} msgP1
+ * @param {string} msgP2
+ * @param {string} player1
+ * @param {string} player2
  */
 function writeMessage(msgP1, msgP2, player1, player2) {
 	const playerUsername = document.getElementById('playerUsername').value;
-	const msgBox = document.getElementById('messages');
+	const msgBox = document.getElementById('message-container__message');
 	if (player1 == playerUsername) {
-		const tempString = `<p>${msgP1}</p>`;
-		msgBox.innerHTML = tempString;
+		if (msgP1 == 'dran') {
+			changeMessage();
+			msgBox.innerHTML = 'Du bist dran!';
+		} else if (msgP1 == 'nicht dran') {
+			changeMessage('big');
+			msgBox.innerHTML = `${player2} ist dran`;
+		} else {
+			changeMessage('big');
+			msgBox.innerHTML = msgP1;
+		}
 	} else if (player2 == playerUsername) {
-		const tempString = `<p>${msgP2}</p>`;
-		msgBox.innerHTML = tempString;
+		if (msgP2 == 'dran') {
+			changeMessage();
+			msgBox.innerHTML = 'Du bist dran!';
+		} else if (msgP2 == 'nicht dran') {
+			changeMessage('big');
+			msgBox.innerHTML = `${player1} ist dran`;
+		} else {
+			changeMessage('big');
+			msgBox.innerHTML = msgP2;
+		}
 	}
 }
 
+/**
+ * Erzeugt ein Overlay mit Infos, wenn ein Spieler nicht dran ist
+ * Wenn der Spieler dran ist, wird das Overlay zu einer kleinen Box am Rande
+ *
+ * @param {bool} big
+ */
+function changeMessage(big = false) {
+	const msgContainer = document.getElementById('message-container');
+	const msgBox = document.getElementById('message-container__message-box');
+	const msg = document.getElementById('message-container__message');
+
+	if (big) {
+		msgContainer.classList.remove('message-container--hidden');
+		msgBox.classList.remove('message-container__message-box--minified');
+		msg.classList.remove('message-container__message--minified');
+	} else {
+		msgContainer.classList.add('message-container--hidden');
+		msgBox.classList.add('message-container__message-box--minified');
+		msg.classList.add('message-container__message--minified');
+	}
+}
+
+/**
+ * Rendert die Karten in den verschiedenen Ablageplätzchen
+ * Baut auch ein bisserl CSS ein, je nachdem wohin die Karten sollen
+ *
+ * @param {object} card
+ * @param {*string} area
+ */
 function renderCards(card, area) {
 	if (document.getElementById(area)) {
 		const domTarget = document.getElementById(area);
@@ -117,12 +162,12 @@ function renderCards(card, area) {
 		node.dataset.id = card.id;
 		node.style.backgroundImage = 'url(/assets/utility/cards/png/1x/' + card.name + '.png)';
 
-		if (domTarget.classList.contains('p2Ablage')) {
+		if (domTarget.classList.contains('p2Ablage') || domTarget.classList.contains('p2Joker')) {
 			const childCount = domTarget.childElementCount;
 			const offsetPixel = childCount * 30;
 			node.style.bottom = offsetPixel + 'px';
 		}
-		if (domTarget.classList.contains('p1Ablage')) {
+		if (domTarget.classList.contains('p1Ablage') || domTarget.classList.contains('p1Joker')) {
 			const childCount = domTarget.childElementCount;
 			const offsetPixel = childCount * 30;
 			node.style.top = offsetPixel + 'px';
@@ -168,13 +213,21 @@ function ablegen(src, trgt, cardId) {
 		trgt: trgt,
 		id: cardId,
 	};
+	removeSelectedClass();
 	console.log(msg);
 	websocket.send(JSON.stringify(msg));
 }
 
 /**
+ * Entfernt den ladescreen, nachdem alle User und Karten verteilt sind
+ */
+function removeLoadingscreen() {
+	const loadingscreen = document.getElementById('loading-screen');
+	loadingscreen.classList.add('loading-screen--hidden');
+}
+
+/**
  * Ruft den Server an, um um neue Karten zu bitten
- * @param {string} trgt
  */
 function abheben() {
 	var msg = {
@@ -184,6 +237,9 @@ function abheben() {
 	websocket.send(JSON.stringify(msg));
 }
 
+/**
+ * Schickt Username an Server
+ */
 function anmelden() {
 	const playerUsername = document.getElementById('playerUsername').value;
 	var msg = {
@@ -195,6 +251,8 @@ function anmelden() {
 
 /**
  * Bestellt alle zum Spielstart benötigten Karten vom Server
+ * Der Username wird nochmal mitgeschickt,
+ * damit der erste Anmelder auch die alle Namen kriegt
  */
 function austeilen() {
 	ausgeteilt = true;
@@ -245,6 +303,7 @@ function spielerVergabe() {
 /**
  * Der Websockerl-Server wird zum ersten Mal angerufen
  * Das Ansinnen, die Spieler auszuwählen wird mit versandt
+ * Die Antworten des Servers werden hier auch verwaltet
  *
  * @param {array} data
  */
@@ -270,6 +329,9 @@ function serverCall(data) {
 			} else if (msg.art == 'anmelden') {
 				renderUsernames(msg.player1Username, msg.player2Username);
 				renderPoints(msg.player1Points, msg.player2Points);
+				if (msg.player1Username && msg.player2Username) {
+					removeLoadingscreen();
+				}
 				if (!ausgeteilt) {
 					austeilen();
 				}
@@ -283,6 +345,9 @@ function serverCall(data) {
 				renderPoints(msg.player1Points, msg.player2Points);
 				renderCards(msg.p1Drawstack, 'p1Drawstack|0');
 				renderCards(msg.p2Drawstack, 'p2Drawstack|0');
+				if (msg.player1Username && msg.player2Username) {
+					removeLoadingscreen();
+				}
 				writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
 			} else if (msg.art == 'move') {
 				console.log(msg);
@@ -293,6 +358,7 @@ function serverCall(data) {
 				}
 			} else if (msg.art == 'abheben') {
 				console.log(msg);
+				//ARRAY EMPFANGEN UND ANIMIEREN
 				renderCards(msg.card, msg.trgt);
 			} else if (msg.art == 'draw') {
 				removeCards(msg.card);
@@ -302,13 +368,12 @@ function serverCall(data) {
 				console.log(msg);
 			} else if (msg.art == 'gameover') {
 				console.log(msg);
+				// RESTART OPTION EINBAUEN
 				removeCards(msg.card);
-				writeMessage(msg.art, 1);
-				writeMessage(msg.art, 2);
+				writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
 			} else if (msg.art == 'stackfull') {
 				console.log(msg);
-				writeMessage(msg.art, 1);
-				writeMessage(msg.art, 2);
+				// HIER ANIMATION EINBAUEN
 				if (msg.src == 'p1Drawstack|0' || msg.src == 'p2Drawstack|0') {
 					renderCards(msg.newcard, msg.src);
 				}
@@ -344,11 +409,11 @@ function isJson(item) {
 }
 
 /**
- * Entfernt Klassen von einigen Elementen
+ * Entfernt die Markierung der ausgewählten Karte
  *
- * @param {Nodelist} els
  */
-function removeClasses(els) {
+function removeSelectedClass() {
+	const els = document.querySelectorAll('.selected');
 	for (let i = 0; i < els.length; i++) {
 		els[i].classList.remove('selected');
 	}

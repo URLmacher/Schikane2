@@ -1,4 +1,3 @@
-<div id="messages" class="message"></div>
 <input id="playerUsername" type="hidden" value="<?= $this->session->userdata('user_name') ?>">
 <div class="wrapper">
   <div class="sub-wrapper">
