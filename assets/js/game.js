@@ -89,6 +89,71 @@ document.addEventListener(
 );
 
 /**
+ * Das ablegen der Karten wird animiert
+ * Die Ursprungskarte wird entfernt
+ * Für die Dauer der Animation wird eine Dummy-Karte erzeugt
+ * Nach Animationsende werden die echten Karten gerendert
+ *
+ * @param {object} card
+ * @param {string} trgt
+ * @param {boolean} draw
+ */
+function animateAblegen(card, trgt, src, newcard, draw = false) {
+	const cards = document.querySelectorAll('.card');
+	let endPosTop = document.getElementById(trgt).getBoundingClientRect().top;
+	let endPosLeft = document.getElementById(trgt).getBoundingClientRect().left;
+
+	cards.forEach(domCard => {
+		if (domCard.dataset.id == card.id) {
+			const startPosTop = domCard.getBoundingClientRect().top;
+			const startPosLeft = domCard.getBoundingClientRect().left;
+			const domBody = document.body;
+
+			removeCards(card);
+
+			let node = document.createElement('div');
+			node.classList.add('card');
+
+			node.style.backgroundImage = 'url(/assets/utility/cards/png/1x/' + card.name + '.png)';
+			node.style.position = 'absolute';
+			node.style.top = startPosTop + 'px';
+			node.style.left = startPosLeft + 'px';
+			node.style.zIndex = 3333;
+			node.id = 'animation-card';
+
+			domBody.appendChild(node);
+			const animationCard = document.getElementById('animation-card');
+
+			animationCard.animate(
+				[
+					{
+						top: startPosTop + 'px',
+						left: startPosLeft + 'px',
+					},
+					{
+						top: endPosTop + 'px',
+						left: endPosLeft + 'px',
+					},
+				],
+				500
+			);
+
+			setTimeout(function() {
+				animationCard.remove();
+			}, 500);
+		}
+	});
+
+	setTimeout(function() {
+		if (draw) {
+			renderCards(card, trgt);
+			renderCards(newcard, src);
+		}
+		renderCards(card, trgt);
+	}, 500);
+}
+
+/**
  * Schreibt eine Nachricht in die Nachrichtenbox
  * sorgt dafür, dass die richtigen Spieler die richtige Nachricht erhalten
  * @param {string} msgP1
@@ -162,12 +227,12 @@ function renderCards(card, area) {
 		node.dataset.id = card.id;
 		node.style.backgroundImage = 'url(/assets/utility/cards/png/1x/' + card.name + '.png)';
 
-		if (domTarget.classList.contains('p2Ablage') || domTarget.classList.contains('p2Joker')) {
+		if (domTarget.classList.contains('p2Ablage') || domTarget.classList.contains('p1Joker')) {
 			const childCount = domTarget.childElementCount;
 			const offsetPixel = childCount * 30;
 			node.style.bottom = offsetPixel + 'px';
 		}
-		if (domTarget.classList.contains('p1Ablage') || domTarget.classList.contains('p1Joker')) {
+		if (domTarget.classList.contains('p1Ablage') || domTarget.classList.contains('p2Joker')) {
 			const childCount = domTarget.childElementCount;
 			const offsetPixel = childCount * 30;
 			node.style.top = offsetPixel + 'px';
@@ -351,8 +416,7 @@ function serverCall(data) {
 				writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
 			} else if (msg.art == 'move') {
 				console.log(msg);
-				removeCards(msg.card);
-				renderCards(msg.card, msg.trgt);
+				animateAblegen(msg.card, msg.trgt, 'src', 'newcard');
 				if (msg.msgP1) {
 					writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
 				}
@@ -361,10 +425,9 @@ function serverCall(data) {
 				//ARRAY EMPFANGEN UND ANIMIEREN
 				renderCards(msg.card, msg.trgt);
 			} else if (msg.art == 'draw') {
-				removeCards(msg.card);
 				renderPoints(msg.player1Points, msg.player2Points);
-				renderCards(msg.card, msg.trgt);
-				renderCards(msg.newcard, msg.src);
+				animateAblegen(msg.card, msg.trgt, msg.src, msg.newcard, 'draw');
+
 				console.log(msg);
 			} else if (msg.art == 'gameover') {
 				console.log(msg);

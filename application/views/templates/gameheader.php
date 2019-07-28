@@ -15,7 +15,7 @@
     <body>
 
         <div class="loading-screen" id="loading-screen">
-            <img class="loading-screen__logo" src="assets\images\logo.png" alt="logo-loadingscreen">
+            <img class="loading-screen__logo" src="assets\images\logo.svg" alt="logo-loadingscreen">
             <div class="loading-screen__loading-bar"></div>
         </div>
         <div id="message-container" class="message-container ">

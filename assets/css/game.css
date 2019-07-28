@@ -54,6 +54,7 @@ div {
 	grid-template-rows: 2fr 1fr 2fr;
 	grid-template-columns: auto;
 	overflow-y: scroll;
+	overflow-x: hidden;
 }
 .ablage-wrapper {
 	height: 100%;
@@ -270,6 +271,7 @@ div {
 #play-area {
 	width: 57.5%;
 	height: 100%;
+	overflow: hidden;
 	background-size: 100% 100%;
 	display: grid;
 	grid-template-rows: 40% 40% 20%;
@@ -280,14 +282,22 @@ div {
 	align-self: center;
 }
 .play-area__stack {
+	background: var(--ablage-background);
+	height: var(--card-height);
+	width: var(--card-width);
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-	width: 100%;
-	height: 100%;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	-webkit-box-align: end;
+	-ms-flex-align: end;
+	align-items: flex-end;
+	border-radius: 12px;
+	-ms-flex-item-align: center;
+	    align-self: center;
+	justify-self: center;
 }
 
 .hand {

@@ -40,30 +40,14 @@
   </div>
 
   <div id="play-area">
-    <div class="play-area__stack" data-playareaid="0" id="playarea|0">
-      <div class="card" data-value="1" data-id="81" style="background-image: url(&quot;/assets/utility/cards/png/1x/diamond_1.png&quot;);"></div>
-    </div>
-    <div class="play-area__stack" data-playareaid="1" id="playarea|1">
-      <div class="card" data-value="1" data-id="81" style="background-image: url(&quot;/assets/utility/cards/png/1x/diamond_1.png&quot;);"></div>
-    </div>
-    <div class="play-area__stack" data-playareaid="2" id="playarea|2">
-      <div class="card" data-value="1" data-id="81" style="background-image: url(&quot;/assets/utility/cards/png/1x/diamond_1.png&quot;);"></div>
-    </div>
-    <div class="play-area__stack" data-playareaid="3" id="playarea|3">
-    <div class="card" data-value="1" data-id="81" style="background-image: url(&quot;/assets/utility/cards/png/1x/diamond_1.png&quot;);"></div>
-    </div>
-    <div class="play-area__stack" data-playareaid="4" id="playarea|4">
-      <div class="card" data-value="1" data-id="81" style="background-image: url(&quot;/assets/utility/cards/png/1x/diamond_1.png&quot;);"></div>
-    </div>
-    <div class="play-area__stack" data-playareaid="5" id="playarea|5">
-      <div class="card" data-value="1" data-id="81" style="background-image: url(&quot;/assets/utility/cards/png/1x/diamond_1.png&quot;);"></div>
-    </div>
-    <div class="play-area__stack" data-playareaid="6" id="playarea|6">
-      <div class="card" data-value="1" data-id="81" style="background-image: url(&quot;/assets/utility/cards/png/1x/diamond_1.png&quot;);"></div>
-    </div>
-    <div class="play-area__stack" data-playareaid="7" id="playarea|7">
-      <div class="card" data-value="1" data-id="81" style="background-image: url(&quot;/assets/utility/cards/png/1x/diamond_1.png&quot;);"></div>
-    </div>
+    <div class="play-area__stack" data-playareaid="0" id="playarea|0"></div>
+    <div class="play-area__stack" data-playareaid="1" id="playarea|1"></div>
+    <div class="play-area__stack" data-playareaid="2" id="playarea|2"></div>
+    <div class="play-area__stack" data-playareaid="3" id="playarea|3"></div>
+    <div class="play-area__stack" data-playareaid="4" id="playarea|4"></div>
+    <div class="play-area__stack" data-playareaid="5" id="playarea|5"></div>
+    <div class="play-area__stack" data-playareaid="6" id="playarea|6"></div>
+    <div class="play-area__stack" data-playareaid="7" id="playarea|7"></div>
   </div>
 </div>
 <div id="p1Hand|0" class="hand" data-hand="0"></div>
