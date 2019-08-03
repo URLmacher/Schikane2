@@ -7,7 +7,7 @@
       <div class="p2Ablage ablage" id="p2Ablage|1"></div>
       <div class="p2Ablage ablage" id="p2Ablage|2"></div>
       <div class="p2Ablage ablage" id="p2Ablage|3"></div>
-      <div class="p2Joker joker-ablage" id="p2Jokerablage|0"></div>
+      <div class="p2Joker ablage" id="p2Jokerablage|0"></div>
     </div>
 
     <div class="utility">

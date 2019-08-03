@@ -93,6 +93,7 @@ document.addEventListener(
  * Die Ursprungskarte wird entfernt
  * Für die Dauer der Animation wird eine Dummy-Karte erzeugt
  * Nach Animationsende werden die echten Karten gerendert
+ * und die Dummy-Karte entfernt
  *
  * @param {object} card
  * @param {string} trgt
@@ -110,7 +111,9 @@ function animateAblegen(card, trgt, src, newcard, draw = false) {
 			const domBody = document.body;
 
 			removeCards(card);
-
+			if (draw) {
+				renderCards(newcard, src);
+			}
 			let node = document.createElement('div');
 			node.classList.add('card');
 
@@ -145,10 +148,6 @@ function animateAblegen(card, trgt, src, newcard, draw = false) {
 	});
 
 	setTimeout(function() {
-		if (draw) {
-			renderCards(card, trgt);
-			renderCards(newcard, src);
-		}
 		renderCards(card, trgt);
 	}, 500);
 }

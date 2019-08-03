@@ -9,18 +9,22 @@ function renderFriends(friends) {
 		friends.forEach(friend => {
 			let friendTable;
 			let tableRow = document.createElement('TR');
-			tableRow.className = 'friend-tr';
+			tableRow.className = 'table__row';
 			tableRow.dataset.friendid = friend.friend_id;
 
 			friendTable = `
-                <td class="view-profile">${friend.user_name}</td>
-                <td>${friend.online}</td>
-                <td><div data-friendname="${
+				<td class="table__data ">
+				<span class="view-profile">${friend.user_name}</span>
+				</td>
+				<td class="table__data">
+				<div class="online-${friend.online} table__data--small"></div>
+				</td>
+                <td class="table__data table__data--small"><div data-friendname="${
 					friend.user_name
-				}" class="msg-to-friend table-btn"></div></td>
-                <td><div data-friendname="${
+				}" class="msg-to-friend table__btn"></div></td>
+                <td class="table__data table__data--small"><div data-friendname="${
 					friend.friendship_id
-				}" class="delete-friend table-btn"></div></td>
+				}" class="delete-friend table__btn"></div></td>
             `;
 			tableRow.innerHTML = friendTable;
 			domTableBody.appendChild(tableRow);

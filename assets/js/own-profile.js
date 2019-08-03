@@ -28,15 +28,15 @@ cityInput.addEventListener('focus', function() {
  * Versteckt die Profile-View Buttons
  */
 function showEdit() {
-	const domProfilForm = document.querySelectorAll('.profile-edit-form');
+	const domProfilForm = document.getElementById('own-profile__edit');
 	const profileViewBtnBox = document.getElementById('profile-view-btn-box');
 	const formViewBtnBox = document.getElementById('profile-edit-view-btn-box');
+	const infoText = document.getElementById('profile-info-text');
 
+	infoText.classList.remove('hide');
 	profileViewBtnBox.classList.add('hide');
 	formViewBtnBox.classList.remove('hide');
-	domProfilForm.forEach(el => {
-		el.classList.remove('hide');
-	});
+	domProfilForm.classList.remove('hide');
 }
 
 /**
@@ -44,15 +44,16 @@ function showEdit() {
  * Stellt den Profile-View wieder her
  */
 function backToProfileViewFromEdit() {
-	const domProfilForm = document.querySelectorAll('.profile-edit-form');
+	const domProfilForm = document.getElementById('own-profile__edit');
 	const profileViewBtnBox = document.getElementById('profile-view-btn-box');
 	const formViewBtnBox = document.getElementById('profile-edit-view-btn-box');
+	const infoText = document.getElementById('profile-info-text');
 
+	infoText.classList.add('hide');
 	profileViewBtnBox.classList.remove('hide');
 	formViewBtnBox.classList.add('hide');
-	domProfilForm.forEach(el => {
-		el.classList.add('hide');
-	});
+	domProfilForm.classList.add('hide');
+
 	clearEditForm('errorsonly');
 	clearEditForm();
 }
@@ -66,14 +67,12 @@ function backToProfileViewFromSett() {
 	const profileContent = document.getElementById('profile-content');
 	const profileViewBtnBox = document.getElementById('profile-view-btn-box');
 	const profileSettBtnBox = document.getElementById('profile-settings-view-btn-box');
-	const infoText = document.getElementById('profile-info-text');
 	const profileDeleteConfirmBox = document.getElementById('profile-delete-confirm');
 
 	profileDeleteConfirmBox.classList.add('hide');
 	profileDeleteBtn.classList.remove('hide');
 	profileSettBtnBox.classList.add('hide');
 	profileViewBtnBox.classList.remove('hide');
-	infoText.classList.remove('hide');
 	settingContainer.classList.add('hide');
 	profileContent.classList.remove('hide');
 }
@@ -87,11 +86,9 @@ function showSettings() {
 	const profileContent = document.getElementById('profile-content');
 	const profileViewBtnBox = document.getElementById('profile-view-btn-box');
 	const profileSettBtnBox = document.getElementById('profile-settings-view-btn-box');
-	const infoText = document.getElementById('profile-info-text');
 
 	profileSettBtnBox.classList.remove('hide');
 	profileViewBtnBox.classList.add('hide');
-	infoText.classList.add('hide');
 	settingContainer.classList.remove('hide');
 	profileContent.classList.add('hide');
 }
@@ -103,26 +100,26 @@ function showSettings() {
  * Fehler werden dem User dargestellt
  */
 function saveProfile() {
-	const sexSpan = document.getElementById('own-profile-sex');
-	const ageSpan = document.getElementById('own-profile-age');
-	const citySpan = document.getElementById('own-profile-city');
+	const sexDom = document.getElementById('own-profile-sex');
+	const ageDom = document.getElementById('own-profile-age');
+	const cityDom = document.getElementById('own-profile-city');
 	let ageInput = document.getElementById('profile-age-input').value;
 	let sexInput = document.querySelector('input[name="profile-sex-radio"]:checked');
 	let cityInput = document.getElementById('profile-city-input').value;
 
 	if (!sexInput) {
-		sexInput = sexSpan.textContent;
+		sexInput = sexDom.textContent;
 		sexInput = sexInput.replace(/(\r\n|\n|\r|\s)/gm, '');
 	} else {
 		sexInput = sexInput.value;
 	}
 	if (ageInput == '') {
-		ageInput = ageSpan.textContent;
+		ageInput = ageDom.textContent;
 		ageInput = parseInt(ageInput);
 	}
 	if (cityInput == '') {
-		cityInput = citySpan.textContent;
-		cityInput = citySpan.replace(/(\r\n|\n|\r|\s)/gm, '');
+		cityInput = cityDom.textContent;
+		cityInput = cityInput.replace(/(\r\n|\n|\r|\s)/gm, '');
 	}
 
 	let data = new FormData();
@@ -137,11 +134,11 @@ function saveProfile() {
 			const data = JSON.parse(xhr.response);
 			if (data.success) {
 				const feedback = document.getElementById('async-feedback');
-
-				feedback.innerHTML = `<p class='alert alert-success'>Profil wurde gespeichert</p>`;
-				sexSpan.innerHTML = sexInput;
-				ageSpan.innerHTML = ageInput;
-				citySpan.innerHTML = cityInput;
+				feedback.classList.add('async-feedback--flash');
+				feedback.innerHTML = `<p class='async-feedback__text'>Profil wurde gespeichert</p>`;
+				sexDom.innerHTML = sexInput;
+				ageDom.innerHTML = ageInput;
+				cityDom.innerHTML = cityInput;
 				clearEditForm();
 				backToProfileViewFromEdit();
 			} else {
@@ -150,7 +147,6 @@ function saveProfile() {
 		}
 	};
 }
-
 
 /**
  * Löscht das Benutzerprofil nach Passwort-Eingabe
@@ -184,7 +180,7 @@ function deleteProfile() {
 
 /**
  * Stellt Fehler nach Art in den passenden Feldern dar
- * @param {object} errors 
+ * @param {object} errors
  */
 function renderEditErrors(errors) {
 	if (errors.hasOwnProperty('age')) {
@@ -204,7 +200,7 @@ function renderEditErrors(errors) {
 /**
  * Leert die Input-Felder
  * Oder entfernt Fehleranzeigen
- * @param {string} errorsonly 
+ * @param {string} errorsonly
  */
 function clearEditForm(errorsonly = false) {
 	if (errorsonly) {

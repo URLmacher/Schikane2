@@ -32,9 +32,10 @@ function renderMessages(msgs) {
 			let msgBody = shortenString(msg.msg_body);
 			let date = convertDate(msg.created_at);
 			let seen = seenOrNot(msg.msg_seen);
+			let profile = deletedorNot(msg.user_name);
 
 			msgTable = `
-				<td class="view-profile">${msg.user_name}</td> 
+				<td ><span class="${profile}">${msg.user_name}</span></td> 
 				<td data-msgid="${msg.msg_id}" class="view-msg">${date}</td>
 				<td data-msgid="${msg.msg_id}" class="view-msg">${msg.msg_title}</td>
 				<td data-msgid="${msg.msg_id}" class="view-msg">${msgBody}</td>
@@ -82,20 +83,20 @@ function renderSingleMessage(msg) {
 		const buttonArea = document.getElementById('specialpurpose');
 		buttonArea.innerHTML = `<button data-username="${
 			msg.user_name
-		}" class="be-friend btn btn-primary">Anfrage annehmen</button>`;
+		}" class="be-friend btn">Anfrage annehmen</button>`;
 	}
 	if (msg.msg_title == 'Spieleinladung') {
 		const buttonArea = document.getElementById('specialpurpose');
 		const url = base_url + '/join';
 		buttonArea.innerHTML = `<a href="${url}/${
 			msg.user_name
-		}" class="join-game btn btn-primary">Spiel beitreten</a>`;
+		}" class="join-game btn ">Spiel beitreten</a>`;
 	}
 	recipientUserName = msg.user_name;
 	domTableBody.classList.add('hide');
 	domMsgBox.classList.remove('hide');
 	domMsgTitle.innerHTML = msg.msg_title;
-	domMsgSender.innerHTML = msg.user_name;
+	domMsgSender.innerHTML = 'von: '+msg.user_name;
 	domMsgBody.innerHTML = msg.msg_body;
 }
 
@@ -188,8 +189,8 @@ function sendMessage(e) {
 			const data = JSON.parse(xhr.response);
 			if (data.success) {
 				const feedback = document.getElementById('async-feedback');
-
-				feedback.innerHTML = `<p class='alert alert-success'>Nachricht wurde verschickt</p>`;
+				feedback.classList.add('async-feedback--flash');
+				feedback.innerHTML = `<p class='async-feedback__text'>Nachricht wurde verschickt</p>`;
 				clearForm();
 			} else {
 				renderMsgErrors(data.errors);
@@ -223,7 +224,7 @@ function isJson(item) {
  */
 function convertDate(dateString) {
 	var date = new Date(dateString);
-	return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+	return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
 }
 
 /**
@@ -244,13 +245,27 @@ function shortenString(string) {
  */
 function seenOrNot(string) {
 	let eyeCon = `
-        <img class="eyeCon"  src="assets/images/eye-blocked.png"/> 
+        <div class="eyeCon--seen"></div>
     `;
-	if (string == 0) {
+	if (string == '0') {
 		eyeCon = `
-        <img class="eyeCon"  src="assets/images/eye.png"/> 
+        <div class="eyeCon--unseen"></div>
     `;
 		return eyeCon;
 	}
 	return eyeCon;
+}
+
+/**
+ * Überprüft, ob User gelöscht wurde
+ * erlaubt/verbietet das ansehen von Profilen
+ * 
+ * @param {string} user_name 
+ */
+function deletedorNot(user_name){
+	let className = 'view-profile';
+	if(user_name == 'deleted') {
+		className = '';
+	}
+	return className;
 }

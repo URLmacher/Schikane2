@@ -8,9 +8,10 @@
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url(); ?>assets/images/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="<?php echo base_url(); ?>assets/images/icons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/icons/images/favicon-16x16.png"> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/main.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/game.css">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/main.css"> -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/dashboard.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/game.css">
 </head>
     <body>
 
@@ -23,7 +24,14 @@
                 <h3 id="message-container__message" class="message-container__message ">Seppo ist dran</h3>
             </div>
         </div>
-        
+        <div class="game-menu">
+            <div id="game-info" class="game-menu__btn"></div>
+            <div id="dashboard-btn" class="game-menu__btn"></div>
+            <div id="game-leave" class="game-menu__btn"></div>
+            <div id="dashboard-close-btn" class="game-menu__btn--close hide"></div>
+        </div>
+      
+
             <?php if($this->session->flashdata('user_registered')) : ?>
                 <?php echo "<p class='alert alert-success'>".$this->session->flashdata('user_registered')."</p>"; ?>
             <?php endif; ?>
@@ -37,3 +45,18 @@
                 <?php echo "<p class='alert alert-success'>".$this->session->flashdata('user_loggedout')."</p>"; ?>
             <?php endif; ?>
            
+        <div id="async-feedback" class="async-feedback "></div>
+           
+       
+    <?php
+    $this->load->view('templates/dashboard');
+    ?>
+    <?php
+    $this->load->view('templates/message-form');
+    ?>
+    <?php
+    $this->load->view('templates/other-profile');
+    ?>
+    <?php
+    $this->load->view('templates/game-info');
+    ?>

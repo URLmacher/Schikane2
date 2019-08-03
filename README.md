@@ -15,17 +15,16 @@
 - Kartenspiel für 2 Spieler
 - User Login
 - Spielersuche
-- Spiel als Gast
-
-**Optionale Features:**
 - Freundesliste
 - Spiel-Einladungen
-- Kartenspiel für 4 Spieler
 - User-Dashboard
 - Statistiken
+- User-Nachrichten
+
+**Optionale Features:**
+- Kartenspiel für 4 Spieler
 - Chat
 - Feedback Kanal
-- User-Nachrichten
 - geführtes Tutorial
 - KI-Matches
 
