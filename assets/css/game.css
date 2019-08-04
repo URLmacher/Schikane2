@@ -559,6 +559,10 @@ a {
 	-webkit-box-shadow: 0px 0px 13px 0px rgba(255, 215, 0, 1), 0px 0px 13px 9px rgba(212, 175, 55, 1);
 	box-shadow: 0px 0px 13px 0px rgba(255, 215, 0, 1), 0px 0px 13px 9px rgba(212, 175, 55, 1);
 }
+.abheben-allowed {
+	-webkit-box-shadow: 0px 0px 13px 0px rgb(83, 63, 175), 0px 0px 13px 9px rgb(90, 163, 231) !important;
+	box-shadow: 0px 0px 13px 0px rgba(83, 63, 175, 1), 0px 0px 13px 9px rgba(90, 163, 231, 1) !important;
+}
 
 #play-area {
 	background-color: #dcb07c;

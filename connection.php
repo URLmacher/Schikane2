@@ -171,7 +171,7 @@ $game = new GameController($cards);
           }
         }else if($msg->art == 'abheben'){
           if($socketID % 2 == 0){
-            $returnMsg = createMessage($game->abheben($msg->trgt,2));
+            $returnMsg = createMessage($game->abheben($msg->trgt,2)); 
             $who = $socketID;
           }else{
             $returnMsg = createMessage($game->abheben($msg->trgt,1));

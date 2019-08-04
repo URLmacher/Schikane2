@@ -89,6 +89,62 @@ document.addEventListener(
 );
 
 /**
+ * Animiert das Abheben einer Karte
+ *
+ * @param {object} card
+ * @param {string} trgt
+ */
+function animateAbheben(card, trgt) {
+	const mainStack = document.getElementById('mainstack-dummy');
+	const hand = document.querySelector('.hand');
+	let startPosTop = mainStack.getBoundingClientRect().top;
+	let startPosLeft = mainStack.getBoundingClientRect().left;
+	let halfEndWidth = hand.getBoundingClientRect().width / 2;
+	let endPosLeft = hand.getBoundingClientRect().left + halfEndWidth;
+	let endPosTop = hand.getBoundingClientRect().top;
+
+	let node = document.createElement('div');
+	node.classList.add('card');
+	node.style.backgroundImage = 'url(/assets/utility/cards/png/1x/back-fuchsia.png)';
+	node.style.position = 'absolute';
+	node.style.top = startPosTop + 'px';
+	node.style.left = startPosLeft + 'px';
+	node.style.zIndex = 3333;
+	node.id = 'animation-card';
+
+	document.body.appendChild(node);
+	const animationCard = document.getElementById('animation-card');
+
+	animationCard.animate(
+		[
+			{
+				top: startPosTop + 'px',
+				left: startPosLeft + 'px',
+			},
+			{
+				top: endPosTop + 'px',
+				left: endPosLeft + 'px',
+			},
+		],
+		500
+	);
+
+	setTimeout(function() {
+		animationCard.remove();
+		renderCards(card, trgt);
+	}, 500);
+}
+
+/**
+ * Signalisiert, dass das abheben nun erlaubt ist
+ */
+function renderAbhebenAllowed() {
+	const mainStack = document.getElementById('mainstack-dummy');
+
+	mainStack.classList.add('abheben-allowed');
+}
+
+/**
  * Das ablegen der Karten wird animiert
  * Die Ursprungskarte wird entfernt
  * Für die Dauer der Animation wird eine Dummy-Karte erzeugt
@@ -294,6 +350,8 @@ function removeLoadingscreen() {
  * Ruft den Server an, um um neue Karten zu bitten
  */
 function abheben() {
+	const mainStack = document.getElementById('mainstack-dummy');
+	mainStack.classList.remove('abheben-allowed');
 	var msg = {
 		art: 'abheben',
 		trgt: document.querySelector('.hand').id,
@@ -415,14 +473,14 @@ function serverCall(data) {
 				writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
 			} else if (msg.art == 'move') {
 				console.log(msg);
+				renderAbhebenAllowed();
 				animateAblegen(msg.card, msg.trgt, 'src', 'newcard');
 				if (msg.msgP1) {
 					writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
 				}
 			} else if (msg.art == 'abheben') {
 				console.log(msg);
-				//ARRAY EMPFANGEN UND ANIMIEREN
-				renderCards(msg.card, msg.trgt);
+				animateAbheben(msg.card, msg.trgt);
 			} else if (msg.art == 'draw') {
 				renderPoints(msg.player1Points, msg.player2Points);
 				animateAblegen(msg.card, msg.trgt, msg.src, msg.newcard, 'draw');

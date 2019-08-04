@@ -166,6 +166,7 @@ class GameController {
         // Nur abheben, wenn Karten im Haupstapel sind und in der Hand weniger als 6 Karten sind
         if($player == 1) {
             if(count($this->mainStack) > 0 && count($this->playerHands['p1Hand|0']) < 6) {
+                
                 $tempCard = array_splice($this->mainStack, 0, 1);
                 array_push( $this->playerHands[$in] ,$tempCard[0]);
                 

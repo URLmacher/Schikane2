@@ -19,7 +19,7 @@
           <div id="p2Name" class="display__name">Hugo</div>
         </div>
         <div id="mainstack" data-mainstack="0">
-          <div id="mainstack-dummy"></div>
+          <div id="mainstack-dummy"></div> 
         </div>
         <div id="p1Display" class="display">
           <div id="p1Points" class="display__points">12</div>
