@@ -134,7 +134,7 @@ a {
 .game-info__header{
 	margin: 1rem 2rem 2rem 2rem;
 }
-.game__info__content{
+.game_info__content{
 	margin: 0 2rem 4rem 2rem;
 }
 .game-info__content__text{
@@ -151,6 +151,45 @@ a {
 }
 .game-info__inner-wrapper::-webkit-scrollbar-thumb {
 	background-color: var(--color-dark-red);
+}
+.game-leave__wrapper{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: var(--color-semitrans-overlay);
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	z-index: 4445;
+}
+.game-leave{
+	border-radius:var(--card-border-radius);
+	background: var(--color-bright-white);
+	margin-top: 5rem;
+	width: 40%;
+	position: relative;
+	display: block;
+	padding-top: 0.35em;
+	padding-bottom: 0.625em;
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+	height: fit-content;
+}
+.game-leave__header{
+	margin: 1rem 2rem 2rem 2rem;
+}
+.game_leave__content{
+	margin: 0 2rem 4rem 2rem;
+}
+.game-leave__content__text{
+	color:var(--color-bright-grey);
+	margin-bottom: .8rem;
+}
+.game-leave__btn-box{
+	margin-top: 4rem;
 }
 .wrapper {
 	display: -webkit-box;

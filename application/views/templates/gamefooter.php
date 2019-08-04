@@ -1,6 +1,7 @@
     <script src="<?= base_url(); ?>assets/js/dashboard.js"></script>
     <script src="<?= base_url(); ?>assets/js/messages.js"></script>
     <script src="<?= base_url(); ?>assets/js/game-info.js"></script>
+    <script src="<?= base_url(); ?>assets/js/game-leave.js"></script>
     <script src="<?= base_url(); ?>assets/js/friends.js"></script>
     <script src="<?= base_url(); ?>assets/js/stats.js"></script>
     <script src="<?= base_url(); ?>assets/js/own-profile.js"></script>

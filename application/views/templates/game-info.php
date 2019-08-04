@@ -4,7 +4,7 @@
             <div class="game-info__header">
                 <h3 class="game-info__header__text">Spielziel</h3>
             </div>
-            <div class="game__info__content">
+            <div class="game-info__content">
                 <p class="game-info__content__text">
                     Jeder Spieler erhält 14 Karten, von denen nur die letzte sichtbar ist.
                     Ziel ist es, alle Karten in diesem Stapel im Spielfeld(rechts) abzulegen.
@@ -19,7 +19,7 @@
             <div class="game-info__header">
                 <h3 class="game-info__header__text">Spielregeln</h3>
             </div>
-            <div class="game__info__content">
+            <div class="game-info__content">
                 <p class="game-info__content__text">
                     Wenn der Spieler dran ist, darf er so lange Karten im Spielfeld ablegen, bis er keine passenden Karten mehr hat.
                     Dazu dürfen Karten aus der Hand, aus dem 14-Karten-Spielstapel, oder die jeweils obersten Karten aus der Ablage des Spielers verwendet werden.
@@ -35,7 +35,7 @@
             <div class="game-info__header">
                 <h3 class="game-info__header__text">Handkarten</h3>
             </div>
-            <div class="game__info__content">
+            <div class="game-info__content">
                 <p class="game-info__content__text">
                     Zu Beginn des Spiels erhält jeder Spieler 6 Karten. Diese Karten dürfen im Spielfeld oder in der Ablage des Spielers abgelegt werden.
                 </p>
@@ -46,7 +46,7 @@
             <div class="game-info__header">
                 <h3 class="game-info__header__text">Spielfeld</h3>
             </div>
-            <div class="game__info__content">
+            <div class="game-info__content">
                 <p class="game-info__content__text">
                     Im Spielfeld dürfen alle Karten in aufsteigender Reihenfolge abgelegt werden, beginnend mit Ass und endend mit König.
                     Die Farben der Karten haben keine Auswirkungen auf das Spiel.
@@ -59,7 +59,7 @@
             <div class="game-info__header">
                 <h3 class="game-info__header__text">Ablage</h3>
             </div>
-            <div class="game__info__content">
+            <div class="game-info__content">
                 <p class="game-info__content__text">
                     In jeder Runde muss der Spieler eine Karte in die Ablage legen.
                     Dabei darf er einen von 4 Stapeln wählen. Damit endet eine Runde.
@@ -78,7 +78,7 @@
             <div class="game-info__header">
                 <h3 class="game-info__header__text">Hauptstapel</h3>
             </div>
-            <div class="game__info__content">
+            <div class="game-info__content">
                 <p class="game-info__content__text">
                     Der Haupstapel besteht aus allen Karten, die nicht gerade im Spiel sind.
                     Die Karten im Hauptstapel sind immer verdeckt.
@@ -94,7 +94,7 @@
             <div class="game-info__header">
                 <h3 class="game-info__header__text">Spielstapel</h3>
             </div>
-            <div class="game__info__content">
+            <div class="game-info__content">
                 <p class="game-info__content__text">
                     Der Spielstapel besteht aus 14 zufälligen Karten, von denen oberste für alle sichtbar aufgedeckt wird.
                 </p>
@@ -109,7 +109,7 @@
             <div class="game-info__header">
                 <h3 class="game-info__header__text">Karten</h3>
             </div>
-            <div class="game__info__content">
+            <div class="game-info__content">
                 <p class="game-info__content__text">
                     Das Spiel benutzt zwei Sets aus 52 Standard-Pokerkarten und 4 Joker.
                     Insgesamt als 108 Karten.
@@ -125,7 +125,7 @@
             <div class="game-info__header">
                 <h3 class="game-info__header__text">Strategie-Tipps</h3>
             </div>
-            <div class="game__info__content">
+            <div class="game-info__content">
                 <p class="game-info__content__text">
                     Es kann sinnvoll sein, ablegbare Karten nicht sofort abzulegen, sondern in der Hand oder Ablage zu "sparen", um später mehr Karten auf einmal ablegen zu können.
                 </p>

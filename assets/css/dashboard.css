@@ -679,7 +679,7 @@ a {
 .btn {
 	border: none;
 	font-family: inherit;
-	font-size: inherit;
+	font-size:1rem;
 	color: inherit;
 	background: none;
 	cursor: pointer;

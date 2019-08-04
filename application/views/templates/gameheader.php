@@ -21,7 +21,7 @@
         </div>
         <div id="message-container" class="message-container ">
             <div id="message-container__message-box" class="message-container__message-box">
-                <h3 id="message-container__message" class="message-container__message ">Seppo ist dran</h3>
+                <h3 id="message-container__message" class="message-container__message "></h3>
             </div>
         </div>
         <div class="game-menu">
@@ -59,4 +59,7 @@
     ?>
     <?php
     $this->load->view('templates/game-info');
+    ?>
+    <?php
+    $this->load->view('templates/game-leave');
     ?>

@@ -17,6 +17,7 @@ document.addEventListener(
 		profileDeleteConfirmBtn.addEventListener('click', deleteProfile);
 		settingsBtn.addEventListener('click', showSettings);
 		infoBtn.addEventListener('click', showGameInfo);
+		leaveBtn.addEventListener('click', showGameLeave);
 		saveBtn.addEventListener('click', saveProfile);
 		document.addEventListener('click', differentActions);
 		if (document.getElementById('dashboard-close-btn')) {
@@ -24,6 +25,7 @@ document.addEventListener(
 			dashboardCloseBtn.addEventListener('click', ()=>{
 				hideDashboard();
 				hideGameInfo();
+				hideGameLeave();
 			});
 		}
 	},
@@ -159,4 +161,12 @@ function differentActions(e) {
 				domMsgForm.classList.remove('hide');
 				domTitleInput.value = 'Freundschaftseinladung';
 			} 
+			// Spiel verlassen
+			else if(e.target.classList.contains('game-leave__leave-game')){
+				location.replace(base_url);
+			}
+			// Im Spiel bleiben
+			else if(e.target.classList.contains('game-leave__stay-game')){
+				hideGameLeave();
+			}
 }
