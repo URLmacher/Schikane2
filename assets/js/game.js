@@ -91,10 +91,10 @@ document.addEventListener(
 /**
  * Animiert das Abheben einer Karte
  *
- * @param {object} card
+ * @param {array} card
  * @param {string} trgt
  */
-function animateAbheben(card, trgt) {
+function animateAbheben(cards, trgt) {
 	const mainStack = document.getElementById('mainstack-dummy');
 	const hand = document.querySelector('.hand');
 	let startPosTop = mainStack.getBoundingClientRect().top;
@@ -102,37 +102,35 @@ function animateAbheben(card, trgt) {
 	let halfEndWidth = hand.getBoundingClientRect().width / 2;
 	let endPosLeft = hand.getBoundingClientRect().left + halfEndWidth;
 	let endPosTop = hand.getBoundingClientRect().top;
+	let animationCard;
 
-	let node = document.createElement('div');
-	node.classList.add('card');
-	node.style.backgroundImage = 'url(/assets/utility/cards/png/1x/back-fuchsia.png)';
-	node.style.position = 'absolute';
-	node.style.top = startPosTop + 'px';
-	node.style.left = startPosLeft + 'px';
-	node.style.zIndex = 3333;
-	node.id = 'animation-card';
+	cards.forEach((card, index) => {
+		setTimeout(() => {
+			let node = document.createElement('div');
+			node.classList.add('card');
+			node.classList.add('animation-card');
+			node.style.backgroundImage = 'url(/assets/utility/cards/png/1x/back-fuchsia.png)';
+			node.style.position = 'absolute';
+			node.style.top = startPosTop + 'px';
+			node.style.left = startPosLeft + 'px';
+			node.style.zIndex = 3333;
+			node.id = 'animation-card' + index;
 
-	document.body.appendChild(node);
-	const animationCard = document.getElementById('animation-card');
+			document.body.appendChild(node);
+			animationCard = document.getElementById('animation-card' + index);
 
-	animationCard.animate(
-		[
-			{
-				top: startPosTop + 'px',
-				left: startPosLeft + 'px',
-			},
-			{
-				top: endPosTop + 'px',
-				left: endPosLeft + 'px',
-			},
-		],
-		500
-	);
-
-	setTimeout(function() {
-		animationCard.remove();
-		renderCards(card, trgt);
-	}, 500);
+			actualCardAnimator(
+				animationCard,
+				500,
+				startPosTop,
+				startPosLeft,
+				endPosTop,
+				endPosLeft,
+				card,
+				trgt
+			);
+		}, 500 * (index + 1));
+	});
 }
 
 /**
@@ -480,7 +478,7 @@ function serverCall(data) {
 				}
 			} else if (msg.art == 'abheben') {
 				console.log(msg);
-				animateAbheben(msg.card, msg.trgt);
+				animateAbheben(msg.cards, msg.trgt);
 			} else if (msg.art == 'draw') {
 				renderPoints(msg.player1Points, msg.player2Points);
 				animateAblegen(msg.card, msg.trgt, msg.src, msg.newcard, 'draw');
@@ -500,6 +498,9 @@ function serverCall(data) {
 				removeCards(msg.card, msg.trgt);
 			} else if (msg.art == 'debug') {
 				console.log(msg);
+			} else if (msg.art == 'unentschieden') {
+				console.log(msg);
+				// HIER GAMEOVERSCREEN EINBAUEN
 			}
 		}
 	};
@@ -555,4 +556,38 @@ function changeId() {
 			elements[i].id = newstring;
 		}
 	}
+}
+
+/**
+ * Kümmert sich um die Animation der Karte
+ * und enfernt Sie dann auch wieder
+ *
+ * @param {HTMLElement} dummyCard
+ * @param {int} duration
+ * @param {int} startPosTop
+ * @param {int} startPosLeft
+ * @param {int} endPosTop
+ * @param {int} endPosLeft
+ * @param {object} card
+ * @param {string} trgt
+ */
+function actualCardAnimator(dummyCard, duration, startPosTop, startPosLeft, endPosTop, endPosLeft,card,trgt) {
+	dummyCard.animate(
+		[
+			{
+				top: startPosTop + 'px',
+				left: startPosLeft + 'px',
+			},
+			{
+				top: endPosTop + 'px',
+				left: endPosLeft + 'px',
+			},
+		],
+		duration
+	);
+
+	setTimeout(function() {
+		dummyCard.remove();
+		renderCards(card, trgt);
+	}, duration);
 }

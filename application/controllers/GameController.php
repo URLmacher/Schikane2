@@ -166,46 +166,55 @@ class GameController {
         // Nur abheben, wenn Karten im Haupstapel sind und in der Hand weniger als 6 Karten sind
         if($player == 1) {
             if(count($this->mainStack) > 0 && count($this->playerHands['p1Hand|0']) < 6) {
-                
-                $tempCard = array_splice($this->mainStack, 0, 1);
-                array_push( $this->playerHands[$in] ,$tempCard[0]);
-                
-                $msg = [
-                    'art' => 'abheben',
-                    'trgt' => 'p1Hand|0',
-                    'card' => $tempCard[0],
-                    'count' => count($this->playerHands[$in]),
-                    'array' => $this->playerHands[$in]
-                ];
-                return $msg;
-            }else{
-                 $msg = [
-                    'art' => 'debug',
-                    'trgt' => 'p1Hand|0',
-                    'card' => '$tempCard[0]'
-                ];
-                return $msg;
+                $cardCount = 6 - count($this->playerHands['p1Hand|0']);
+
+                if($cardCount > count($this->mainStack)) {
+                     $msg = [
+                        'art' => 'unentschieden'
+                    ];
+                    return $msg;
+                }else{
+                    $tempCards = array_splice($this->mainStack, 0, $cardCount);
+                    foreach( $tempCards as $tempCard) {
+                        array_push( $this->playerHands[$in] ,$tempCard);
+                    }
+                    
+                    $msg = [
+                        'art' => 'abheben',
+                        'trgt' => 'p1Hand|0',
+                        'cards' => $tempCards,
+                        'count' => count($this->playerHands[$in]),
+                        'array' => $this->playerHands[$in],
+                        'cardCount' => $cardCount
+                    ];
+                    return $msg;
+                }
             }
-        }else{
+        }else if ($player == 2){
             if(count($this->mainStack) > 0 && count($this->playerHands['p2Hand|0']) < 6) {
-                $tempCard = array_splice($this->mainStack, 0, 1);
-                array_push( $this->playerHands[$in] ,$tempCard[0]);
-                
-                $msg = [
-                    'art' => 'abheben',
-                    'trgt' => 'p2Hand|0',
-                    'card' => $tempCard[0],
-                    'count' => count($this->playerHands[$in]),
-                    'array' => $this->playerHands[$in]
-                ];
-                return $msg;
-            }else{
-                 $msg = [
-                    'art' => 'debug',
-                    'trgt' => 'p2Hand|0',
-                    'card' => '$tempCard[0]'
-                ];
-                return $msg;
+                $cardCount = 6 - count($this->playerHands['p2Hand|0']);
+
+                if($cardCount > count($this->mainStack)) {
+                    $msg = [
+                        'art' => 'unentschieden'
+                    ];
+                    return $msg;
+                }else{
+                    $tempCards = array_splice($this->mainStack, 0, $cardCount);
+                    foreach( $tempCards as $tempCard) {
+                        array_push( $this->playerHands[$in] ,$tempCard);
+                    }
+                    
+                    $msg = [
+                        'art' => 'abheben',
+                        'trgt' => 'p2Hand|0',
+                        'cards' => $tempCards,
+                        'count' => count($this->playerHands[$in]),
+                        'array' => $this->playerHands[$in],
+                        'cardCount' => $cardCount
+                    ];
+                    return $msg;
+                }
             }
         }
     }
@@ -261,7 +270,7 @@ class GameController {
                 'trgt' => $in,
                 'trgtArr' => $trgtArr,
                 'srcArr' => $srcArr,
-                'card' => $card
+                'card' => $card,
             ];
             return $msg;
 
