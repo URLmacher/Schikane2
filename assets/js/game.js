@@ -1,6 +1,7 @@
 let chosenCard; // Die Karte, die verschoben werden soll
 let chosenSrc; // Wo die Karte herkommt
 let ausgeteilt = false; // Flag, damit nicht zu oft ausgeteilt wird
+let clickVerbot = false; // Flag, damit nicht unerlaubt gecklickt wird
 
 /**
  * Speichert erste Auswahl
@@ -11,7 +12,14 @@ function playersChoice(e) {
 	if (!chosenCard) {
 		const domSrc = e.target.parentElement;
 		removeSelectedClass();
-		if (domSrc.hasAttribute('data-hand')) {
+
+		if (domSrc.hasAttribute('data-mainstack')) {
+			if (e.target.classList.contains('abheben-allowed')) {
+				abheben();
+			}
+		} else if (clickVerbot) {
+			return;
+		} else if (domSrc.hasAttribute('data-hand')) {
 			chosenCard = e.target.dataset.id;
 			chosenSrc = domSrc.id;
 			e.target.classList.add('selected');
@@ -27,8 +35,6 @@ function playersChoice(e) {
 			chosenCard = e.target.dataset.id;
 			chosenSrc = domSrc.id;
 			e.target.classList.add('selected');
-		} else if (domSrc.hasAttribute('data-mainstack')) {
-			abheben();
 		}
 	} else {
 		let domTarget;
@@ -113,6 +119,7 @@ function animateAbheben(cards, trgt) {
 			node.style.position = 'absolute';
 			node.style.top = startPosTop + 'px';
 			node.style.left = startPosLeft + 'px';
+			node.style.transform = 'rotate(90deg)';
 			node.style.zIndex = 3333;
 			node.id = 'animation-card' + index;
 
@@ -121,7 +128,7 @@ function animateAbheben(cards, trgt) {
 
 			actualCardAnimator(
 				animationCard,
-				500,
+				300,
 				startPosTop,
 				startPosLeft,
 				endPosTop,
@@ -135,11 +142,27 @@ function animateAbheben(cards, trgt) {
 
 /**
  * Signalisiert, dass das abheben nun erlaubt ist
+ *
+ * @param {bool} abhebenP1
+ * @param {bool} abhebenP2
+ * @param {string} player1
+ * @param {string} player2
  */
-function renderAbhebenAllowed() {
+function renderAbhebenAllowed(abhebenP1, abhebenP2, player1, player2) {
+	const playerUsername = document.getElementById('playerUsername').value;
 	const mainStack = document.getElementById('mainstack-dummy');
 
-	mainStack.classList.add('abheben-allowed');
+	if (player1 == playerUsername) {
+		if (abhebenP1) {
+			clickVerbot = true;
+			mainStack.classList.add('abheben-allowed');
+		}
+	} else if (player2 == playerUsername) {
+		if (abhebenP2) {
+			clickVerbot = true;
+			mainStack.classList.add('abheben-allowed');
+		}
+	}
 }
 
 /**
@@ -471,13 +494,21 @@ function serverCall(data) {
 				writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
 			} else if (msg.art == 'move') {
 				console.log(msg);
-				renderAbhebenAllowed();
+				if (msg.abhebenP1 || msg.abhebenP2) {
+					renderAbhebenAllowed(
+						msg.abhebenP1,
+						msg.abhebenP2,
+						msg.player1Username,
+						msg.player2Username
+					);
+				}
 				animateAblegen(msg.card, msg.trgt, 'src', 'newcard');
 				if (msg.msgP1) {
 					writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
 				}
 			} else if (msg.art == 'abheben') {
 				console.log(msg);
+				clickVerbot = false;
 				animateAbheben(msg.cards, msg.trgt);
 			} else if (msg.art == 'draw') {
 				renderPoints(msg.player1Points, msg.player2Points);
@@ -571,16 +602,27 @@ function changeId() {
  * @param {object} card
  * @param {string} trgt
  */
-function actualCardAnimator(dummyCard, duration, startPosTop, startPosLeft, endPosTop, endPosLeft,card,trgt) {
+function actualCardAnimator(
+	dummyCard,
+	duration,
+	startPosTop,
+	startPosLeft,
+	endPosTop,
+	endPosLeft,
+	card,
+	trgt
+) {
 	dummyCard.animate(
 		[
 			{
 				top: startPosTop + 'px',
 				left: startPosLeft + 'px',
+				transform: 'rotate(0deg)',
 			},
 			{
 				top: endPosTop + 'px',
 				left: endPosLeft + 'px',
+				transform: 'rotate(90deg)',
 			},
 		],
 		duration
