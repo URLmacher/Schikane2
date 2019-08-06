@@ -1,6 +1,8 @@
 <?php
 namespace Controllers;
 
+use \PDO;
+
 class GameController {
 
 
@@ -50,8 +52,10 @@ class GameController {
     
         $this->playerHands['p1Hand|0'] = array_splice($cards, 0, 6);
         $this->playerHands['p2Hand|0'] = array_splice($cards, 0, 6);
-        $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 14);
-        $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 14);
+        // $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 14);
+        // $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 14);
+        $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 1);
+        $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 1);
         $this->mainStack = array_splice($cards,0,(count($cards)-1));
           
     }
@@ -1063,6 +1067,7 @@ class GameController {
      */
     public function abhebenAllowed($srcArr,$playerNum,$roundend = false) {
         $key = key ( $srcArr );
+        echo $key;
         if( $roundend ) {
             $otherPlayerKey = 'p'.$playerNum.'Hand|0';
             if(strpos( $key, $playerNum ) == false 
@@ -1072,7 +1077,7 @@ class GameController {
             }
             return false;
         }
-        if( strpos( $key, $playerNum ) !== false && count($srcArr) == 1 ) {
+        if( strpos( $key, $playerNum ) != false && count($srcArr) == 1 ) {
            return true;
         }
         return false;
@@ -1109,19 +1114,21 @@ class GameController {
         $dbname = 'Schikane';
         $dsn = 'mysql:host='. $host .';dbname='. $dbname;
 
-        $pdo = new PDO($dsn, $user, $password);
+        $pdo = new \PDO($dsn, $user, $password);
        
         $sql = 'SELECT games_won FROM users WHERE user_name = :winner';
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['winner' => $winner]);
         $winnerWins = $stmt->fetchAll();
-        $winnerWins += 1;
+        $winnerWins = $winnerWins[0]['games_won'];
+        $winnerWins ++;
 
         $sql = 'SELECT games_lost FROM users WHERE user_name = :loser';
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['loser' => $loser]);
         $loserLoss = $stmt->fetchAll();
-        $loserLoss += 1;
+        $loserLoss  = $loserLoss[0]['games_lost'];
+        $loserLoss ++;
 
         $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         $sql = 'UPDATE users SET games_won = :points WHERE user_name = :winner';

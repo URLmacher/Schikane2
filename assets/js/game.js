@@ -303,12 +303,12 @@ function renderCards(card, area) {
 		node.dataset.id = card.id;
 		node.style.backgroundImage = 'url(/assets/utility/cards/png/1x/' + card.name + '.png)';
 
-		if (domTarget.classList.contains('p2Ablage') || domTarget.classList.contains('p1Joker')) {
+		if (domTarget.classList.contains('p2Ablage') || domTarget.classList.contains('p2Joker')) {
 			const childCount = domTarget.childElementCount;
 			const offsetPixel = childCount * 30;
 			node.style.bottom = offsetPixel + 'px';
 		}
-		if (domTarget.classList.contains('p1Ablage') || domTarget.classList.contains('p2Joker')) {
+		if (domTarget.classList.contains('p1Ablage') || domTarget.classList.contains('p1Joker')) {
 			const childCount = domTarget.childElementCount;
 			const offsetPixel = childCount * 30;
 			node.style.top = offsetPixel + 'px';
@@ -338,7 +338,7 @@ function gameOver(winner, player1, player2,unentschieden = false) {
 		gameOverText.innerHTML = 'Unentschieden. Es gibt keine Karten mehr.';
 		return;
 	}
-	
+
 	if (player1 == playerUsername) {
 		if(winner == 1) {
 			gameOverText.innerHTML = 'Sie haben gewonnen!';

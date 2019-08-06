@@ -349,6 +349,7 @@ a {
 }
 .ablage {
 	position: relative;
+	cursor: pointer;
 }
 .utility {
 	width: 100%;

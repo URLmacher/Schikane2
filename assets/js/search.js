@@ -34,7 +34,7 @@ document.addEventListener('click', function(e) {
 		if (!ready) {
 			interval = setInterval(function() {
 				checkIfReady();
-			}, 3000);
+			}, 1000);
 		}
 	} else if (e.target.classList.contains('send-invite')) {
 		const domMsgForm = document.getElementById('send-msg-form-wrapper');
@@ -46,7 +46,7 @@ document.addEventListener('click', function(e) {
 		if (!player2) {
 			interval2 = setInterval(function() {
 				searchPlayer2(username);
-			}, 3000);
+			}, 1000);
 		}
 	}
 });
@@ -57,7 +57,7 @@ function checkIfJoined() {
 		const username = urlPart.replace('/join/', '')
 		interval2 = setInterval(function() {
 			searchPlayer2(username);
-		}, 3000);
+		}, 1000);
 	}
 }
 
@@ -94,7 +94,7 @@ function searchGo(e) {
 	if (!player2) {
 		interval = setInterval(function() {
 			searchPlayer2();
-		}, 3000);
+		}, 1000);
 	}
 }
 
@@ -128,7 +128,7 @@ function startCountdown() {
 	const player2Dom = document.getElementById('playertworeadyindicator');
 	player2Dom.className = 'ready';
 	player2Dom.innerHTML = 'Bereit';
-	let timeleft = 5;
+	let timeleft = 3;
 	let gameStartTimer = setInterval(function() {
 		document.getElementById('countdown').innerHTML = 'Spiel startet in: ' + timeleft;
 		timeleft -= 1;
