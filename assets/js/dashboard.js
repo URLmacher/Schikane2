@@ -22,7 +22,7 @@ document.addEventListener(
 		document.addEventListener('click', differentActions);
 		if (document.getElementById('dashboard-close-btn')) {
 			const dashboardCloseBtn = document.getElementById('dashboard-close-btn');
-			dashboardCloseBtn.addEventListener('click', ()=>{
+			dashboardCloseBtn.addEventListener('click', () => {
 				hideDashboard();
 				hideGameInfo();
 				hideGameLeave();
@@ -50,7 +50,7 @@ function showDashboard() {
 		otherGameMenuBtns.forEach(btn => {
 			btn.classList.add('hide');
 		});
-	} 
+	}
 	dashboard.classList.remove('hide');
 	dashboard.classList.add('show');
 }
@@ -70,8 +70,8 @@ function hideDashboard() {
 	gameMenuCloseBtn.classList.add('hide');
 	setTimeout(() => {
 		dashboard.classList.add('hide');
-		dashboard.classList.remove('hider')
-	},900)
+		dashboard.classList.remove('hider');
+	}, 900);
 	dashboard.classList.remove('show');
 }
 
@@ -84,7 +84,7 @@ function differentActions(e) {
 	// Einzelne Nachricht aufrufen
 	if (e.target.classList.contains('view-msg')) {
 		getSingleMessage(e.target.dataset.msgid);
-	} 
+	}
 	// Zurück zu den Nachrichten von der Einzelansicht
 	else if (e.target.classList.contains('back-to-table')) {
 		getMessages();
@@ -92,7 +92,7 @@ function differentActions(e) {
 		const domMsgBox = document.getElementById('single-msg');
 		domTable.classList.remove('hide');
 		domMsgBox.classList.add('hide');
-	} 
+	}
 	// Auf Nachricht antworten
 	else if (e.target.classList.contains('antworten')) {
 		e.preventDefault();
@@ -104,69 +104,72 @@ function differentActions(e) {
 		domMsgForm.classList.remove('hide');
 		domTable.classList.remove('hide');
 		domRecipientInput.value = recipientUserName;
-	} 
+	}
 	// Nachrichtenformular schließen
 	else if (e.target.classList.contains('send-msg-close')) {
 		clearForm();
-	} 
+	}
 	// Neue Nachricht schreiben
 	else if (e.target.classList.contains('profile-msgs__new-msg')) {
-				const domMsgForm = document.getElementById('send-msg-form-wrapper');
-				domMsgForm.classList.remove('hide');
-			}
-			// Nachricht an User aus der Friendlist
-			else if (e.target.classList.contains('msg-to-friend')) {
-				const domMsgForm = document.getElementById('send-msg-form-wrapper');
-				const recipientName = e.target.dataset.friendname;
-				domRecipientInput.value = recipientName;
-				domMsgForm.classList.remove('hide');
-			}
-			// User aus der Friendlist löschen
-			else if (e.target.classList.contains('delete-friend')) {
-				const friendName = e.target.dataset.friendname;
-				deleteFriend(friendName);
-			}
-			// Freundschaftsanfrage verschicken
-			else if (e.target.classList.contains('new-friend-btn')) {
-				const domMsgForm = document.getElementById('send-msg-form-wrapper');
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
+		domMsgForm.classList.remove('hide');
+	}
+	// Nachricht an User aus der Friendlist
+	else if (e.target.classList.contains('msg-to-friend')) {
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
+		const recipientName = e.target.dataset.friendname;
+		domRecipientInput.value = recipientName;
+		domMsgForm.classList.remove('hide');
+	}
+	// User aus der Friendlist löschen
+	else if (e.target.classList.contains('delete-friend')) {
+		const friendName = e.target.dataset.friendname;
+		deleteFriend(friendName);
+	}
+	// Freundschaftsanfrage verschicken
+	else if (e.target.classList.contains('new-friend-btn')) {
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
 
-				domMsgForm.classList.remove('hide');
-				domTitleInput.value = 'Freundschaftseinladung';
-			}
-			// Freundschaftsanfrage bestätigen
-			else if (e.target.classList.contains('be-friend')) {
-				clearForm();
-				const friendName = e.target.dataset.username;
-				confirmFriendship(friendName);
-			}
-			// Profil von anderen ansehen
-			else if (e.target.classList.contains('view-profile')) {
-				const username = e.target.innerText;
-				getOtherProfile(username);
-			}
-			// Nachricht an Profilinhaber verschicken
-			else if (e.target.classList.contains('other-profile-msg')) {
-				const domMsgForm = document.getElementById('send-msg-form-wrapper');
-				const recipientName = e.target.dataset.othername;
-				domRecipientInput.value = recipientName;
-				otherProfileDom.classList.add('hide');
-				domMsgForm.classList.remove('hide');
-			}
-			// FReundschaftsanfrage an Profilinhaber senden
-			else if (e.target.classList.contains('other-profile-friend')) {
-				const domMsgForm = document.getElementById('send-msg-form-wrapper');
-				const recipientName = e.target.dataset.othername;
-				domRecipientInput.value = recipientName;
-				otherProfileDom.classList.add('hide');
-				domMsgForm.classList.remove('hide');
-				domTitleInput.value = 'Freundschaftseinladung';
-			} 
-			// Spiel verlassen
-			else if(e.target.classList.contains('game-leave__leave-game')){
-				location.replace(base_url);
-			}
-			// Im Spiel bleiben
-			else if(e.target.classList.contains('game-leave__stay-game')){
-				hideGameLeave();
-			}
+		domMsgForm.classList.remove('hide');
+		domTitleInput.value = 'Freundschaftseinladung';
+	}
+	// Freundschaftsanfrage bestätigen
+	else if (e.target.classList.contains('be-friend')) {
+		clearForm();
+		const friendName = e.target.dataset.username;
+		confirmFriendship(friendName);
+	}
+	// Profil von anderen ansehen
+	else if (e.target.classList.contains('view-profile')) {
+		const username = e.target.innerText;
+		getOtherProfile(username);
+	}
+	// Nachricht an Profilinhaber verschicken
+	else if (e.target.classList.contains('other-profile-msg')) {
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
+		const recipientName = e.target.dataset.othername;
+		domRecipientInput.value = recipientName;
+		otherProfileDom.classList.add('hide');
+		domMsgForm.classList.remove('hide');
+	}
+	// FReundschaftsanfrage an Profilinhaber senden
+	else if (e.target.classList.contains('other-profile-friend')) {
+		const domMsgForm = document.getElementById('send-msg-form-wrapper');
+		const recipientName = e.target.dataset.othername;
+		domRecipientInput.value = recipientName;
+		otherProfileDom.classList.add('hide');
+		domMsgForm.classList.remove('hide');
+		domTitleInput.value = 'Freundschaftseinladung';
+	}
+	// Spiel verlassen
+	else if (
+		e.target.classList.contains('game-leave__leave-game') ||
+		e.target.classList.contains('game-over__leave-game')
+	) {
+		location.replace(base_url);
+	}
+	// Im Spiel bleiben
+	else if (e.target.classList.contains('game-leave__stay-game')) {
+		hideGameLeave();
+	}
 }

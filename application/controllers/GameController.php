@@ -670,6 +670,7 @@ class GameController {
         
             if(count($this->drawStacks[$out]) == 0) {
                 #gameover  
+                $this->whoWon($this->currentPlayer, $this->playerOne, $this->playerTwo);
                 
                 $msg = [
                     'art' => 'gameover',
@@ -679,8 +680,9 @@ class GameController {
                     'card' => $card,
                     'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
-                    'msgP1' => $this->currentPlayer+' hat gewonnen!',
-                    'msgP2' => $this->currentPlayer+' hat gewonnen!',
+                    'winner' => $this->currentPlayer,
+                    'player1Username' => $this->playerOne,
+                    'player2Username' => $this->playerTwo,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false
@@ -723,7 +725,8 @@ class GameController {
             
             if(count($this->drawStacks[$out]) == 0) {
                 #gameover  
-                
+                $this->whoWon($this->currentPlayer, $this->playerOne, $this->playerTwo);
+
                 $msg = [
                     'art' => 'gameover',
                     'debug' => 'Draw-Stack - Karte - Playarea - wenn um 1 höher',
@@ -732,8 +735,9 @@ class GameController {
                     'card' => $card,
                     'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
-                    'msgP1' => $this->currentPlayer+' hat gewonnen!',
-                    'msgP2' => $this->currentPlayer+' hat gewonnen!',
+                    'winner' => $this->currentPlayer,
+                    'player1Username' => $this->playerOne,
+                    'player2Username' => $this->playerTwo,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false
@@ -797,7 +801,8 @@ class GameController {
          
             if(count($this->drawStacks[$out]) == 0) {
                 #gameover  
-                
+                $this->whoWon($this->currentPlayer, $this->playerOne, $this->playerTwo);
+
                 $msg = [
                     'art' => 'gameover',
                     'debug' => 'Draw-Stack - Joker - Playarea - wenn nicht leer',
@@ -806,8 +811,9 @@ class GameController {
                     'card' => $card,
                     'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
-                    'msgP1' => $this->currentPlayer+' hat gewonnen!',
-                    'msgP2' => $this->currentPlayer+' hat gewonnen!',
+                    'winner' => $this->currentPlayer,
+                    'player1Username' => $this->playerOne,
+                    'player2Username' => $this->playerTwo,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false
@@ -866,7 +872,8 @@ class GameController {
             
             if(count($this->drawStacks[$out]) == 0) {
                 #gameover  
-                
+                $this->whoWon($this->currentPlayer, $this->playerOne, $this->playerTwo);
+
                 $msg = [
                     'art' => 'gameover',
                     'debug' => 'Draw-Stack - Joker - JokerAblage- wenn Joker',
@@ -875,8 +882,9 @@ class GameController {
                     'card' => $card,
                     'player1Points' => count($this->drawStacks['p1Drawstack|0']),
                     'player2Points' => count($this->drawStacks['p2Drawstack|0']),
-                    'msgP1' => $this->currentPlayer+' hat gewonnen!',
-                    'msgP2' => $this->currentPlayer+' hat gewonnen!',
+                    'winner' => $this->currentPlayer,
+                    'player1Username' => $this->playerOne,
+                    'player2Username' => $this->playerTwo,
                     'trgtArr' => $trgtArr,
                     'srcArr' => $srcArr,
                     'abheben' => false
@@ -908,9 +916,7 @@ class GameController {
 
         // FEHLER / UNGÜLTIGER ZUG / DEBUG
         else{
-            // $tempIndex = array_search($card,$srcArr);
-            // $tempCard = array_splice($srcArr, array_search($card,$srcArr),1);
-           
+        
             $msg = [
                 'art' => 'debug',
                 'debug' => 'FEHLER, ungültiger zug',
@@ -941,6 +947,7 @@ class GameController {
         // 'abhebenP2': bool, ob er abheben darf
         // 'msgP1': 'dran',
         // 'msgP2': 'nicht dran',
+        // 'winner': wer gewonnen hat/ clientnr
     }
 
     /**
@@ -951,7 +958,7 @@ class GameController {
      * @param string $stringNum
      * @return array
      */
-    public function preSelect($stringNum) {
+    private function preSelect($stringNum) {
         $arr = explode('|', $stringNum);
         $string = $arr[0];
         $num = (int)$arr[1];
@@ -997,7 +1004,7 @@ class GameController {
      * @param int $id
      * @return stdObj $el
      */
-    public function findCard($arr, $id) {
+    private function findCard($arr, $id) {
         foreach($arr as $el => $val) {
             if($val->id == $id) {    
                 return $val;
@@ -1045,10 +1052,7 @@ class GameController {
         }
     }
    
-    /** private $playerHands = [
-        'p1Hand|0' => [],
-        'p2Hand|0' => []
-    ];
+    /** 
      * Überprüft welchem der Spieler das Abheben erlaubt wird
      * anhand dem betroffenen Array
      *
@@ -1072,6 +1076,62 @@ class GameController {
            return true;
         }
         return false;
+    }
+
+    /**
+     * Findet raus, wergewonnen hat
+     * ruft Punkteupdatung auf
+     *
+     * @param int $currentPlayer
+     * @param string $player1
+     * @param string $player2
+     * @return void
+     */
+    private function whoWon($currentPlayer, $player1, $player2) {
+        if($currentPlayer == 1) {
+            $this->updatePoints($player1,$player2);
+        }else if($currentPlayer == 2) {
+            $this->updatePoints($player2,$player1);
+        }
+    }
+
+    /**
+     * Aktuliesiert die Siege und Verlierungen der Spieler nach Spielende
+     *
+     * @param string $winner
+     * @param string $loser
+     * @return void
+     */
+    private function updatePoints($winner,$loser) {
+        $host =  'localhost';
+        $user = 'root';
+        $password = '';
+        $dbname = 'Schikane';
+        $dsn = 'mysql:host='. $host .';dbname='. $dbname;
+
+        $pdo = new PDO($dsn, $user, $password);
+       
+        $sql = 'SELECT games_won FROM users WHERE user_name = :winner';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['winner' => $winner]);
+        $winnerWins = $stmt->fetchAll();
+        $winnerWins += 1;
+
+        $sql = 'SELECT games_lost FROM users WHERE user_name = :loser';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['loser' => $loser]);
+        $loserLoss = $stmt->fetchAll();
+        $loserLoss += 1;
+
+        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $sql = 'UPDATE users SET games_won = :points WHERE user_name = :winner';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['points' => $winnerWins, 'winner' => $winner]);
+
+        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $sql = 'UPDATE users SET games_lost = :points WHERE user_name = :loser';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['points' => $loserLoss, 'loser' => $loser]);
     }
 
 }

@@ -319,6 +319,42 @@ function renderCards(card, area) {
 }
 
 /**
+ * Zeigt den Game-Over-Bildschirm an 
+ * informiert Verlierer und Gewinner
+ * 
+ * @param {int} winner 
+ * @param {string} player1 
+ * @param {string} player2 
+ * @param {bool} unentschieden
+ */
+function gameOver(winner, player1, player2,unentschieden = false) {
+	const gameOverScreen = document.getElementById('game-over__wrapper');
+	const gameOverText = document.getElementById('game-over-text');
+	const playerUsername = document.getElementById('playerUsername').value;
+	gameOverScreen.classList.remove('hide');
+	gameOverScreen.classList.add('show');
+
+	if(unentschieden) {
+		gameOverText.innerHTML = 'Unentschieden. Es gibt keine Karten mehr.';
+		return;
+	}
+	
+	if (player1 == playerUsername) {
+		if(winner == 1) {
+			gameOverText.innerHTML = 'Sie haben gewonnen!';
+		}else{
+			gameOverText.innerHTML = 'Sie haben verloren!';
+		}
+	} else if (player2 == playerUsername) {
+		if (winner == 2) {
+			gameOverText.innerHTML = 'Sie haben gewonnen!';
+		} else {
+			gameOverText.innerHTML = 'Sie haben verloren!';
+		}
+	}
+}
+
+/**
  * Entfernt eine Karte oder alle Karten in einem Bereich
  *
  * @param {obj} card
@@ -517,9 +553,9 @@ function serverCall(data) {
 				console.log(msg);
 			} else if (msg.art == 'gameover') {
 				console.log(msg);
-				// RESTART OPTION EINBAUEN
 				removeCards(msg.card);
-				writeMessage(msg.msgP1, msg.msgP2, msg.player1Username, msg.player2Username);
+				renderPoints(msg.player1Points, msg.player2Points);
+				gameOver(msg.winner, msg.player1Username, msg.player2Username);
 			} else if (msg.art == 'stackfull') {
 				console.log(msg);
 				// HIER ANIMATION EINBAUEN
@@ -531,7 +567,7 @@ function serverCall(data) {
 				console.log(msg);
 			} else if (msg.art == 'unentschieden') {
 				console.log(msg);
-				// HIER GAMEOVERSCREEN EINBAUEN
+				gameOver(3, 'niemand', 'niemand', msg.art);
 			}
 		}
 	};
