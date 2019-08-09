@@ -157,7 +157,7 @@
 }
 .profile-friends__add-friend {
 	position: absolute;
-	top: -5rem;
+	top: 1rem;
 	right: 1rem;
 	height: 3rem;
 	width: 3rem;
@@ -220,8 +220,8 @@
 }
 .profile-msgs__new-msg {
 	position: absolute;
-	top: 2rem;
-	right: 3rem;
+	top: 1rem;
+	right: 1rem;
 	height: 3rem;
 	width: 3rem;
 	background-image: url('../images/new-msg.svg');
@@ -245,7 +245,6 @@
 .profile-msgs {
 	margin: 2rem;
 	height: 70%;
-	position: relative;
 }
 .view-msg {
 	font-size: 12px;
@@ -562,12 +561,12 @@
 .view-profile:hover:after {
 	display: inline-block;
 }
-.async-feedback__text {
+/* .async-feedback__text {
 	color: var(--color-dark-black);
-	margin-left: 2rem;
+	margin-left: 2rem; 
 	margin-top: 1rem;
 	margin-bottom: 1rem;
-}
+} */
 @-webkit-keyframes flash {
 	0% {
 		opacity: 1;

@@ -191,8 +191,7 @@ function sendMessage(e) {
 			const data = JSON.parse(xhr.response);
 			if (data.success) {
 				const feedback = document.getElementById('async-feedback');
-				feedback.classList.add('async-feedback--flash');
-				feedback.innerHTML = `<p class='async-feedback__text'>Nachricht wurde verschickt</p>`;
+				feedback.innerHTML = `<p class='async-feedback--flash async-feedback__text'>Nachricht wurde verschickt</p>`;
 				clearForm();
 			} else {
 				renderMsgErrors(data.errors);

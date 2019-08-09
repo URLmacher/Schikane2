@@ -1,6 +1,6 @@
 <h3 class="dashboard__element__title"><?= $this->session->userdata('user_name') ?>'s Nachrichten</h3>
 <div class="profile-msgs">
-    <div class="profile-msgs__new-msg" id="profile-msgs__new-msg"></div>
+    <div class="profile-msgs__new-msg" id="profile-msgs__new-msg"></div> 
     <table class="table" id="msg-table">
         <thead>
             <tr>

@@ -186,7 +186,7 @@ a {
 	opacity: 0;
 	background: var(--color-positive);
 	position: absolute;
-	z-index: 44;
+	z-index: 5448;
 	-webkit-transform: translateY(-5px);
 	transform: translateY(-5px);
 	z-index: 301;
@@ -200,7 +200,7 @@ a {
 	opacity: 0;
 	background: var(--color-dark-red);
 	position: absolute;
-	z-index: 44;
+	z-index: 5448;
 	-webkit-transform: translateY(-5px);
 	transform: translateY(-5px);
 	padding: 1rem;
