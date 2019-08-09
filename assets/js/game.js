@@ -319,30 +319,30 @@ function renderCards(card, area) {
 }
 
 /**
- * Zeigt den Game-Over-Bildschirm an 
+ * Zeigt den Game-Over-Bildschirm an
  * informiert Verlierer und Gewinner
- * 
- * @param {int} winner 
- * @param {string} player1 
- * @param {string} player2 
+ *
+ * @param {int} winner
+ * @param {string} player1
+ * @param {string} player2
  * @param {bool} unentschieden
  */
-function gameOver(winner, player1, player2,unentschieden = false) {
+function gameOver(winner, player1, player2, unentschieden = false) {
 	const gameOverScreen = document.getElementById('game-over__wrapper');
 	const gameOverText = document.getElementById('game-over-text');
 	const playerUsername = document.getElementById('playerUsername').value;
 	gameOverScreen.classList.remove('hide');
 	gameOverScreen.classList.add('show');
 
-	if(unentschieden) {
+	if (unentschieden) {
 		gameOverText.innerHTML = 'Unentschieden. Es gibt keine Karten mehr.';
 		return;
 	}
 
 	if (player1 == playerUsername) {
-		if(winner == 1) {
+		if (winner == 1) {
 			gameOverText.innerHTML = 'Sie haben gewonnen!';
-		}else{
+		} else {
 			gameOverText.innerHTML = 'Sie haben verloren!';
 		}
 	} else if (player2 == playerUsername) {
@@ -558,7 +558,7 @@ function serverCall(data) {
 				gameOver(msg.winner, msg.player1Username, msg.player2Username);
 			} else if (msg.art == 'stackfull') {
 				console.log(msg);
-				// HIER ANIMATION EINBAUEN
+				animateStackFull(msg.trgt, mag.card);
 				if (msg.src == 'p1Drawstack|0' || msg.src == 'p2Drawstack|0') {
 					renderCards(msg.newcard, msg.src);
 				}
@@ -571,6 +571,57 @@ function serverCall(data) {
 			}
 		}
 	};
+}
+
+/**
+ * Animiert das einsortieren eines vollen Stapels in den Hauptstapel
+ * 
+ * @param {string} target 
+ * @param {object} card 
+ */
+function animateStackFull(target, card) {
+	const mainStack = document.getElementById('mainstack-dummy');
+	const fullStack = document.getElementById(target);
+	let startPosTop = fullStack.getBoundingClientRect().top;
+	let startPosLeft = fullStack.getBoundingClientRect().left;
+
+	let endPosLeft = mainStack.getBoundingClientRect().left;
+	let endPosTop = mainStack.getBoundingClientRect().top;
+
+	setTimeout(() => {
+		let node = document.createElement('div');
+		node.classList.add('card');
+		node.style.backgroundImage = 'url(/assets/utility/cards/png/1x/' + card.name + '.png)';
+		node.style.position = 'absolute';
+		node.style.top = startPosTop + 'px';
+		node.style.left = startPosLeft + 'px';
+		node.style.zIndex = 3333;
+		node.id = 'animation-card';
+
+		document.body.appendChild(node);
+
+		const dummyCard = document.getElementById('animation-card');
+
+		dummyCard.animate(
+			[
+				{
+					top: startPosTop + 'px',
+					left: startPosLeft + 'px',
+					transform: 'rotate(0deg)',
+				},
+				{
+					top: endPosTop + 'px',
+					left: endPosLeft + 'px',
+					transform: 'rotate(90deg)',
+				},
+			],
+			duration
+		);
+	}, 500);
+
+	setTimeout(function() {
+		dummyCard.remove();
+	}, 500);
 }
 
 /**

@@ -95,7 +95,8 @@ function confirmFriendship(friendName) {
 			if (data.success) {
                 getFriends();
 				const feedback = document.getElementById('async-feedback');
-				feedback.innerHTML = `<p class='alert alert-success'>Freundschaft wurde bestätigt</p>`;
+				feedback.classList.add('async-feedback--flash');
+				feedback.innerHTML = `<p class='async-feedback__text'>Freundschaft wurde bestätigt</p>`;
 			} else {
 				console.log(data.errors);
 			}

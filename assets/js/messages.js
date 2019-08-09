@@ -78,6 +78,7 @@ function renderSingleMessage(msg) {
 	const domMsgTitle = document.getElementById('msg-title');
 	const domMsgSender = document.getElementById('msg-sender');
 	const domMsgBody = document.getElementById('msg-body');
+	const nemMsgBtn = document.getElementById('profile-msgs__new-msg');
 
 	if (msg.msg_title == 'Freundschaftseinladung') {
 		const buttonArea = document.getElementById('specialpurpose');
@@ -94,6 +95,7 @@ function renderSingleMessage(msg) {
 	}
 	recipientUserName = msg.user_name;
 	domTableBody.classList.add('hide');
+	nemMsgBtn.classList.add('hide');
 	domMsgBox.classList.remove('hide');
 	domMsgTitle.innerHTML = msg.msg_title;
 	domMsgSender.innerHTML = 'von: '+msg.user_name;

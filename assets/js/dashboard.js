@@ -16,8 +16,13 @@ document.addEventListener(
 		profileSettBackBtn.addEventListener('click', backToProfileViewFromSett);
 		profileDeleteConfirmBtn.addEventListener('click', deleteProfile);
 		settingsBtn.addEventListener('click', showSettings);
-		infoBtn.addEventListener('click', showGameInfo);
-		leaveBtn.addEventListener('click', showGameLeave);
+		if (document.getElementById('game-info')) {
+			infoBtn.addEventListener('click', showGameInfo);
+			leaveBtn.addEventListener('click', showGameLeave);
+		}
+		if (document.getElementById('dashboard-close-btn-nav')) {
+			document.getElementById('dashboard-close-btn-nav').addEventListener('click', hideDashboard);
+		}
 		saveBtn.addEventListener('click', saveProfile);
 		document.addEventListener('click', differentActions);
 		if (document.getElementById('dashboard-close-btn')) {
@@ -51,6 +56,12 @@ function showDashboard() {
 			btn.classList.add('hide');
 		});
 	}
+	if (document.getElementById('navbar')) {
+		const closeBtn = document.getElementById('dashboard-close-btn-nav');
+		const navBar = document.getElementById('navbar');
+		navBar.classList.add('hide');
+		closeBtn.classList.remove('hide');
+	}
 	dashboard.classList.remove('hide');
 	dashboard.classList.add('show');
 }
@@ -61,18 +72,33 @@ function showDashboard() {
  * Schliess-Button wird versteckt
  */
 function hideDashboard() {
-	const gameMenuCloseBtn = document.getElementById('dashboard-close-btn');
-	const otherGameMenuBtns = document.querySelectorAll('.game-menu__btn');
-	otherGameMenuBtns.forEach(btn => {
-		btn.classList.remove('hide');
-	});
-	dashboard.classList.add('hider');
-	gameMenuCloseBtn.classList.add('hide');
-	setTimeout(() => {
-		dashboard.classList.add('hide');
-		dashboard.classList.remove('hider');
-	}, 900);
-	dashboard.classList.remove('show');
+	if (document.getElementById('navbar')) {
+		const closeBtn = document.getElementById('dashboard-close-btn-nav');
+		const navBar = document.getElementById('navbar');
+		navBar.classList.remove('hide');
+		closeBtn.classList.add('hide');
+
+		dashboard.classList.add('hider');
+
+		setTimeout(() => {
+			dashboard.classList.add('hide');
+			dashboard.classList.remove('hider');
+		}, 900);
+		dashboard.classList.remove('show');
+	} else {
+		const gameMenuCloseBtn = document.getElementById('dashboard-close-btn');
+		const otherGameMenuBtns = document.querySelectorAll('.game-menu__btn');
+		otherGameMenuBtns.forEach(btn => {
+			btn.classList.remove('hide');
+		});
+		dashboard.classList.add('hider');
+		gameMenuCloseBtn.classList.add('hide');
+		setTimeout(() => {
+			dashboard.classList.add('hide');
+			dashboard.classList.remove('hider');
+		}, 900);
+		dashboard.classList.remove('show');
+	}
 }
 
 /**
@@ -90,6 +116,8 @@ function differentActions(e) {
 		getMessages();
 		const domTable = document.getElementById('msg-table');
 		const domMsgBox = document.getElementById('single-msg');
+		const nemMsgBtn = document.getElementById('profile-msgs__new-msg');
+		nemMsgBtn.classList.remove('hide');
 		domTable.classList.remove('hide');
 		domMsgBox.classList.add('hide');
 	}
@@ -127,7 +155,7 @@ function differentActions(e) {
 		deleteFriend(friendName);
 	}
 	// Freundschaftsanfrage verschicken
-	else if (e.target.classList.contains('new-friend-btn')) {
+	else if (e.target.classList.contains('profile-friends__add-friend')) {
 		const domMsgForm = document.getElementById('send-msg-form-wrapper');
 
 		domMsgForm.classList.remove('hide');

@@ -9,19 +9,19 @@
 
                 <div class="msg__form-group">
                     <label for="send-msg-recipient">Empfänger</label>
-                    <input value=""  type="text" class="form-control" id="send-msg-recipient"  placeholder="Empfänger">
+                    <input value=""  type="text"  id="send-msg-recipient"  placeholder="Empfänger">
                     <div class="error-box" id="recipient-error"></div>
                 </div>
 
                 <div class="msg__form-group">
                     <label for="send-msg-title">Titel</label>
-                    <input value="" type="text" class="form-control" id="send-msg-title"  placeholder="Hier den Titel reinschreiben">
+                    <input value="" type="text"  id="send-msg-title"  placeholder="Hier den Titel reinschreiben">
                     <div class="error-box" id="title-error"></div>
                 </div>
             
                 <div class="msg__form-group">
                     <label for="send-msg-body">Text</label>
-                    <textarea  class="form-control" id="send-msg-body" rows="8"></textarea>
+                    <textarea   id="send-msg-body" rows="8"></textarea>
                     <div class="error-box" id="body-error"></div>
                 </div>
 

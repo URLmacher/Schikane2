@@ -3,8 +3,15 @@ namespace Controllers;
 
 use \PDO;
 
+/**
+ * Kümmerts sich um alle Spielerelevanten Angelegenheiten
+ * Speichern von Karten,
+ * Austeilungen,
+ * Überprüfungen von Zügen
+ * Informierungen der Spieler
+ * Punktestände uvm.
+ */
 class GameController {
-
 
     private $playArea = [
         'playarea|0' => [],
@@ -52,37 +59,12 @@ class GameController {
     
         $this->playerHands['p1Hand|0'] = array_splice($cards, 0, 6);
         $this->playerHands['p2Hand|0'] = array_splice($cards, 0, 6);
-        // $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 14);
-        // $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 14);
-        $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 1);
-        $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 1);
+        $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 14);
+        $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 14);
         $this->mainStack = array_splice($cards,0,(count($cards)-1));
           
     }
 
-    /**
-     * Nur zum testen
-     * @return array $playerHands
-     */
-    public function getHands() {
-        return $this->playerHands;
-    }
-
-    /**
-     * Nur zum testen
-     * @return array $mainStack
-     */
-    public function getMainStack() {
-        return $this->mainStack;
-    }
-
-    /**
-     * Nur zum testen
-     * @return int $currentPlayer
-     */
-    public function getCurrentPlayer() {
-        return $this->currentPlayer;
-    }
 
     /**
      * Meldet die Spieler an
@@ -300,7 +282,7 @@ class GameController {
                 $this->backToMainStack($this->playArea[$in]);
 
                 $msg = [
-                    'art' => 'stackfull',
+                    'art' => 'stackfull', 
                     'debug' => 'Hand - Karte - Playarea - wenn Karte um 1 höher',
                     'src' => $out,
                     'trgt' => $in,

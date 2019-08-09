@@ -9,8 +9,9 @@
     <link rel="icon" type="image/png" sizes="96x96" href="<?php echo base_url(); ?>assets/images/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/images/favicon-16x16.png">
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/bootstrap.css">
-     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/dashboard.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/dashboard.css">
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/main.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/utility.css">
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.js" ></script>
     <script src="<?php echo base_url(); ?>assets/js/popper.min.js" ></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" ></script>
@@ -22,16 +23,16 @@
     ?>
 
     <?php if($this->session->flashdata('user_registered')) : ?>
-        <?php echo "<p class='alert alert-success'>".$this->session->flashdata('user_registered')."</p>"; ?>
+        <?php echo "<p class='async-feedback async-feedback--flash'>".$this->session->flashdata('user_registered')."</p>"; ?>
     <?php endif; ?>
     <?php if($this->session->flashdata('user_loggedin')) : ?>
-        <?php echo "<p class='alert alert-success'>".$this->session->flashdata('user_loggedin')."</p>"; ?>
+        <?php echo "<p class='async-feedback async-feedback--flash'>".$this->session->flashdata('user_loggedin')."</p>"; ?>
     <?php endif; ?>
     <?php if($this->session->flashdata('login_failed')) : ?>
-        <?php echo "<p class='alert alert-danger'>".$this->session->flashdata('login_failed')."</p>"; ?>
+        <?php echo "<p class='async-feedback--bad async-feedback--flash'>".$this->session->flashdata('login_failed')."</p>"; ?>
     <?php endif; ?>
     <?php if($this->session->flashdata('user_loggedout')) : ?>
-        <?php echo "<p class='alert alert-success'>".$this->session->flashdata('user_loggedout')."</p>"; ?>
+        <?php echo "<p class='async-feedback async-feedback--flash'>".$this->session->flashdata('user_loggedout')."</p>"; ?>
     <?php endif; ?>
   
     <div id="async-feedback"></div>
@@ -46,3 +47,15 @@
     <?php
     $this->load->view('templates/other-profile');
     ?>
+     <ul class="suits">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>

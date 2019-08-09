@@ -1,6 +1,8 @@
 const searchBtn = document.getElementById('search');
 const player1 = document.getElementById('playerone');
 const inviteBtn = document.getElementById('friend-invite-btn');
+const friendlistBtn = document.getElementById('friend-dropdown');
+let dropdownOpen = false;
 
 let player2 = false;
 let ready = false;
@@ -15,10 +17,67 @@ document.addEventListener(
 	function() {
 		getFriendsGameSearch();
 		checkIfJoined();
+		alignDropdown();
 		searchBtn.addEventListener('click', searchGo);
+		friendlistBtn.addEventListener('click', showDropdow);
 	},
 	false
 );
+
+/**
+ * Versteckt das Dropdown hinterm Search-Container
+ */
+function alignDropdown() {
+	const parentKastelDimensions = document.getElementById('search-wrapper').getBoundingClientRect();
+	const searchFriendlist = document.getElementById('search-friendlist');
+
+	searchFriendlist.style.width = parentKastelDimensions.width + 'px';
+	searchFriendlist.style.top = parentKastelDimensions.top + 'px';
+	searchFriendlist.style.left = parentKastelDimensions.left + 'px';
+}
+
+/**
+ * Macht das Dropdown-Kastel auf und zu
+ */
+function showDropdow() {
+	const parentKastelDimensions = document.getElementById('search-wrapper').getBoundingClientRect();
+	const searchFriendlist = document.getElementById('search-friendlist');
+
+	let startPosTop = parentKastelDimensions.top;
+	let endPosTop = parentKastelDimensions.bottom;
+
+	if (!dropdownOpen) {
+		searchFriendlist.classList.remove('hide');
+		searchFriendlist.animate(
+			[
+				{
+					top: startPosTop + 'px',
+				},
+				{
+					top: endPosTop + 'px',
+				},
+			],
+			{ duration: 200, fill: 'forwards' }
+		);
+		dropdownOpen = true;
+	} else {
+		searchFriendlist.animate(
+			[
+				{
+					top: endPosTop + 'px',
+				},
+				{
+					top: startPosTop + 'px',
+				},
+			],
+			{ duration: 200, fill: 'forwards' }
+		);
+		dropdownOpen = false;
+		setTimeout(() => {
+			searchFriendlist.classList.add('hide');
+		}, 200);
+	}
+}
 
 /**
  * Der 'Bereit'-Button wird abgehört
@@ -51,10 +110,13 @@ document.addEventListener('click', function(e) {
 	}
 });
 
+/**
+ * Überprüft, ob schon wer beigetreten ist
+ */
 function checkIfJoined() {
 	const urlPart = window.location.pathname;
-	if(urlPart.indexOf('join') !== -1){
-		const username = urlPart.replace('/join/', '')
+	if (urlPart.indexOf('join') !== -1) {
+		const username = urlPart.replace('/join/', '');
 		interval2 = setInterval(function() {
 			searchPlayer2(username);
 		}, 1000);
@@ -63,22 +125,34 @@ function checkIfJoined() {
 
 /**
  * Zeigt Freunde im Dropdown-Menü an
- * 
- * @param {object} data 
+ *
+ * @param {object} data
  */
 function renderSearchFriends(data) {
-	const friendlist = document.getElementById('search-friendlist');
-	friendlist.innerHTML = '';
-	data.forEach(el => {
-		let anchor = document.createElement('a');
-		let online = el.online == 1 ? 'online':'offline';
-		anchor.classList.add('dropdown-item');
-		anchor.classList.add('flex-justify');
-		anchor.classList.add('send-invite');
-		anchor.dataset.username = el.user_name;
-		anchor.innerHTML = `${el.user_name}<span class="online-indicator">${online}</span>`
-		friendlist.appendChild(anchor);
-	});
+	const friendlistTable = document.getElementById('search-friendlist__table__body');
+	if (data.length > 0) {
+		friendlistTable.innerHTML = '';
+		data.forEach(friend => {
+			let friendTable;
+			let tableRow = document.createElement('TR');
+			tableRow.className = 'search-friendlist__table__row';
+			tableRow.style.height = '2rem';
+
+			friendTable = `
+					<td class="table__data ">
+						<span class="view-profile">${friend.user_name}</span>
+					</td>
+					<td class="table__data">
+						<div class="online-${friend.online} table__data--small"></div>
+					</td>
+					<td class="table__data table__data--small">
+						<div data-username="${friend.user_name}" class="send-invite">Einladen</div>
+					</td>
+				`;
+			tableRow.innerHTML = friendTable;
+			friendlistTable.appendChild(tableRow);
+		});
+	}
 }
 
 /**
@@ -128,7 +202,7 @@ function startCountdown() {
 	const player2Dom = document.getElementById('playertworeadyindicator');
 	player2Dom.className = 'ready';
 	player2Dom.innerHTML = 'Bereit';
-	let timeleft = 3;
+	let timeleft = 4;
 	let gameStartTimer = setInterval(function() {
 		document.getElementById('countdown').innerHTML = 'Spiel startet in: ' + timeleft;
 		timeleft -= 1;
@@ -147,7 +221,7 @@ function startCountdown() {
  */
 function renderReady(player2) {
 	const searchBar = document.getElementById('searching');
-	if(searchBar) {
+	if (searchBar) {
 		searchBar.remove();
 	}
 	const btnBox = document.getElementById('button-box');
@@ -165,10 +239,10 @@ function renderReady(player2) {
 	player1Dom.innerHTML = span1;
 	player2Dom.innerHTML = span2;
 
-	player2Name.innerHTML = player2;
+	player2Name.innerHTML = `<span class="view-profile view-profile-search">${player2}</span>`;
 
 	let btn = `
-        <button id="readybtn" class="btn btn-primary">Bereit</button>
+        <button id="readybtn" class="btn">Bereit</button>
     `;
 
 	btnBox.innerHTML = btn;
@@ -181,7 +255,7 @@ function renderReady(player2) {
  * Beendet die Suche
  */
 function searchPlayer2(username = false) {
-	if(username) {
+	if (username) {
 		let data = new FormData();
 		data.append('username', username);
 		let xhr = new XMLHttpRequest();
@@ -194,12 +268,12 @@ function searchPlayer2(username = false) {
 					player2 = data.player2;
 					clearInterval(interval2);
 					renderReady(data.player2);
-				}else{
+				} else {
 					console.log(data);
 				}
 			}
 		};
-	}else{
+	} else {
 		let xhr = new XMLHttpRequest();
 		xhr.open('GET', base_url + '/search');
 		xhr.send();
