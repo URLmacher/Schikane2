@@ -189,6 +189,9 @@
 	padding: 1.6rem;
 	font-size: 1.5rem;
 }
+.game-over__btn-box{
+	width:53rem;
+}
 .wrapper {
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -626,6 +629,12 @@
 	opacity: 0;
 	-webkit-transition: visibility 0s 0.8s, opacity 0.8s linear;
 	transition: visibility 0s 0.8s, opacity 0.8s linear;
+}
+.loading-screen__noaccess{
+	margin-top: 4rem;
+}
+.loading-screen__noaccess__text{
+	margin-bottom: 4rem;
 }
 .message-container {
 	position: absolute;

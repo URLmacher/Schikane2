@@ -59,8 +59,11 @@ class GameController {
     
         $this->playerHands['p1Hand|0'] = array_splice($cards, 0, 6);
         $this->playerHands['p2Hand|0'] = array_splice($cards, 0, 6);
-        $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 14);
-        $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 14);
+        // $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 14);
+        // $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 14);
+        // Zur Demonstration nur eine Karte im Playstack
+        $this->drawStacks['p1Drawstack|0'] = array_splice($cards, 0, 1);
+        $this->drawStacks['p2Drawstack|0'] = array_splice($cards, 0, 1);
         $this->mainStack = array_splice($cards,0,(count($cards)-1));
           
     }
@@ -240,7 +243,7 @@ class GameController {
             return $msg;
         }
         // Hand - Ass - Playarea - wenn leer
-        if( $srcArr == $this->playerHands[$out]
+        if( $srcArr == @$this->playerHands[$out]
             && array_key_exists($in, $this->playArea)
             && $card->value == 1
             && count($trgtArr) == 0) 
@@ -258,8 +261,8 @@ class GameController {
                 'srcArr' => $srcArr,
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
-                'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],1),
-                'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],2),
+                'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],$out,1),
+                'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],$out,2),
                 'card' => $card,
             ];
             return $msg;
@@ -267,7 +270,7 @@ class GameController {
         }
         
         // Hand - Karte - Playarea - wenn Karte um 1 höher
-        else if( $srcArr == $this->playerHands[$out]
+        else if( $srcArr == @$this->playerHands[$out]
             && array_key_exists($in, $this->playArea)
             && count($trgtArr) != 0 
             && $card->value != 'any'
@@ -291,8 +294,8 @@ class GameController {
                     'srcArr' => $srcArr,
                     'player1Username' => $this->playerOne,
                     'player2Username' => $this->playerTwo,
-                    'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],1),
-                    'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],2),
+                    'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],$out,1),
+                    'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],$out,2),
                     'abheben' => false
                 ];
             
@@ -308,8 +311,8 @@ class GameController {
                     'srcArr' => $srcArr,
                     'player1Username' => $this->playerOne,
                     'player2Username' => $this->playerTwo,
-                    'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],1),
-                    'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],2),
+                    'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],$out,1),
+                    'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],$out,2),
                     'card' => $card
                 ];
                 
@@ -319,7 +322,7 @@ class GameController {
         }
 
         // Hand - Joker - Playarea - wenn nicht leer
-        else if( $srcArr == $this->playerHands[$out]
+        else if( $srcArr == @$this->playerHands[$out]
             && array_key_exists($in, $this->playArea)
             && count($trgtArr) != 0 
             && count($trgtArr) != 12
@@ -344,8 +347,8 @@ class GameController {
                     'srcArr' => $srcArr,
                     'player1Username' => $this->playerOne,
                     'player2Username' => $this->playerTwo,
-                    'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],1),
-                    'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],2),
+                    'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],$out,1),
+                    'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],$out,2),
                     'abheben' => false
                 ];
             
@@ -361,8 +364,8 @@ class GameController {
                     'srcArr' => $srcArr,
                     'player1Username' => $this->playerOne,
                     'player2Username' => $this->playerTwo,
-                    'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],1),
-                    'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],2),
+                    'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],$out,1),
+                    'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],$out,2),
                     'card' => $card
                 ];
                 
@@ -372,7 +375,7 @@ class GameController {
         }
 
         // Hand - Karte - Spieler Eins Ablage - wenn nicht Joker
-        else if( $srcArr == $this->playerHands[$out]
+        else if( $srcArr == @$this->playerHands[$out]
             && array_key_exists($in, $this->trayStacks['p1Ablage'])
             && $card->value != 'any' )
         {
@@ -390,8 +393,8 @@ class GameController {
                 'abheben' => true,
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
-                'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],1,'roundend'),
-                'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],2,'roundend'),
+                'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],$out,1,'roundend'),
+                'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],$out,2,'roundend'),
                 'msgP1' => 'nicht dran',
                 'msgP2' => 'dran',
             ];
@@ -401,7 +404,7 @@ class GameController {
         
         }
         // Hand - Karte - Spieler Zwei Ablage - wenn nicht Joker
-        else if( $srcArr == $this->playerHands[$out]
+        else if( $srcArr == @$this->playerHands[$out]
             && array_key_exists($in, $this->trayStacks['p2Ablage'])
             && $card->value != 'any' )
         {
@@ -419,8 +422,8 @@ class GameController {
                 'abheben' => true,
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
-                'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],1,'roundend'),
-                'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],2,'roundend'),
+                'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],$out,1,'roundend'),
+                'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],$out,2,'roundend'),
                 'msgP1' => 'dran',
                 'msgP2' => 'nicht dran',
             ];
@@ -431,7 +434,7 @@ class GameController {
         }
 
         // Hand - Joker - Joker-Ablage - wenn Joker
-        else if( $srcArr == $this->playerHands[$out]
+        else if( $srcArr == @$this->playerHands[$out]
             && array_key_exists($in, $this->jokerStacks)
             && $card->value == 'any' )
         {
@@ -449,8 +452,8 @@ class GameController {
                 'trgtfull' => false,
                 'player1Username' => $this->playerOne,
                 'player2Username' => $this->playerTwo,
-                'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],1),
-                'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],2),
+                'abhebenP1' => $this->abhebenAllowed($this->playerHands[$out],$out,1),
+                'abhebenP2' => $this->abhebenAllowed($this->playerHands[$out],$out,2),
                 'dran' => true,
                 'trgtArr' => $trgtArr,
                 'srcArr' => $srcArr,
@@ -598,7 +601,7 @@ class GameController {
         }
 
         // Joker-Ablage - Joker - Playarea - wenn nicht leer
-        else if( $srcArr == $this->jokerStacks[$out]
+        else if( $srcArr == @$this->jokerStacks[$out]
             && array_key_exists($in, $this->playArea)
             && count($trgtArr) != 0
             && count($trgtArr) != 12
@@ -645,7 +648,7 @@ class GameController {
         }
 
         // Draw-Stack - Ass - Playarea - wenn leer
-        else if( $srcArr == $this->drawStacks[$out]
+        else if( $srcArr == @$this->drawStacks[$out]
             && array_key_exists($in, $this->playArea)
             && count($trgtArr) == 0
             && $card->value == 1 ) 
@@ -699,7 +702,7 @@ class GameController {
         }
 
         // Draw-Stack - Karte - Playarea - wenn um 1 höher
-        else if( $srcArr == $this->drawStacks[$out]
+        else if( $srcArr == @$this->drawStacks[$out]
             && array_key_exists($in, $this->playArea)
             && count($trgtArr) != 0
             && $card->value != 'any'
@@ -773,7 +776,7 @@ class GameController {
         }
 
         // Draw-Stack - Joker - Playarea - wenn nicht leer
-        else if( $srcArr == $this->drawStacks[$out]
+        else if( $srcArr == @$this->drawStacks[$out]
             && array_key_exists($in, $this->playArea)
             && count($trgtArr) != 0
             && count($trgtArr) != 12
@@ -848,7 +851,7 @@ class GameController {
         }
 
         // Draw-Stack - Joker - JokerAblage- wenn Joker
-        else if( $srcArr == $this->drawStacks[$out] 
+        else if( $srcArr == @$this->drawStacks[$out] 
             && array_key_exists($in, $this->jokerStacks)
             && $card->value == 'any'  ) 
         {
@@ -1043,13 +1046,13 @@ class GameController {
      * anhand dem betroffenen Array
      *
      * @param string $srcArr
+     * @param string $key
      * @param int $playerNum
      * @param bool $roundend
      * @return bool
      */
-    public function abhebenAllowed($srcArr,$playerNum,$roundend = false) {
-        $key = key ( $srcArr );
-        echo $key;
+    public function abhebenAllowed($srcArr,$key,$playerNum,$roundend = false) {
+        
         if( $roundend ) {
             $otherPlayerKey = 'p'.$playerNum.'Hand|0';
             if(strpos( $key, $playerNum ) == false 
@@ -1059,7 +1062,7 @@ class GameController {
             }
             return false;
         }
-        if( strpos( $key, $playerNum ) != false && count($srcArr) == 1 ) {
+        if( strpos( $key, $playerNum ) != false && count($srcArr) == 0 ) {
            return true;
         }
         return false;
@@ -1083,7 +1086,7 @@ class GameController {
     }
 
     /**
-     * Aktuliesiert die Siege und Verlierungen der Spieler nach Spielende
+     * Aktualisiert die Siege und Verlierungen der Spieler nach Spielende
      *
      * @param string $winner
      * @param string $loser

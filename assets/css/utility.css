@@ -123,6 +123,7 @@ a {
 	background: var(--color-dark-red);
 	color: var(--color-bright-white);
 	margin: 1rem 0 1rem 0;
+	font-size: inherit;
 }
 .btn--bad:hover {
 	-webkit-box-shadow: var(--card-shadow);
@@ -186,10 +187,11 @@ a {
 	opacity: 0;
 	background: var(--color-positive);
 	position: absolute;
-	z-index: 5448;
+	top:0;
 	-webkit-transform: translateY(-5px);
 	transform: translateY(-5px);
-	z-index: 301;
+	z-index: 8301;
+	pointer-events: none;
 	padding: 1rem;
 	padding-left: 2rem;
 	-webkit-box-shadow: var(--card-shadow);
@@ -200,12 +202,13 @@ a {
 	opacity: 0;
 	background: var(--color-dark-red);
 	position: absolute;
-	z-index: 5448;
+	top:0;
 	-webkit-transform: translateY(-5px);
 	transform: translateY(-5px);
 	padding: 1rem;
 	padding-left: 2rem;
-	z-index: 301;
+	z-index: 8301;
+	pointer-events: none;
 	-webkit-box-shadow: var(--card-shadow);
 	box-shadow: var(--card-shadow);
 }
@@ -217,4 +220,60 @@ a {
 	-webkit-animation-iteration-count: 1;
 	animation-iteration-count: 1;
 }
-
+#specialpurpose{
+	display: flex;
+}
+@-webkit-keyframes flash {
+	0% {
+		opacity: 1;
+	}
+	10% {
+		opacity: 1;
+	}
+	90% {
+		opacity: 0;
+	}
+}
+@keyframes flash {
+	0% {
+		opacity: 1;
+	}
+	10% {
+		opacity: 1;
+	}
+	90% {
+		opacity: 0;
+	}
+}
+@-webkit-keyframes show {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes show {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@-webkit-keyframes hider {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes hider {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}

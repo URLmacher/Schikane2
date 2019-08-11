@@ -12,6 +12,11 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/dashboard.css">
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/main.css">
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/utility.css">
+    <?php 
+        if($this->session->userdata('user_name') != 'Heini'){ 
+            echo '<link rel="stylesheet" type="text/css" media="screen" href="'.base_url().'assets/css/alternate.css">';
+        }
+    ?>
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.js" ></script>
     <script src="<?php echo base_url(); ?>assets/js/popper.min.js" ></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" ></script>

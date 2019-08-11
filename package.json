@@ -1,0 +1,24 @@
+{
+	"name": "schikane2",
+	"version": "1.0.0",
+	"description": "1. Repo klonieren\r 2. Datenbank erstellen utf8_mb4_general_ci name schikane\r 3. Datenbank migrieren: php index.php migrate latest\r 4. websockets am server aktivieren extension=sockets in php.ini\r 5. vhost erstellen schikanezwei.loc od. $config['base_url'] in application/config/config.php anpassen\r 6. composer install\r 7. php connection.php im Hauptverzeichnis ausführen um Websockets zu starten\r 8. Website im Browser aufrufen",
+	"main": "index.html",
+	"scripts": {
+		"start": "run test && fest",
+		"test": "php connection.php",
+		"fest": "run php connection2.php"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/URLmacher/Schikane2.git"
+	},
+	"keywords": [
+		"schikane"
+	],
+	"author": "Patrick",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/URLmacher/Schikane2/issues"
+	},
+	"homepage": "https://github.com/URLmacher/Schikane2#readme"
+}

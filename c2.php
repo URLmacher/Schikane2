@@ -12,7 +12,6 @@ $game = new GameController($cards);
     function send( $message, $who ) {
       global $clientSocketArr;
 
-
       $message = $this->seal( $message );
       
       $len = strlen( $message );
@@ -85,7 +84,7 @@ $game = new GameController($cards);
   $chatHandler = new Connection();
 
   define( 'HOST', 'localhost' );
-  define( 'PORT', '5001' );
+  define( 'PORT', '5002' );
   $null = NULL;
 
   $clientid = 1;
@@ -97,7 +96,7 @@ $game = new GameController($cards);
 
   $clientSocketArr = array( $socket );
 
-  echo 'SocketServer auf Port 5001 läuft.
+  echo 'SocketServer auf Port 5002 läuft.
 ';
 
   

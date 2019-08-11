@@ -3,13 +3,27 @@
 
         /**
          * Erstellt Spiel-Bildschirm
+         * setzt Werte zurück
          *
          * @return void
          */
         public function render(){
-               
+            $this->User_model->resetValues($this->session->userdata('user_id'));
             $this->load->view('templates/gameheader');
             $this->load->view('pages/game');
+            $this->load->view('templates/gamefooter');
+        }
+
+        /**
+         * Erstellt Spiel-Bildschirm
+         * setzt Werte zurück
+         *
+         * @return void
+         */
+        public function rerender(){
+            $this->User_model->resetValues($this->session->userdata('user_id'));
+            $this->load->view('templates/gameheader');
+            $this->load->view('pages/game2');
             $this->load->view('templates/gamefooter');
         }
 
@@ -55,6 +69,31 @@
             $this->User_model->setReady($this->session->userdata('user_id'));
             $playersReady = $this->User_model->getReady($json);
             $data['ready'] = $playersReady;
+            echo json_encode($data);
+        }
+
+        /**
+         * Überprüft, ob einer der beiden Spieler bereit ist
+         *
+         * @return JSON
+         */
+        public function checkready() {
+            $player2 = $this->input->post('player2');
+            $player1ready = $this->User_model->getReady($this->session->userdata('user_name'));
+            $player2ready = $this->User_model->getReady($player2);
+            $data['readyP1'] = $player1ready;
+            $data['readyP2'] = $player2ready;
+            echo json_encode($data);
+        }
+
+        /**
+         * Setzt den User auf bereit
+         *
+         * @return JSON
+         */
+        public function setready() {
+            $this->User_model->setReady($this->session->userdata('user_id'));
+            $data['success'] = 'true';
             echo json_encode($data);
         }
 

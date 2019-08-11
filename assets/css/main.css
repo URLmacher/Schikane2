@@ -1,4 +1,4 @@
-body{
+body {
 	overflow-y: hidden;
 	height: 104vh !important;
 }
@@ -15,13 +15,37 @@ body{
 	text-align: right;
 	width: 100%;
 }
+.navbar-username {
+	position: absolute;
+	right: 2rem;
+	top: 2rem;
+	font-size: 2rem;
+	font-weight: 500;
+	color: var(--color-dark-black);
+	transition: var(--transition-standard);
+	cursor: pointer;
+}
+.navbar-username::before {
+	content: '';
+	background-image: url(../images/user-dark.svg);
+	width: 2rem;
+	height: 2rem;
+	background-size: contain;
+	background-repeat: no-repeat;
+	position: absolute;
+	left: -3rem;
+	top: .6rem;
+}
+.navbar-username:hover {
+	transform: scale(1.1);
+}
 .form-group {
 	position: relative;
 }
-.dashboard{
+.dashboard {
 	top: 0;
 }
-.msg__wrapper{
+.msg__wrapper {
 	top: 0;
 }
 .navbar {
@@ -369,7 +393,7 @@ label {
 	width: 20px;
 	height: 20px;
 	-webkit-animation: suit-anim 25s linear infinite;
-	        animation: suit-anim 25s linear infinite;
+	animation: suit-anim 25s linear infinite;
 	bottom: -150px;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -379,7 +403,7 @@ label {
 	width: 60px;
 	height: 60px;
 	-webkit-animation-delay: 0s;
-	        animation-delay: 0s;
+	animation-delay: 0s;
 	background-image: url(../images/back-suit-2.svg);
 	fill: #e42929;
 	background-size: contain;
@@ -389,9 +413,9 @@ label {
 	width: 20px;
 	height: 20px;
 	-webkit-animation-delay: 2s;
-	        animation-delay: 2s;
+	animation-delay: 2s;
 	-webkit-animation-duration: 12s;
-	        animation-duration: 12s;
+	animation-duration: 12s;
 	background-image: url(../images/back-suit-4.svg);
 }
 .suits li:nth-child(3) {
@@ -399,7 +423,7 @@ label {
 	width: 20px;
 	height: 20px;
 	-webkit-animation-delay: 4s;
-	        animation-delay: 4s;
+	animation-delay: 4s;
 	background-image: url(../images/back-suit-1.svg);
 }
 .suits li:nth-child(4) {
@@ -407,9 +431,9 @@ label {
 	width: 60px;
 	height: 60px;
 	-webkit-animation-delay: 0s;
-	        animation-delay: 0s;
+	animation-delay: 0s;
 	-webkit-animation-duration: 18s;
-	        animation-duration: 18s;
+	animation-duration: 18s;
 	background-image: url(../images/back-suit-3.svg);
 }
 .suits li:nth-child(5) {
@@ -417,7 +441,7 @@ label {
 	width: 20px;
 	height: 20px;
 	-webkit-animation-delay: 0s;
-	        animation-delay: 0s;
+	animation-delay: 0s;
 	background-image: url(../images/back-suit-3.svg);
 }
 .suits li:nth-child(6) {
@@ -425,7 +449,7 @@ label {
 	width: 60px;
 	height: 60px;
 	-webkit-animation-delay: 3s;
-	        animation-delay: 3s;
+	animation-delay: 3s;
 	background-image: url(../images/back-suit-4.svg);
 }
 .suits li:nth-child(7) {
@@ -433,7 +457,7 @@ label {
 	width: 60px;
 	height: 60px;
 	-webkit-animation-delay: 7s;
-	        animation-delay: 7s;
+	animation-delay: 7s;
 	background-image: url(../images/back-suit-1.svg);
 }
 .suits li:nth-child(8) {
@@ -441,9 +465,9 @@ label {
 	width: 20px;
 	height: 20px;
 	-webkit-animation-delay: 15s;
-	        animation-delay: 15s;
+	animation-delay: 15s;
 	-webkit-animation-duration: 45s;
-	        animation-duration: 45s;
+	animation-duration: 45s;
 	background-image: url(../images/back-suit-3.svg);
 }
 .suits li:nth-child(9) {
@@ -451,9 +475,9 @@ label {
 	width: 60px;
 	height: 60px;
 	-webkit-animation-delay: 2s;
-	        animation-delay: 2s;
+	animation-delay: 2s;
 	-webkit-animation-duration: 35s;
-	        animation-duration: 35s;
+	animation-duration: 35s;
 	background-image: url(../images/back-suit-2.svg);
 }
 .suits li:nth-child(10) {
@@ -461,22 +485,22 @@ label {
 	width: 20px;
 	height: 20px;
 	-webkit-animation-delay: 0s;
-	        animation-delay: 0s;
+	animation-delay: 0s;
 	-webkit-animation-duration: 11s;
-	        animation-duration: 11s;
+	animation-duration: 11s;
 	background-image: url(../images/back-suit-1.svg);
 }
 @-webkit-keyframes suit-anim {
 	0% {
 		-webkit-transform: translateY(0) rotate(0deg);
-		        transform: translateY(0) rotate(0deg);
+		transform: translateY(0) rotate(0deg);
 		opacity: 0.8;
 		border-radius: 0;
 	}
 
 	100% {
 		-webkit-transform: translateY(-1000px) rotate(720deg);
-		        transform: translateY(-1000px) rotate(720deg);
+		transform: translateY(-1000px) rotate(720deg);
 		opacity: 0;
 		border-radius: 50%;
 	}
@@ -484,14 +508,14 @@ label {
 @keyframes suit-anim {
 	0% {
 		-webkit-transform: translateY(0) rotate(0deg);
-		        transform: translateY(0) rotate(0deg);
+		transform: translateY(0) rotate(0deg);
 		opacity: 0.8;
 		border-radius: 0;
 	}
 
 	100% {
 		-webkit-transform: translateY(-1000px) rotate(720deg);
-		        transform: translateY(-1000px) rotate(720deg);
+		transform: translateY(-1000px) rotate(720deg);
 		opacity: 0;
 		border-radius: 50%;
 	}

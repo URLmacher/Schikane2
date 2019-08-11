@@ -1,0 +1,27 @@
+* {
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+	margin: 0;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	--card-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+	--card-border: 2px solid rgb(47, 46, 46);
+	--card-border-radius: 12px;
+	--big-border-radius: 40px;
+	--card-height: 215px;
+	--card-width: 15rem;
+	--joker-background: rgba(214, 42, 94, 0.719);
+	--ablage-background: rgba(205, 255, 216, 0.719);
+	--color-btn-primary: rgba(63, 63, 103, 0.81);
+	--color-positive: rgb(112, 228, 91);
+	--color-dark-red: #d429e4;
+	--color-bright-red: #e66eb8;
+	--color-bright-white: #f2ecd9;
+	--color-bright-grey: #575757;
+	--color-very-bright-grey: rgb(218, 218, 218);
+	--color-dark-black: #1d1d1d;
+	--color-semitrans-overlay: #1d1d1d94;
+	--transition-standard: all 0.3s ease-in-out;
+	--transition-fade-in: opacity 0.6s ease-in-out;
+	--display-radius: 30px;
+}

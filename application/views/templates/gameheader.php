@@ -18,6 +18,10 @@
         <div class="loading-screen" id="loading-screen">
             <img class="loading-screen__logo" src="assets\images\logo.svg" alt="logo-loadingscreen">
             <div class="loading-screen__loading-bar"></div>
+            <div class="loading-screen__noaccess hide">
+                <p class="loading-screen__noaccess__text">Sie versuchen einer laufenden Sitzung beizutreten.</p>
+                <a href="<?php echo base_url(); ?>" class="btn loading-screen__noaccess__btn">Zurück zum Hauptmenü</a>
+            </div>
         </div>
         <div id="message-container" class="message-container ">
             <div id="message-container__message-box" class="message-container__message-box">

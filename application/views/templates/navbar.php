@@ -33,6 +33,6 @@
         <?php endif; ?>
         </ul>
     </div>
+    <div class="navbar-username" id="username-to-dashboard"><?php echo $this->session->userdata('user_name'); ?></div>
 </nav>
-        
 <div class="dashboard-close-btn-nav hide" id="dashboard-close-btn-nav"></div>

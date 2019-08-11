@@ -502,7 +502,7 @@ function spielerVergabe() {
  * @param {array} data
  */
 function serverCall(data) {
-	websocket = new WebSocket('ws://localhost:5001');
+	websocket = new WebSocket('ws://localhost:5002');
 	websocket.onopen = function() {
 		websocket.send(JSON.stringify(data));
 		console.log('Verbindung zum Server hergestellt.');

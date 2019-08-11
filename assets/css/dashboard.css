@@ -56,6 +56,7 @@
 	margin: 2rem;
 	font-size: 2.3rem;
 	color: var(--color-dark-black);
+	font-weight: 600;
 }
 /* PROFILE */
 .own-profile {
@@ -174,7 +175,7 @@
 .table {
 	width: 100%;
 	height: 100%;
-	table-layout: fixed;
+	font-size: 1rem;
 }
 .table__header {
 	text-align: left;
@@ -244,7 +245,6 @@
 }
 .profile-msgs {
 	margin: 2rem;
-	height: 70%;
 }
 .view-msg {
 	font-size: 12px;
@@ -266,7 +266,7 @@
 }
 .profile-msgs__single-msg {
 	position: absolute;
-	width: 100%;
+	width: 95%;
 	margin: auto;
 	border: 4 px solid var(--color-bright-red);
 	border-radius: var(--big-border-radius);
@@ -567,60 +567,7 @@
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 } */
-@-webkit-keyframes flash {
-	0% {
-		opacity: 1;
-	}
-	10% {
-		opacity: 1;
-	}
-	90% {
-		opacity: 0;
-	}
-}
-@keyframes flash {
-	0% {
-		opacity: 1;
-	}
-	10% {
-		opacity: 1;
-	}
-	90% {
-		opacity: 0;
-	}
-}
-@-webkit-keyframes show {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-@keyframes show {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-@-webkit-keyframes hider {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
-}
-@keyframes hider {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
-}
+
 #user-messages::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px var(--color-dark-black);
 	background-color: var(--color-bright-white);

@@ -20,6 +20,9 @@ document.addEventListener(
 			infoBtn.addEventListener('click', showGameInfo);
 			leaveBtn.addEventListener('click', showGameLeave);
 		}
+		if (document.getElementById('username-to-dashboard')) {
+			document.getElementById('username-to-dashboard').addEventListener('click', showDashboard);
+		}
 		if (document.getElementById('dashboard-close-btn-nav')) {
 			document.getElementById('dashboard-close-btn-nav').addEventListener('click', hideDashboard);
 		}

@@ -5,6 +5,8 @@
          * Speichert Benutzerdaten
          * Überprüft Eingaben
          * Gibt Fehler zurück
+         * Setz Sessiondaten
+         * meldet an
          * Leitet zur Startseite weiter
          *
          * @return void
@@ -26,8 +28,27 @@
                 $enc_password = md5($this->input->post('password'));
                 $this->User_model->register($enc_password);
 
-                $this->session->set_flashdata('user_registered', 'Sie sind nun registriert.');
+             
+                $username = $this->input->post('user_name');
+                $password = md5($this->input->post('password'));
+                $user_data = $this->User_model->login($username, $password);
+
+                $session_data = array(
+                    'user_id' => $user_data['user_id'],
+                    'user_name' => $username, 
+                    'user_age' => $user_data['user_age'],
+                    'user_sex' => $user_data['user_sex'],
+                    'user_city' => $user_data['user_city'],
+                    'games_won' => $user_data['games_won'],
+                    'games_lost' => $user_data['games_lost'],
+                    'logged_in' => true
+                );
+                    
+                    
+                $this->session->set_userdata($session_data);
+                $this->session->set_flashdata('user_loggedin', 'Sie sind nun angemeldet.');
                 redirect('home');
+                
             }
         }
 
