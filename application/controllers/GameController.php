@@ -1062,7 +1062,7 @@ class GameController {
             }
             return false;
         }
-        if( strpos( $key, $playerNum ) != false && count($srcArr) == 0 ) {
+        if( strpos( $key, strval($playerNum) ) != false && count($srcArr) == 1 ) {
            return true;
         }
         return false;
