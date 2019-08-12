@@ -8,18 +8,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url(); ?>assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="<?php echo base_url(); ?>assets/images/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/images/favicon-16x16.png">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/dashboard.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/main.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/utility.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/dist/css/mainest.css">
     <?php 
         if($this->session->userdata('user_name') != 'Heini'){ 
             echo '<link rel="stylesheet" type="text/css" media="screen" href="'.base_url().'assets/css/alternate.css">';
         }
     ?>
-    <script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.js" ></script>
-    <script src="<?php echo base_url(); ?>assets/js/popper.min.js" ></script>
-    <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" ></script>
 </head>
 <body>
                    

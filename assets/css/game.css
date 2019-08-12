@@ -379,7 +379,7 @@
 	align-self: center;
 	height: var(--card-height);
 	width: var(--card-width);
-	background-image: url(../utility/cards/png/1x/back-fuchsia.png);
+	background-image: url(../images/back-fuchsia.png);
 	background-size: contain;
 	background-repeat: no-repeat;
 	-webkit-box-shadow: var(--card-shadow);

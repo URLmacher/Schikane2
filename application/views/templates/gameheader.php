@@ -9,9 +9,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="<?php echo base_url(); ?>assets/images/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url(); ?>assets/images/favicon-16x16.png">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/dashboard.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/game.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/css/utility.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url(); ?>assets/dist/css/schikane.css">
 </head>
     <body>
 

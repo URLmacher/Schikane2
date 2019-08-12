@@ -323,6 +323,7 @@
 /* MESSAGES */
 .msg__wrapper {
 	position: absolute;
+	top:0;
 	height: 100%;
 	width: 100%;
 	background: var(--color-semitrans-overlay);
@@ -398,6 +399,7 @@
 }
 /* OTHER PROFILES */
 .other-profile__wrapper {
+	top:0;
 	position: absolute;
 	height: 100%;
 	width: 100%;
