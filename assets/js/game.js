@@ -18,6 +18,7 @@ function playersChoice(e) {
 				abheben();
 			}
 		} else if (clickVerbot) {
+			writeSmallMessage('Abheben nicht vergessen!');
 			return;
 		} else if (domSrc.hasAttribute('data-hand')) {
 			chosenCard = e.target.dataset.id;
@@ -230,6 +231,21 @@ function animateAblegen(card, trgt, src, newcard, draw = false) {
 }
 
 /**
+ * Schreibt einen Hinweis, der nach kurzer Zeit verschwindet
+ * 
+ * @param {string} msg 
+ */
+function writeSmallMessage(msg) {
+	const tinyMsg = document.getElementById('game-tiny-message');
+	const tinyMsgText = document.getElementById('game-tiny-msg__text');
+	tinyMsg.classList.add('game-tiny-msg__flash');
+	tinyMsgText.innerHTML = msg;
+	setTimeout(function() {
+		tinyMsg.classList.remove('game-tiny-msg__flash');
+	}, 1000);
+}
+
+/**
  * Schreibt eine Nachricht in die Nachrichtenbox
  * sorgt dafür, dass die richtigen Spieler die richtige Nachricht erhalten
  * @param {string} msgP1
@@ -292,7 +308,7 @@ function changeMessage(big = false) {
  * Baut auch ein bisserl CSS ein, je nachdem wohin die Karten sollen
  *
  * @param {object} card
- * @param {*string} area
+ * @param {string} area
  */
 function renderCards(card, area) {
 	if (document.getElementById(area)) {
@@ -373,7 +389,7 @@ function gameOver(winner, player1, player2, unentschieden = false) {
  * Entfernt eine Karte oder alle Karten in einem Bereich
  *
  * @param {obj} card
- * @param {*string} area
+ * @param {string} area
  */
 function removeCards(card, area = false) {
 	if (area) {
@@ -395,8 +411,8 @@ function removeCards(card, area = false) {
 /**
  * Ruft den Server an, um den Zug auf Gültigkeit zu prüfen
  * @param {string} src
- * @param {*string} trgt
- * @param {*int} cardId
+ * @param {string} trgt
+ * @param {int} cardId
  */
 function ablegen(src, trgt, cardId) {
 	var msg = {
@@ -630,29 +646,6 @@ function animateStackFull(target, card) {
 	setTimeout(function() {
 		dummyCard.remove();
 	}, 500);
-}
-
-/**
- * Überprüft, ob ein String JSON ist
- * zum Zwecke der Fehlerunterdrückung
- *
- * @param {string} item
- * @return {bool}
- */
-function isJson(item) {
-	item = typeof item !== 'string' ? JSON.stringify(item) : item;
-
-	try {
-		item = JSON.parse(item);
-	} catch (e) {
-		return false;
-	}
-
-	if (typeof item === 'object' && item !== null) {
-		return true;
-	}
-
-	return false;
 }
 
 /**

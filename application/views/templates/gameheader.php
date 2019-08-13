@@ -23,7 +23,7 @@
         </div>
         <div id="message-container" class="message-container ">
             <div id="message-container__message-box" class="message-container__message-box">
-                <h3 id="message-container__message" class="message-container__message "></h3>
+                <h3 id="message-container__message" class="message-container__message "></h3> 
             </div>
         </div>
         <div class="game-menu">
@@ -31,6 +31,9 @@
             <div id="dashboard-btn" class="game-menu__btn"></div>
             <div id="game-leave" class="game-menu__btn"></div>
             <div id="dashboard-close-btn" class="game-menu__btn--close hide"></div>
+        </div>
+        <div class="game-tiny-msg" id="game-tiny-message">
+            <h3 class="game-tiny-msg__text" id="game-tiny-msg__text">Abheben nicht vergessen</h3>
         </div>
       
 

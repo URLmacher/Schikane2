@@ -34,7 +34,7 @@ body {
 	background-repeat: no-repeat;
 	position: absolute;
 	left: -3rem;
-	top: .6rem;
+	top: 0.6rem;
 }
 .navbar-username:hover {
 	transform: scale(1.1);
@@ -329,6 +329,7 @@ label {
 	position: relative;
 	width: 64px;
 	height: 64px;
+	transform: scale(1.2);
 }
 .lds-ring div {
 	-webkit-box-sizing: border-box;
