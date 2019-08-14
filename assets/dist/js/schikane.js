@@ -6,7 +6,7 @@ const base_url = window.location.origin;
  * Verschiedene Eventlistener zum Dashboard
  */
 document.addEventListener(
-	'DOMContentLoaded',
+	'DOMContentLoaded', 
 	function() {
 		dashboardBtn.addEventListener('click', showDashboard);
 		sendButton.addEventListener('click', sendMessage);
@@ -50,6 +50,7 @@ function showDashboard() {
 	getMessages();
 	getFriends();
 	renderWonAndLost();
+	getFreshStats();
 	if (document.getElementById('dashboard-close-btn')) {
 		const gameMenuCloseBtn = document.getElementById('dashboard-close-btn');
 		const otherGameMenuBtns = document.querySelectorAll('.game-menu__btn');
@@ -296,16 +297,14 @@ function renderSingleMessage(msg) {
 	if (msg.msg_title == 'Spieleinladung') {
 		const buttonArea = document.getElementById('specialpurpose');
 		const url = base_url + '/join';
-		buttonArea.innerHTML = `<a href="${url}/${
-			msg.user_name
-		}" class="join-game btn ">Spiel beitreten</a>`;
+		buttonArea.innerHTML = `<a href="${url}/${msg.user_name}" class="join-game btn ">Spiel beitreten</a>`;
 	}
 	recipientUserName = msg.user_name;
 	domTableBody.classList.add('hide');
 	nemMsgBtn.classList.add('hide');
 	domMsgBox.classList.remove('hide');
 	domMsgTitle.innerHTML = msg.msg_title;
-	domMsgSender.innerHTML = 'von: '+msg.user_name;
+	domMsgSender.innerHTML = 'von: ' + msg.user_name;
 	domMsgBody.innerHTML = msg.msg_body;
 }
 
@@ -343,6 +342,16 @@ function clearForm(errorsonly = false) {
 	} else {
 		const domMsgForm = document.getElementById('send-msg-form-wrapper');
 		const buttonArea = document.getElementById('specialpurpose');
+		const feedback = document.getElementById('async-feedback');
+		setTimeout(function() {
+			feedback.classList.remove('async-feedback--flash');
+		}, 4000);
+		if (document.querySelectorAll('.error-box')) {
+			const errors = document.querySelectorAll('.error-box');
+			errors.forEach(el => {
+				el.innerHTML = '';
+			});
+		}
 		buttonArea.innerHTML = '';
 		domMsgForm.classList.add('hide');
 		domRecipientInput.value = '';
@@ -398,8 +407,7 @@ function sendMessage(e) {
 			const data = JSON.parse(xhr.response);
 			if (data.success) {
 				const feedback = document.getElementById('async-feedback');
-				feedback.classList.add('async-feedback--flash')
-				feedback.classList.add('async-feedback');
+				feedback.classList.add('async-feedback--flash');
 				feedback.innerHTML = `Nachricht wurde verschickt`;
 				clearForm();
 			} else {
@@ -469,12 +477,12 @@ function seenOrNot(string) {
 /**
  * Überprüft, ob User gelöscht wurde
  * erlaubt/verbietet das ansehen von Profilen
- * 
- * @param {string} user_name 
+ *
+ * @param {string} user_name
  */
-function deletedorNot(user_name){
+function deletedorNot(user_name) {
 	let className = 'view-profile';
-	if(user_name == 'deleted') {
+	if (user_name == 'deleted') {
 		className = '';
 	}
 	return className;
@@ -795,13 +803,43 @@ function renderWonAndLost() {
 	const lostBar = document.getElementById('games-lost-bar');
 	const lost = document.getElementById('games-lost').textContent;
 	const wonBar = document.getElementById('games-won-bar');
-    const won = document.getElementById('games-won').textContent;
+	const won = document.getElementById('games-won').textContent;
 
-    const lostWidth = parseInt(lost) * 1 + 1.4;
-    const wonWidth = parseInt(won) * 1 + 1.4;
+	const lostWidth = parseInt(lost) * 1 + 1.4;
+	const wonWidth = parseInt(won) * 1 + 1.4;
 
-    lostBar.style.width = lostWidth+'rem';
-    wonBar.style.width = wonWidth+'rem';
+	lostBar.style.width = lostWidth + 'rem';
+	wonBar.style.width = wonWidth + 'rem';
+}
+
+/**
+ * Updates stats
+ */
+function getFreshStats() {
+	const lost = document.getElementById('games-lost');
+    const won = document.getElementById('games-won');
+    const lostBar = document.getElementById('games-lost-bar');
+    const wonBar = document.getElementById('games-won-bar');
+
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', base_url + '/profile/stats');
+	xhr.send();
+	xhr.onload = function() {
+		if (isJson(xhr.response)) {
+			const data = JSON.parse(xhr.response);
+			if (data.stats) {
+				lost.innerHTML = data.stats[0].games_lost;
+                won.innerHTML = data.stats[0].games_won;
+                const lostWidth = parseInt(data.stats[0].games_lost) * 1 + 1.4;
+				const wonWidth = parseInt(data.stats[0].games_won) * 1 + 1.4;
+
+				lostBar.style.width = lostWidth + 'rem';
+				wonBar.style.width = wonWidth + 'rem';
+			} else {
+				console.log('no Stats');
+			}
+		}
+	};
 }
 
 const editBtn = document.getElementById('profile-edit-btn');

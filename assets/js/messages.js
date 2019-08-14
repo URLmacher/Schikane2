@@ -89,16 +89,14 @@ function renderSingleMessage(msg) {
 	if (msg.msg_title == 'Spieleinladung') {
 		const buttonArea = document.getElementById('specialpurpose');
 		const url = base_url + '/join';
-		buttonArea.innerHTML = `<a href="${url}/${
-			msg.user_name
-		}" class="join-game btn ">Spiel beitreten</a>`;
+		buttonArea.innerHTML = `<a href="${url}/${msg.user_name}" class="join-game btn ">Spiel beitreten</a>`;
 	}
 	recipientUserName = msg.user_name;
 	domTableBody.classList.add('hide');
 	nemMsgBtn.classList.add('hide');
 	domMsgBox.classList.remove('hide');
 	domMsgTitle.innerHTML = msg.msg_title;
-	domMsgSender.innerHTML = 'von: '+msg.user_name;
+	domMsgSender.innerHTML = 'von: ' + msg.user_name;
 	domMsgBody.innerHTML = msg.msg_body;
 }
 
@@ -136,6 +134,16 @@ function clearForm(errorsonly = false) {
 	} else {
 		const domMsgForm = document.getElementById('send-msg-form-wrapper');
 		const buttonArea = document.getElementById('specialpurpose');
+		const feedback = document.getElementById('async-feedback');
+		setTimeout(function() {
+			feedback.classList.remove('async-feedback--flash');
+		}, 4000);
+		if (document.querySelectorAll('.error-box')) {
+			const errors = document.querySelectorAll('.error-box');
+			errors.forEach(el => {
+				el.innerHTML = '';
+			});
+		}
 		buttonArea.innerHTML = '';
 		domMsgForm.classList.add('hide');
 		domRecipientInput.value = '';
@@ -191,8 +199,7 @@ function sendMessage(e) {
 			const data = JSON.parse(xhr.response);
 			if (data.success) {
 				const feedback = document.getElementById('async-feedback');
-				feedback.classList.add('async-feedback--flash')
-				feedback.classList.add('async-feedback');
+				feedback.classList.add('async-feedback--flash');
 				feedback.innerHTML = `Nachricht wurde verschickt`;
 				clearForm();
 			} else {
@@ -262,12 +269,12 @@ function seenOrNot(string) {
 /**
  * Überprüft, ob User gelöscht wurde
  * erlaubt/verbietet das ansehen von Profilen
- * 
- * @param {string} user_name 
+ *
+ * @param {string} user_name
  */
-function deletedorNot(user_name){
+function deletedorNot(user_name) {
 	let className = 'view-profile';
-	if(user_name == 'deleted') {
+	if (user_name == 'deleted') {
 		className = '';
 	}
 	return className;

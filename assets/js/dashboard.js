@@ -6,7 +6,7 @@ const base_url = window.location.origin;
  * Verschiedene Eventlistener zum Dashboard
  */
 document.addEventListener(
-	'DOMContentLoaded',
+	'DOMContentLoaded', 
 	function() {
 		dashboardBtn.addEventListener('click', showDashboard);
 		sendButton.addEventListener('click', sendMessage);
@@ -50,6 +50,7 @@ function showDashboard() {
 	getMessages();
 	getFriends();
 	renderWonAndLost();
+	getFreshStats();
 	if (document.getElementById('dashboard-close-btn')) {
 		const gameMenuCloseBtn = document.getElementById('dashboard-close-btn');
 		const otherGameMenuBtns = document.querySelectorAll('.game-menu__btn');

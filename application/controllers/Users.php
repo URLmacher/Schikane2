@@ -245,4 +245,25 @@
             echo json_encode($data);
         }
 
+        /**
+         *  holt stats
+         *
+         * @return JSON
+         */
+        public function stats() {
+            $stats = false;
+            $data['success'] = false;
+            $data['errors'] = [];
+
+            
+            $stats = $this->User_model->get_stats($this->session->user_id);
+
+            if($stats){
+                $data['success'] = true;
+                $data['stats'] = $stats;
+            }
+
+            echo json_encode($data);
+        }
+
     }

@@ -180,6 +180,17 @@ class User_model extends CI_Model{
     }
 
     /**
+     * Gets fresch stats
+     *
+     * @param int $user_id
+     * @return void
+     */
+    public function get_stats($user_id) {
+        $query = $this->db->get_where('users', array('user_id' => $user_id));
+        return $query->result_array();
+    }
+
+    /**
      * Setzt Werte zurück, die nur in einer Phase benötigt werden
      *
      * @param int $user_id

@@ -34,7 +34,7 @@
         <?php echo "<p class='async-feedback async-feedback--flash'>".$this->session->flashdata('user_loggedout')."</p>"; ?>
     <?php endif; ?>
   
-    <div id="async-feedback"></div>
+    <div id="async-feedback" class="async-feedback"></div>
            
        
     <?php
